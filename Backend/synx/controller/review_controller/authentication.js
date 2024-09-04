@@ -139,11 +139,13 @@ const resendOtp = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
+console.log("hello")
 
   try {
+    console.log('sssss')
     let user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ msg: "Invalid user" });
+      return res.status(400).json({ msg: "Invalid  hello user" });
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
