@@ -44,9 +44,11 @@ const EnhancedSignup = () => {
         console.log('handle submity is workign')
        const result = await axios.post('http://localhost:3000/signup',formData)
         // await new Promise(resolve => setTimeout(resolve, 1000));
+        
         if(result){
-          navigate(`/OTPVerificationPage?email=${encodeURIComponent(formData.email)}&role=${encodeURIComponent(formData.role)}`);
+          navigate(`/OTPVerificationPage?email=${encodeURIComponent(formData.email)}`);
         }
+
       } catch (error) {
         console.error("Signup error:", error);
         setErrors(prev => ({ ...prev, api: "An error occurred. Please try again." }));

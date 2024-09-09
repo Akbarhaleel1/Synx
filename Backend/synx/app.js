@@ -1,12 +1,19 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require('dotenv');
+require('dotenv').config();
 const Route = require("./routes/router");
+const session = require('express-session');
 
 const app = express();
 
-dotenv.config();
 
+
+app.use(session({
+    secret: '89093789021', 
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } 
+  }));
 
 app.use(cors());
 
@@ -18,7 +25,7 @@ const port = 3000;
 app.use("/", Route);
 
 
-// Start the server and listen on the specified port
+
 app.listen(port, () => {
-    console.log('Server is running and you can listen from this port: http://localhost:${port}');
+    console.log(`Server is running and you can listen from this port: http://localhost:${port}`);
 });

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -17,7 +17,6 @@ const EnhancedLogin = () => {
   };
 
   const validateForm = () => {
-    let isValid = true;
     const newErrors = {};
 
     if (!formData.email.trim()) newErrors.email = "Email is required";
@@ -34,7 +33,11 @@ const EnhancedLogin = () => {
       try {
         const result = await axios.post('http://localhost:3000/login',formData)
         if(result){
-          navigate('/dashboard');
+          console.log('user',result.data.user);
+          
+          localStorage.setItem('user',JSON.stringify(result.data.user))
+          console.log('result',result)
+          navigate('/reviews');
         }
       } catch (error) {
         console.error("Login error:", error);
@@ -51,7 +54,7 @@ const EnhancedLogin = () => {
           <div className="h-full w-full bg-black bg-opacity-80 flex flex-col justify-center items-center text-white p-12">
             <h2 className="text-3xl font-bold mb-4">Welcome Back!</h2>
             <p className="text-xl text-center">
-              We're so excited to see you again! Log in to access your account and continue your journey.
+              We are so excited to see you again! Log in to access your account and continue your journey.
             </p>
             <a href="/signup" className="mt-8 px-6 py-3 border border-white text-white rounded-full hover:bg-white hover:text-indigo-600 transition duration-300">
               Create Account

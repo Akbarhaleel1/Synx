@@ -48,7 +48,7 @@ const SynXPlusReviewRequest = () => {
               Whatsapp
             </button>
           </a>
-          <a href="/GetReviews/qrcode">
+          <a href="/QrCode">
             <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               QR Code
             </button>

@@ -357,10 +357,6 @@ async function makemytrip(url) {
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: 'networkidle2' });
 
-    // while (true) {
-      ; // Append current page reviews to the overall list
-
-
       
       const reviews = await page.evaluate(() => {
         return Array.from(document.querySelectorAll('.reviewBox ')).map(element => ({

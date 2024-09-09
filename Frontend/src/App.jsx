@@ -1,6 +1,6 @@
 
 
-import React, { useState } from "react";
+import  { useState } from "react";
 import {
   Reviews,
   GetReviews,
@@ -17,7 +17,10 @@ import Signup from "./sections/auth/Signup.jsx";
 import EnhancedLogin from "./sections/auth/Login.jsx";
 import ForgotPasswordPage from "./sections/auth/ForgotPassword.jsx";
 import OTPVerificationPage from "./sections/auth/Otp.jsx";
-
+import QrCode from './sections/QrCode.jsx'
+import HotelReview from './sections/HotelReview.jsx'
+import NegativeReview from './sections/negetiveFeedback.jsx'
+import NegativeReviewsDisplay from './sections/getNegetiveReviews.jsx'
 
 const App = () => {
   const [isActive, setIsActive] = useState(false);
@@ -44,6 +47,10 @@ const App = () => {
           <Route path="/login" element={<EnhancedLogin />} />
           <Route path="/forgorPassword" element={<ForgotPasswordPage />} />
           <Route path="/OTPVerificationPage" element={<OTPVerificationPage />} />
+          <Route path="/QrCode" element={<QrCode />} />
+          <Route path="/HotelReview" element={<HotelReview />} />
+          <Route path="/review" element={<NegativeReview />} />
+          <Route path="/negetiveReview" element={<NegativeReviewsDisplay />} />
           {/* Add routes for SignIn/SignUp or display based on condition */}
 
         </Routes>

@@ -1,11 +1,21 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { ArrowRight, Loader2 } from 'lucide-react';
+import axios from 'axios'
+import { useLocation,useNavigate  } from 'react-router-dom';
 
 const OTPVerificationPage = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
   const inputs = useRef([]);
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+
+  const email = queryParams.get('email');
+
 
   useEffect(() => {
     if (inputs.current[0]) {
@@ -24,9 +34,17 @@ const OTPVerificationPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    console.log('email', email)
+    const result = await axios.post('http://localhost:3000/otp',{otp,email})
+    console.log(result)
+    if(result){
+      setTimeout(()=>{
+        navigate('/login')
+      },3000)
+    }
     // Simulate API call
     setTimeout(() => {
       console.log('OTP submitted:', otp.join(''));
@@ -40,7 +58,7 @@ const OTPVerificationPage = () => {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
         <div className="text-center mb-8">
           <h2 className="text-3xl font-bold text-gray-800 mb-2">Verify Your Account</h2>
-          <p className="text-gray-600">We've sent a code to your email. Please enter it below.</p>
+          <p className="text-gray-600"> we sent a code to your email. Please enter it below.</p>
         </div>
 
         {isVerified ? (
@@ -87,7 +105,7 @@ const OTPVerificationPage = () => {
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Didn't receive the code?{' '}
+            Did not receive the code?{' '}
             <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
               Resend OTP
             </a>
