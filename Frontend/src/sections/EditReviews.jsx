@@ -21,7 +21,7 @@ const EditReviews = () => {
 
     try {
       const user = JSON.parse(localStorage.getItem('user')); // Corrected localStorage retrieval
-      const response = await axios.post('http://localhost:3000/editReview', { data, user });
+      const response = await axios.post('https://review.synxautomate.com/editReview', { data, user });
 
       if (response.status === 200) {
         // Handle successful submission

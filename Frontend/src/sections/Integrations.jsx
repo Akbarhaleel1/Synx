@@ -62,7 +62,7 @@ const Modal = ({ isOpen, onClose, platform, }) => {
 
   const onDelete = async () =>{
     console.log('delteing wi woring',platform )
-   const result = await axios.post('http://localhost:3000/deleteLink', {user,platform:platform.name});
+   const result = await axios.post('https://review.synxautomate.com/deleteLink', {user,platform:platform.name});
    console.log('result',result)
    if(result.status ===200){
     window.location.reload();

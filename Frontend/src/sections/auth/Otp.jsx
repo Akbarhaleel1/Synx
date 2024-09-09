@@ -38,7 +38,7 @@ const OTPVerificationPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     console.log('email', email)
-    const result = await axios.post('http://localhost:3000/otp',{otp,email})
+    const result = await axios.post('https://review.synxautomate.com/otp',{otp,email})
     console.log(result)
     if(result){
       setTimeout(()=>{

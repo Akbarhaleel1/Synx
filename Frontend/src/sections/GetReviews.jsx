@@ -50,7 +50,7 @@ const GetReviews = () => {
       console.log('input', inputs)
       let user = localStorage.getItem('user')
       // Send the data to the backend
-      const response = await axios.post('http://localhost:3000/sendReviews', { user:user,contacts: inputs });
+      const response = await axios.post('https://review.synxautomate.com/sendReviews', { user:user,contacts: inputs });
       console.log('responsce is', response);
       
       // Handle success response

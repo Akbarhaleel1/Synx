@@ -22,7 +22,7 @@ const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       const user = localStorage.getItem("user");
-      const result = await axios.post("http://localhost:3000/reviews", { user });
+      const result = await axios.post("https://review.synxautomate.com/reviews", { user });
       console.log("result", result);
       setReviews(result.data.review); // Assuming the response contains the review data
     };

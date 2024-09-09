@@ -22,7 +22,7 @@ const NegativeReview = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     
-    const result = await axios.post('http://localhost:3000/review',{formData})
+    const result = await axios.post('https://review.synxautomate.com/review',{formData})
     console.log('result',result)
   };
 

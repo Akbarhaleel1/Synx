@@ -31,7 +31,7 @@ const EnhancedLogin = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const result = await axios.post('http://localhost:3000/login',formData)
+        const result = await axios.post('https://review.synxautomate.com/login',formData)
         if(result){
           console.log('user',result.data.user);
           

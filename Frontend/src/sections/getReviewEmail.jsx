@@ -22,7 +22,7 @@ const GetReviewsEmail = () => {
   useEffect(()=>{
     const fetchData = async()=>{
       const user = localStorage.getItem('user')
-      const result = await axios.post('http://localhost:3000/ePageLoad',{user});
+      const result = await axios.post('https://review.synxautomate.com/ePageLoad',{user});
       console.log('result',result.data)
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)
