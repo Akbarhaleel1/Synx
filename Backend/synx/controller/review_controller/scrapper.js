@@ -79,7 +79,7 @@ const integrate=async (req,res)=>{
           console.log("sususus") 
 
     } catch (error) {
-        res.status(500).send("Server error");
+        res.status(502).send("Server error");
     }
 }
 

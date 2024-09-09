@@ -66,7 +66,7 @@ const GetReviews = () => {
     const fetchData = async () => {
       const user = localStorage.getItem("user");
       try {
-        const result = await axios.post("http://localhost:3000/emailPage", {
+        const result = await axios.post("https://review.synxautomate.com/emailPage", {
           user,
         });
         setCompanyName(result.data.email.name);
@@ -86,7 +86,7 @@ const GetReviews = () => {
       const user = localStorage.getItem("user");
       const updateTemplate = async () => {
         try {
-          await axios.post("http://localhost:3000/saveEmailTemplate", {
+          await axios.post("https://review.synxautomate.com/saveEmailTemplate", {
             message,
             companyName,
             user,

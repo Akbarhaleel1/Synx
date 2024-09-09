@@ -61,7 +61,7 @@ const Modal = ({ isOpen, onClose, platform, }) => {
   const user = localStorage.getItem('user')
 
   const onDelete = async () =>{
-    console.log('delteing wi woring',platform )
+    console.log('this is what is send',platform )
    const result = await axios.post('https://review.synxautomate.com/deleteLink', {user,platform:platform.name});
    console.log('result',result)
    if(result.status ===200){
@@ -150,7 +150,7 @@ const Integrations = () => {
   useEffect(() => {
     const fetchIntegrations = async () => {
       try {
-        const result = await axios.post('http://localhost:3000/integratepage', {user});
+        const result = await axios.post('https://review.synxautomate.com/integratepage', { user });
         setIntegrated(result.data.reviewLink)
         console.log('result',result.data);
       } catch (error) {
