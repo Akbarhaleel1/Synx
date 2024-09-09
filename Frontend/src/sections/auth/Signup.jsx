@@ -42,7 +42,7 @@ const EnhancedSignup = () => {
     if (validateForm()) {
       try {
         console.log('handle submity is workign')
-       const result = await axios.post('http://localhost:3000/signup',formData)
+       const result = await axios.post('https://review.synxautomate.com/signup',formData)
         // await new Promise(resolve => setTimeout(resolve, 1000));
         
         if(result){
