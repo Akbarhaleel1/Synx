@@ -210,7 +210,7 @@ const booking= async (url) => {
     const page = await browser.newPage();
     
     try {
-      await page.goto(url, { waitUntil: 'networkidle2' });
+      await page.goto(url, { waitUntil: 'networkidle2',timeout: 60000  });
    
      
       await page.waitForSelector('div[data-testid="review-card"]');
