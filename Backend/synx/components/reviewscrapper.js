@@ -1,5 +1,5 @@
 const chromium = require('chrome-aws-lambda')
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core');
 
 
 function convertToNormalDateAndExtractRating(reviews) {
