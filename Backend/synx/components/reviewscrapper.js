@@ -1,5 +1,5 @@
-const chromium = require('chrome-aws-lambda')
-const puppeteer = require('puppeteer-core');
+
+const puppeteer = require('puppeteer');
 
 
 function convertToNormalDateAndExtractRating(reviews) {
@@ -206,10 +206,7 @@ const trustpilot= async (url) => {
 // booking.com.........
 const booking= async (url) => {
 
-    const browser = await puppeteer.launch({ executablePath: await chromium.executablePath,
-      headless: true,
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,});
+    const browser = await puppeteer.launch({headless: true});
     const page = await browser.newPage();
     
     try {
