@@ -20,14 +20,14 @@ const EditReviews = () => {
     console.log('data',data)
 
     try {
-      const user = JSON.parse(localStorage.getItem('user')); // Corrected localStorage retrieval
+      const user = JSON.parse(localStorage.getItem('user')); 
       const response = await axios.post('https://review.synxautomate.com/editReview', { data, user });
 
       if (response.status === 200) {
         // Handle successful submission
         console.log('Data successfully sent to the backend');
       } else {
-        // Handle errors
+    
         console.error('Error sending data to the backend');
       }
     } catch (error) {
