@@ -17,12 +17,10 @@ Route.post('/otp', authentication.validateOtp);
 Route.post("/integrations",scrapper.integrate)
 Route.post("/integratepage",scrapper.integratepage)
 Route.post("/deleteLink",scrapper.deleteLink)
-// subscription selection
 Route.post('/subscribe',subscription.subscribe)
 Route.post("/editReview",reviewLink.createOrUpdateReviewLink)
 
 
-// qr code
 Route.post("/generateqr",getReview.generateqr)
 // verify payment
 Route.post("/verify_payment",subscription.verify_payment)
