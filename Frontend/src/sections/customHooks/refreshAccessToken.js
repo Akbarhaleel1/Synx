@@ -1,9 +1,8 @@
 import axios from 'axios';
 
 const refreshAccessToken = async () => {
-    console.log('1')
+   
     const refreshToken = JSON.parse(localStorage.getItem('refreshToken')); 
-    console.log('2')
 
     if (!refreshToken) {
         throw new Error('No refresh token available');
