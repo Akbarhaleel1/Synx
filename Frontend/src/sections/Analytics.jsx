@@ -1,6 +1,9 @@
 import Nav from "../components/Nav";
+import useAuth from './customHooks/useAuth';
+
 
 const AnalyticsDashboard = () => {
+  useAuth()
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
       {/* Adjust the width of the Nav component based on screen size */}

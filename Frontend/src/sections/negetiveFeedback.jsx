@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios'
+import useAuth from './customHooks/useAuth';
 
 const NegativeReview = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +10,8 @@ const NegativeReview = () => {
     review: '',
     consent: false,
   });
+
+  useAuth()
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,7 +25,7 @@ const NegativeReview = () => {
     e.preventDefault();
     console.log('Form submitted:', formData);
     
-    const result = await axios.post('https://review.synxautomate.com/review',{formData})
+    const result = await axios.post('http://localhost:3000/review',{formData})
     console.log('result',result)
   };
 

@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/kriparajp1/synx#readme",
   "dependencies": {
-    "axios": "^1.7.5",
+    "axios": "^1.7.7",
     "bcryptjs": "^2.4.3",
     "cheerio": "^1.0.0",
     "chrome-aws-lambda": "^10.1.0",
@@ -37,6 +37,7 @@
     "node-cron": "^3.0.3",
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
+    "plivo": "^4.68.3",
     "puppeteer": "^23.2.0",
     "puppeteer-core": "^10.4.0",
     "qrcode": "^1.5.4",

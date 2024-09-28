@@ -1,6 +1,7 @@
 import React from 'react';
 import { Star, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import Nav from "../components/Nav";
+import useAuth from './customHooks/useAuth';
 
 const NegativeReviewsPage = () => {
   // This would typically come from an API or prop
@@ -23,6 +24,8 @@ const NegativeReviewsPage = () => {
     },
     // Add more reviews as needed
   ];
+
+  useAuth()
 
   const StarRating = ({ rating }) => (
     <div className="flex">

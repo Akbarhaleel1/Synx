@@ -23,7 +23,12 @@ import {
 } from "react-icons/fa";
 import Nav from "../components/Nav";
 
+
+import useAuth from './customHooks/useAuth';
+
+
 const SynXPlusReviewRequest = () => {
+  useAuth()
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-gray-900 text-white">
       {/* Sidebar */}

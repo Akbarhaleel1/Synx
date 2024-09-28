@@ -31,12 +31,16 @@ const EnhancedLogin = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        const result = await axios.post('https://review.synxautomate.com/login',formData)
+        const result = await axios.post('http://localhost:3000/login',formData)
         if(result){
-          console.log('user',result.data.user);
+          console.log('token',result.data.token);
+          console.log('refreshToken',result.data.refreshToken);
           
-          localStorage.setItem('user',JSON.stringify(result.data.user))
-          console.log('result',result)
+          if(result.data.token){
+            localStorage.setItem('token',JSON.stringify(result.data.token))
+          localStorage.setItem('refreshToken',JSON.stringify(result.data.refreshToken))
+          }
+
           navigate('/reviews');
         }
       } catch (error) {

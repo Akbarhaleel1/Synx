@@ -1,3 +1,4 @@
+import useAuth from './customHooks/useAuth';
 
 
 
@@ -10,6 +11,7 @@ const EditReviews = () => {
   const [linkTitle, setLinkTitle] = useState('');
   const [initialPage, setInitialPage] = useState('enabled');
 
+  useAuth()
   const handleSubmit = async () => {
     const data = {
       endpoint,
@@ -21,7 +23,7 @@ const EditReviews = () => {
 
     try {
       const user = JSON.parse(localStorage.getItem('user')); 
-      const response = await axios.post('https://review.synxautomate.com/editReview', { data, user });
+      const response = await axios.post('http://localhost:3000/editReview', { data, user });
 
       if (response.status === 200) {
         // Handle successful submission

@@ -4,6 +4,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const nodemailer = require("nodemailer"); 
 const crypto = require("crypto"); 
+const { generateToken, verifyRefreshToken, generateRefreshToken } = require("../../utils/authUtils");
 const otpStore = {}; 
 
 
@@ -19,7 +20,7 @@ const transporter = nodemailer.createTransport({
 const signup = async (req, res) => {
   const { firstname, lastname, email, phonenumber, password } = req.body;
 
-
+  
   try {
    
     let user = await User.findOne({ email });
@@ -43,12 +44,6 @@ const signup = async (req, res) => {
 
     await userData.save();
 
-
-    // req.session.otp = otp; 
-    // req.session.otpCreationTime = creationTime;
-    // req.session.newUser = { firstname, lastname, email, phonenumber, password:hashedPassword };
-
-  
     const mailOptions = {
       from: 'fito.kripp@gmail.com',
       to: email,
@@ -145,13 +140,10 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    
-   
     let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
-
    
     if (!user.isVerified) {
       return res.status(403).json({ msg: "Account is not verified. Please verify your account first." });
@@ -160,14 +152,14 @@ const login = async (req, res) => {
     if (!isMatch) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
+    console.log('user', user)
+    const token = generateToken(user);
+    const refreshToken = generateRefreshToken(user);
 
- 
-    req.session.userEmail = email;
-    console.log('user',user);
-    
-
+    console.log('token',token);
+    console.log('refreshToken',refreshToken);
    
-    res.status(200).json({ msg: "Login successful. Redirecting to dashboard...",user });
+    res.status(200).json({ msg: "Login successful. Redirecting to dashboard...",token,refreshToken });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");
@@ -176,10 +168,94 @@ const login = async (req, res) => {
 
 
 
+const refreshToken = async (req, res)=> {
+  const { refreshToken } = req.body;
+  console.log('refreshToken is',refreshToken)
+  if (!refreshToken) {
+      return res.status(401).json({ msg: 'Refresh token required' });
+  }
+
+  try {
+      const decoded = verifyRefreshToken(refreshToken);
+      const user = { _id: decoded.id, email: decoded.email };
+      const newAccessToken = generateToken(user);
+      res.json({ accessToken: newAccessToken });
+  } catch (error) {
+      res.status(401).json({ msg: 'Invalid refresh token' });
+  }
+}
+
+
+
+
+const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ msg: "User does not exist." });
+    }
+
+    const { otp, creationTime } = generateOtp();
+    user.otp = otp;
+    await user.save();
+
+    const mailOptions = {
+      from: 'fito.kripp@gmail.com',
+      to: email,
+      subject: "Password Reset OTP",
+      text: `Your OTP for password reset is ${otp}. It will expire in 5 minutes.`,
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending password reset OTP email:", error);
+        return res.status(500).json({ msg: "Error sending OTP email" });
+      } else {
+        console.log("Password reset OTP email sent:", info.response);
+        res.status(200).json({ msg: "OTP sent to your email for password reset" });
+      }
+    });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
+const resetPassword = async (req, res) => {
+  const { email, otp, newPassword } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid email address." });
+    }
+
+    const userOtp = parseInt(otp.join(''));
+    if (user.otp === userOtp) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(newPassword, salt);
+      user.otp = null; // Clear OTP after successful reset
+      await user.save();
+
+      res.status(200).json({ msg: "Password reset successful. Please login with your new password." });
+    } else {
+      res.status(400).json({ msg: "Invalid or expired OTP." });
+    }
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
+};
+
 
 module.exports = {
   signup,
   login,
+  refreshToken,
   validateOtp,
   resendOtp,
+  forgotPassword,
+  resetPassword,
 };

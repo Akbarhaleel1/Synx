@@ -1,5 +1,7 @@
+import useAuth from './customHooks/useAuth';
 
 const SpecialOffer = () => {
+  useAuth()
   return (
     <div>
       SpecialOffer

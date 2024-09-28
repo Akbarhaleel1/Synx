@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 mongoose.connect(process.env.MONGODB);
 
-const Etemplate = new mongoose.Schema({
+const whatsapTemplate = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
@@ -15,6 +15,6 @@ const Etemplate = new mongoose.Schema({
     }
   });
   
-  const emailTemps = mongoose.model("template", Etemplate);
+  const whatsapTemp = mongoose.model("whatsapTemplate", whatsapTemplate);
   
-  module.exports = emailTemps;
+  module.exports = whatsapTemp;

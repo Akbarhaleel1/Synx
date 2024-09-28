@@ -3,7 +3,11 @@ import { useState , useEffect} from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
 
+import useAuth from './customHooks/useAuth';
+
+
 const PlatformIcon = ({ name, color }) => {
+  useAuth()
   const icons = {
     'booking.com': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
@@ -62,7 +66,7 @@ const Modal = ({ isOpen, onClose, platform, }) => {
 
   const onDelete = async () =>{
     console.log('this is what is send',platform )
-   const result = await axios.post('https://review.synxautomate.com/deleteLink', {user,platform:platform.name});
+   const result = await axios.post('http://localhost:3000/deleteLink', {user,platform:platform.name});
    console.log('result',result)
    if(result.status ===200){
     window.location.reload();
@@ -150,7 +154,7 @@ const Integrations = () => {
   useEffect(() => {
     const fetchIntegrations = async () => {
       try {
-        const result = await axios.post('https://review.synxautomate.com/integratepage', { user });
+        const result = await axios.post('http://localhost:3000/integratepage', { user });
         setIntegrated(result.data.reviewLink)
         console.log('result',result.data);
       } catch (error) {

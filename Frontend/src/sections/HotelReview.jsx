@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { Star, Send } from 'lucide-react';
 import {useNavigate } from 'react-router-dom'
+import useAuth from './customHooks/useAuth';
+
 
 const HotelReview = () => {
   const [rating, setRating] = useState(0);
 
   const navigate = useNavigate();
+
+  useAuth()
 
 
 const submitStart = (start) =>{

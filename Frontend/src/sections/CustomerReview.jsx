@@ -1,5 +1,7 @@
+import useAuth from './customHooks/useAuth';
 
 const CustomerReview = () => {
+  useAuth()
   return (
     <div>
       CustomerReview

@@ -11,6 +11,9 @@ import {
 import Nav from "../components/Nav";
 import axios from "axios";
 
+import useAuth from './customHooks/useAuth';
+
+
 const ToggleSwitch = ({ checked, onChange }) => (
   <label className="toggle-switch">
     <input type="checkbox" checked={checked} onChange={onChange} />
@@ -29,6 +32,8 @@ const GetReviews = () => {
   const handleAddLine = () => {
     setInputs([...inputs, { name: "", contact: "" }]);
   };
+
+  useAuth()
 
   const handleInputChange = (index, event) => {
     const newInputs = [...inputs];
@@ -50,7 +55,7 @@ const GetReviews = () => {
       console.log('input', inputs)
       let user = localStorage.getItem('user')
       // Send the data to the backend
-      const response = await axios.post('https://review.synxautomate.com/sendReviews', { user:user,contacts: inputs });
+      const response = await axios.post('http://localhost:3000/sendReviews', { user:user,contacts: inputs });
       console.log('responsce is', response);
       
       // Handle success response
@@ -66,7 +71,7 @@ const GetReviews = () => {
     const fetchData = async () => {
       const user = localStorage.getItem("user");
       try {
-        const result = await axios.post("https://review.synxautomate.com/emailPage", {
+        const result = await axios.post("http://localhost:3000/emailPage", {
           user,
         });
         setCompanyName(result.data.email.name);
@@ -86,7 +91,7 @@ const GetReviews = () => {
       const user = localStorage.getItem("user");
       const updateTemplate = async () => {
         try {
-          await axios.post("https://review.synxautomate.com/saveEmailTemplate", {
+          await axios.post("http://localhost:3000/saveEmailTemplate", {
             message,
             companyName,
             user,

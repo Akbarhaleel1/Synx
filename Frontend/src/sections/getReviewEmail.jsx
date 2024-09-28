@@ -1,6 +1,9 @@
 import { useState,useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
+
+import useAuth from './customHooks/useAuth';
+
 const ToggleSwitch = ({ checked, onChange }) => (
   <label className="toggle-switch">
     <input type="checkbox" checked={checked} onChange={onChange} />
@@ -18,11 +21,12 @@ const GetReviewsEmail = () => {
   const [companyName, setCompanyName] = useState('');
   const [emailContent, setEmailContent] = useState('');
 
+  useAuth()
 
   useEffect(()=>{
     const fetchData = async()=>{
       const user = localStorage.getItem('user')
-      const result = await axios.post('https://review.synxautomate.com/ePageLoad',{user});
+      const result = await axios.post('http://localhost:3000/ePageLoad',{user});
       console.log('result',result.data)
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)
@@ -41,7 +45,7 @@ const GetReviewsEmail = () => {
       // Send data to the backend
       let user = localStorage.getItem('user')
 
-      const response = await axios.post('https://review.synxautomate.com/ePage', {
+      const response = await axios.post('http://localhost:3000/ePage', {
         user,
         companyName,
         emailContent,
@@ -83,7 +87,7 @@ const GetReviewsEmail = () => {
       console.log('input', inputs)
       let user = localStorage.getItem('user')
       // Send the data to the backend
-      const response = await axios.post('https://review.synxautomate.com/sendEmailReviews', { user:user,email: inputs });
+      const response = await axios.post('http://localhost:3000/sendEmailReviews', { user:user,email: inputs });
       console.log('responsce is', response);
       
       // Handle success response

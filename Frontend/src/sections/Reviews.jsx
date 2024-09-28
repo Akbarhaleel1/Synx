@@ -3,7 +3,7 @@ import { useState,useEffect} from "react";
 import Nav from "../components/Nav";
 import bellIcon from "../assets/images/bellIcon.png";
 import axios from 'axios'
-
+import useAuth from './customHooks/useAuth';
 const Reviews = () => {
   const [isToggled, setToggled] = useState(false);
   const [rating, setRating] = useState(0);
@@ -11,6 +11,9 @@ const Reviews = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [selectedFilter, setSelectedFilter] = useState("Types"); // State for filter selection
 
+  useAuth();
+
+  
   const handleClick = (index) => {
     setRating(index + 1);
   };
@@ -22,7 +25,7 @@ const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       const user = localStorage.getItem("user");
-      const result = await axios.post("https://review.synxautomate.com/reviews", { user });
+      const result = await axios.post("http://localhost:3000/reviews", { user });
       console.log("result", result);
       setReviews(result.data.review); // Assuming the response contains the review data
     };

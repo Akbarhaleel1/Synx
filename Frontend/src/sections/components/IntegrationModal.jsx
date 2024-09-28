@@ -18,7 +18,7 @@ const LinkPageModal = ({ isOpen, onClose, platform, integrated }) => {
 
     try {
       const user = localStorage.getItem('user');
-      const response = await axios.post('https://review.synxautomate.com/integrations', {
+      const response = await axios.post('http://localhost:3000/integrations', {
         platform: platform.name,
         pageLink,
         user

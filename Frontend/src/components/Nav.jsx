@@ -4,9 +4,11 @@ import { useState } from 'react';
 import logo from '../assets/images/logo.png';
 import reviewLogo from '../assets/images/reviewLogo.png';
 import menuBar from '../assets/images/menuBar.png';
+import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate(); 
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -22,9 +24,14 @@ const Nav = () => {
   ];
 
   const bottomItems = [
-    { name: 'Negetive Reviews', href: '/negetiveReview' },
-    { name: 'Logout', href: '/reviews' },
+    { name: 'Negative Reviews', href: '/negativeReview' },
+    { name: 'Logout', href: '/login' },
   ];
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); 
+    navigate('/login'); 
+  };
 
   const NavItem = ({ item }) => (
     <a href={item.href} className='flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md'>
@@ -35,7 +42,7 @@ const Nav = () => {
 
   return (
     <header>
-      {/* Desktop Navigation - Kept fixed as in the original */}
+      {/* Desktop Navigation */}
       <nav className="fixed h-screen w-64 p-6 bg-black hidden lg:block">
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
         <div className='space-y-4 mb-12'>
@@ -45,12 +52,14 @@ const Nav = () => {
         </div>
         <div className='absolute bottom-6 left-6 space-y-4'>
           {bottomItems.map((item, index) => (
-            <NavItem key={index} item={item} />
+            <div key={index} onClick={item.name === 'Logout' ? handleLogout : () => navigate(item.href)}>
+              <NavItem item={item} />
+            </div>
           ))}
         </div>
       </nav>
 
-      {/* Mobile Navigation - Changed to be scrollable */}
+      {/* Mobile Navigation */}
       <div className="lg:hidden">
         <button
           className='fixed top-2 right-4 z-50 p-2'
@@ -71,7 +80,9 @@ const Nav = () => {
             </div>
             <div className='space-y-4 mt-12'>
               {bottomItems.map((item, index) => (
-                <NavItem key={index} item={item} />
+                <div key={index} onClick={item.name === 'Logout' ? handleLogout : () => navigate(item.href)}>
+                  <NavItem item={item} />
+                </div>
               ))}
             </div>
           </nav>
