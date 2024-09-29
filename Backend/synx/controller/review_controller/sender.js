@@ -73,7 +73,8 @@ const email= async (req, res) => {
     console.log("keri",req.body)
     const userData=JSON.parse(user)
     const emailtemp=await Etemplate.findOne({user:userData._id})
-    const linkdata= await ReviewLink.findOne({user:userData._id})
+    const linkdata=await ReviewLink.findOne({user:userData._id})
+    console.log(linkdata)
     // const monthlydata=await MonthlyLimit.findOne({user:userData._id})
 
 
@@ -103,7 +104,7 @@ const email= async (req, res) => {
             subject: `Hi ${name}`,
             text: `Hi ${name}, ${emailtemp.message} ${linkdata.link}`,
           };
-          transporter.sendMail(mailOptions, (error, info) => {
+           transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
                console.log("kitteela",error)
                 results.push({name, msg: "Error sending OTP email" });
@@ -114,6 +115,7 @@ const email= async (req, res) => {
           });
         
       } catch (error) {
+        console.log(error)
         results.push({ name, status: 'Failed', error: error.message });
       }
       // let count=monthlydata.phone;
@@ -183,8 +185,6 @@ const email= async (req, res) => {
 //   console.log(results);
 //   return res.status(200).json({ msg: "email sent ", results });
 // };
-
-
 
 // const email = async (req, res) => {
 //   try {

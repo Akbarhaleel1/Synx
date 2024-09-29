@@ -4,7 +4,7 @@ mongoose.connect(process.env.MONGODB);
 const customReviewSchema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "reviewLinkSchema",
+        ref: "User",
         required: true,
       },
     email:{
@@ -14,6 +14,9 @@ const customReviewSchema = new mongoose.Schema({
       type:String,
     },
     phone:{
+      type:Number,
+    },
+    stars:{
       type:Number,
     },
     review:{

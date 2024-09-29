@@ -13,16 +13,17 @@ const createOrUpdateReviewLink = async (req, res) => {
         title: data.linkTitle,
         starFilter: data.initialPage,
       };
+      console.log('reviewLinkData',reviewLinkData)
         const reviewLink = await ReviewLink.findOneAndUpdate(
           { user: user._id }, 
           reviewLinkData, 
           {
-            new: true, 
+            new: true,  
             upsert: true, 
           }
         );
-
-        return res.status(201).json({ message: "Review link created successfully", reviewLink });
+        console.log('reviewLink',reviewLink)
+        return res.status(200).json({ message: "Review link created successfully", reviewLink });
       
     } catch (error) {
       console.error("Error creating or updating review link:", error);
@@ -30,6 +31,16 @@ const createOrUpdateReviewLink = async (req, res) => {
     }
   };
 
+const reviewlink= async(req,res)=>{
+  try {
+    const {user}=req.body
+    console.log("reviewlinkkkkkkkkkkkkkkkkkkkkkkk",req.body)
+    const link= await ReviewLink.findOne({user:user._id})
+    return res.status(200).json({ message: "Review link created successfully",link });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+}
 module.exports={
-    createOrUpdateReviewLink
+    createOrUpdateReviewLink,reviewlink
 }

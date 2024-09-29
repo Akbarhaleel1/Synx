@@ -26,7 +26,13 @@ const GetReviewsEmail = () => {
   useEffect(() => {
     const fetchData = async () => {
       const user = localStorage.getItem('user')
-      const result = await axios.post('http://localhost:3000/ePageLoad', { user });
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
+      const result = await axios.post('http://localhost:3000/ePageLoad', { user },{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log('result', result.data)
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)

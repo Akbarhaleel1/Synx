@@ -1,7 +1,8 @@
-import React from 'react';
+import {useEffect} from 'react';
 import { Star, User, Mail, Phone, MessageSquare } from 'lucide-react';
 import Nav from "../components/Nav";
 import useAuth from './customHooks/useAuth';
+import axios from 'axios';
 
 const NegativeReviewsPage = () => {
   // This would typically come from an API or prop
@@ -26,6 +27,52 @@ const NegativeReviewsPage = () => {
   ];
 
   useAuth()
+
+
+
+  useEffect(() => {
+    const fetchNegativeReviews = async () => {
+      try {
+        // Get the user and token from localStorage
+        const getUser = localStorage.getItem('user');
+        const getToken = localStorage.getItem('token');
+  
+        // Ensure both values exist before attempting to parse
+        if (!getUser || !getToken) {
+          console.error('User or Token not found in localStorage');
+          return;
+        }
+  
+        const user = JSON.parse(getUser);
+        const token = JSON.parse(getToken);
+  
+        console.log('User:', user);
+  
+        // Perform the API call
+        const result = await axios.post(
+          'http://localhost:3000/showcustomreviews',
+          { user },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+  
+        // Log the result for debugging
+        console.log('API result:', result.data);
+  
+        // You can now set the fetched reviews to the state if needed
+        // setFetchedReviews(result.data); 
+      } catch (error) {
+        // Handle any errors that occur during the API call
+        console.error('Error fetching negative reviews:', error);
+      }
+    };
+  
+    fetchNegativeReviews();
+  }, []);
+  
 
   const StarRating = ({ rating }) => (
     <div className="flex">

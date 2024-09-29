@@ -28,10 +28,15 @@ const ReviewLinkAndQRCode = () => {
     }
   };
 
+  const parsedToken = localStorage.getItem('token');
+  const token = JSON.parse(parsedToken)
+
   useEffect(() => {
     const fetchUser = async () => {
       const user = localStorage.getItem('user');
-      const result = await axios.post('http://localhost:3000/generateqr', { user });
+      const result = await axios.post('http://localhost:3000/generateqr', { user },{headers: {
+        Authorization: `Bearer ${token}`,
+      }});
       console.log('result is ', result);
       setData(result.data);
     };

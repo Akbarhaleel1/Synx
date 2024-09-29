@@ -101,6 +101,8 @@ const GetReviews = () => {
   useEffect(() => {
     if (companyName || message) {
       const user = localStorage.getItem("user");
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
       const updateTemplate = async () => {
         try {
           await axios.post("http://localhost:3000/saveEmailTemplate", {

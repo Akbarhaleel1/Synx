@@ -9,8 +9,7 @@ const reviewLink=require("../controller/review_controller/reviewLink")
 const sender=require("../controller/review_controller/sender");
 const authMiddleware = require("../utils/authMiddleware");
 const customreview=require("../controller/review_controller/synxReview")
-
-
+const feedback=require('../controller/review_controller/customreview')
 
 
 Route.post("/signup",authentication.signup)
@@ -43,7 +42,8 @@ Route.post("/forgot-password",authentication.forgotPassword);
 Route.post("/reset-password", authentication.resetPassword);
 
 // custom reviewpage route
-Route.post("/customreviews", customreview.getReview)
-Route.post("/showcustomreviews", customreview.getUserReviews)
+Route.post("/showcustomreviews", authMiddleware,customreview.getUserReviews)
+Route.post("/editLinkEndpoint", reviewLink.reviewlink)
+Route.post("/userReview",feedback.reviewPage)
 
 module.exports=Route

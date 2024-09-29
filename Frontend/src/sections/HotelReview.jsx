@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
 import { Star, Send } from 'lucide-react';
-import {useNavigate } from 'react-router-dom'
+import { useNavigate, useLocation  } from 'react-router-dom'
 import useAuth from './customHooks/useAuth';
 
 
 const HotelReview = () => {
   const [rating, setRating] = useState(0);
-
   const navigate = useNavigate();
+  const location = useLocation();
 
-  useAuth()
+  useAuth();
 
+  const getQueryParams = () => {
+    const params = new URLSearchParams(location.search);
+    return {
+      endpoint: params.get('endpoint'), 
+    };
+  };
 
-const submitStart = (start) =>{
-  setRating(start)
-  if (start <= 3) {
-    navigate('/review');
-  }  
-  console.log('result',start)
-}
+  const { endpoint } = getQueryParams();
+
+  const submitStart = (star) => {
+    setRating(star);
+    if (star <= 3) {
+      navigate('/userReview');
+    };
+    localStorage.setItem('star',star)
+    localStorage.setItem('endpoint',endpoint)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center p-4">
@@ -37,19 +46,18 @@ const submitStart = (start) =>{
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
                   key={star}
-                  className={`w-10 h-10 cursor-pointer ${
-                    star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
-                  }`}
+                  className={`w-10 h-10 cursor-pointer ${star <= rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                    }`}
                   onClick={() => submitStart(star)}
                 />
               ))}
             </div>
-    
+
           </div>
           <div className="md:w-1/2">
-            <img 
-              src="https://wallpaperaccess.com/full/2484157.jpg" 
-              alt="Luxurious hotel room" 
+            <img
+              src="https://wallpaperaccess.com/full/2484157.jpg"
+              alt="Luxurious hotel room"
               className="w-full h-full object-cover"
             />
           </div>
