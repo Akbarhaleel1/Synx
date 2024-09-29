@@ -68,7 +68,7 @@ const sms = async (req, res) => {
     },
   });
 
-const email=async (req, res) => {
+const email= async (req, res) => {
     const {user,email} = req.body
     console.log("keri",req.body)
     const userData=JSON.parse(user)
@@ -95,7 +95,7 @@ const email=async (req, res) => {
         results.push({ name, status: 'Failed', error: 'Invalid mail id' });
         continue;
       }
-  
+  console.log(emailtemp)
       try {
         const mailOptions = {
             from: 'fito.kripp@gmail.com',
