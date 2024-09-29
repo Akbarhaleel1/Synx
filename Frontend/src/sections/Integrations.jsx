@@ -1,5 +1,5 @@
 import LinkPageModal from './components/IntegrationModal';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
 
@@ -11,47 +11,47 @@ const PlatformIcon = ({ name, color }) => {
   const icons = {
     'booking.com': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M20.3 7.2C18.5 5.4 16 4.5 13.3 4.5c-2.7 0-5.2 1-7 2.7s-2.7 4.3-2.7 7c0 2.7 1 5.2 2.7 7s4.3 2.7 7 2.7c2.7 0 5.2-1 7-2.7s2.7-4.3 2.7-7c0-2.7-1-5.2-2.7-7zm-7 12.3c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z"/>
-        <path d="M14.8 11.5l-1.5-1.5-1.5 1.5-1.5-1.5-1.5 1.5v3h6v-3z"/>
+        <path d="M20.3 7.2C18.5 5.4 16 4.5 13.3 4.5c-2.7 0-5.2 1-7 2.7s-2.7 4.3-2.7 7c0 2.7 1 5.2 2.7 7s4.3 2.7 7 2.7c2.7 0 5.2-1 7-2.7s2.7-4.3 2.7-7c0-2.7-1-5.2-2.7-7zm-7 12.3c-3.5 0-6.3-2.8-6.3-6.3s2.8-6.3 6.3-6.3 6.3 2.8 6.3 6.3-2.8 6.3-6.3 6.3z" />
+        <path d="M14.8 11.5l-1.5-1.5-1.5 1.5-1.5-1.5-1.5 1.5v3h6v-3z" />
       </svg>
     ),
     'airbnb': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z"/>
-        <path d="M12 4.5c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6 12 6s2.5 1.1 2.5 2.5S13.4 11 12 11z"/>
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z" />
+        <path d="M12 4.5c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6 12 6s2.5 1.1 2.5 2.5S13.4 11 12 11z" />
       </svg>
     ),
     'facebook': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M24 12.1c0-6.6-5.4-12-12-12s-12 5.4-12 12c0 6 4.4 11 10.1 11.9v-8.4h-3v-3.5h3v-2.6c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.3h3.4l-.5 3.5h-2.9v8.4c5.7-.9 10.1-5.9 10.1-11.9z"/>
+        <path d="M24 12.1c0-6.6-5.4-12-12-12s-12 5.4-12 12c0 6 4.4 11 10.1 11.9v-8.4h-3v-3.5h3v-2.6c0-3 1.8-4.7 4.5-4.7 1.3 0 2.7.2 2.7.2v3h-1.5c-1.5 0-2 .9-2 1.9v2.3h3.4l-.5 3.5h-2.9v8.4c5.7-.9 10.1-5.9 10.1-11.9z" />
       </svg>
     ),
     'agoda': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z"/>
-        <path d="M12 4.5c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6 12 6s2.5 1.1 2.5 2.5S13.4 11 12 11z"/>
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z" />
+        <path d="M12 4.5c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4zm0 6.5c-1.4 0-2.5-1.1-2.5-2.5S10.6 6 12 6s2.5 1.1 2.5 2.5S13.4 11 12 11z" />
       </svg>
     ),
     'trustpilot': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
       </svg>
     ),
     'tripadvisor': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z"/>
-        <circle cx="7.5" cy="12" r="2.5"/>
-        <circle cx="16.5" cy="12" r="2.5"/>
+        <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.6 0 12 0zm0 22.5C6.2 22.5 1.5 17.8 1.5 12S6.2 1.5 12 1.5 22.5 6.2 22.5 12 17.8 22.5 12 22.5z" />
+        <circle cx="7.5" cy="12" r="2.5" />
+        <circle cx="16.5" cy="12" r="2.5" />
       </svg>
     ),
     'makeMyTrip': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M19.4 3.9l-2-1.9C16.5 1.1 15 2 15 3.5V7H8.8C7.4 5.6 5.3 5.1 3.5 5.8c-1.2.5-2.1 1.5-2.5 2.7-.7 2.1 0 4.4 1.8 5.7.4.3.8.5 1.2.6.8.3 1.7.3 2.5 0 1.3-.4 2.3-1.4 2.7-2.7.1-.3.1-.6.2-.9H15v3.5c0 1.5 1.5 2.4 2.4 1.5l2-1.9c.5-.5.8-1.2.8-1.8V5.7c0-.7-.3-1.3-.8-1.8zM9 12c0 1.7-1.3 3-3 3S3 13.7 3 12s1.3-3 3-3 3 1.3 3 3z"/>
+        <path d="M19.4 3.9l-2-1.9C16.5 1.1 15 2 15 3.5V7H8.8C7.4 5.6 5.3 5.1 3.5 5.8c-1.2.5-2.1 1.5-2.5 2.7-.7 2.1 0 4.4 1.8 5.7.4.3.8.5 1.2.6.8.3 1.7.3 2.5 0 1.3-.4 2.3-1.4 2.7-2.7.1-.3.1-.6.2-.9H15v3.5c0 1.5 1.5 2.4 2.4 1.5l2-1.9c.5-.5.8-1.2.8-1.8V5.7c0-.7-.3-1.3-.8-1.8zM9 12c0 1.7-1.3 3-3 3S3 13.7 3 12s1.3-3 3-3 3 1.3 3 3z" />
       </svg>
     ),
     'goBiko': (
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill={color} className="w-10 h-10">
-        <path d="M3 20.5v-17c0-.8.8-1.3 1.5-1l13 8.5c.7.4.7 1.4 0 1.8l-13 8.5c-.7.5-1.5 0-1.5-.8z"/>
+        <path d="M3 20.5v-17c0-.8.8-1.3 1.5-1l13 8.5c.7.4.7 1.4 0 1.8l-13 8.5c-.7.5-1.5 0-1.5-.8z" />
       </svg>
     ),
   };
@@ -62,15 +62,27 @@ const PlatformIcon = ({ name, color }) => {
 
 const Modal = ({ isOpen, onClose, platform, }) => {
   if (!isOpen) return null;
-  const user = localStorage.getItem('user')
+  const user = localStorage.getItem('user');
+  const getToken = localStorage.getItem('token');
+  const token = JSON.parse(getToken)
 
-  const onDelete = async () =>{
-    console.log('this is what is send',platform )
-   const result = await axios.post('http://localhost:3000/deleteLink', {user,platform:platform.name});
-   console.log('result',result)
-   if(result.status ===200){
-    window.location.reload();
-   }
+  console.log('token isss', token)
+  if (!token) {
+    setError('Authorization token missing. Please log in.');
+    return;
+  }
+
+  const onDelete = async () => {
+    console.log('this is what is send', platform)
+    const result = await axios.post('http://localhost:3000/deleteLink', { user, platform: platform.name }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    console.log('result', result)
+    if (result.status === 200) {
+      window.location.reload();
+    }
   }
 
   return (
@@ -117,11 +129,10 @@ const IntegrationCard = ({ platform, onEdit, onIntegrate, integrated }) => {
       <h3 className="text-lg font-semibold">{platform.name}</h3>
       <button
         onClick={() => isPlatformIntegrated ? onEdit(platform) : onIntegrate(platform)}
-        className={`mt-4 w-full py-2 rounded-lg ${
-          isPlatformIntegrated
+        className={`mt-4 w-full py-2 rounded-lg ${isPlatformIntegrated
             ? 'bg-black text-white'
             : 'bg-gray-200 text-gray-600'
-        }`}
+          }`}
       >
         {isPlatformIntegrated ? 'Edit' : 'Integrate'}
       </button>
@@ -149,21 +160,27 @@ const Integrations = () => {
 
   const user = localStorage.getItem('user')
 
-  console.log('user is',user)
+  console.log('user is', user)
 
   useEffect(() => {
     const fetchIntegrations = async () => {
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
       try {
-        const result = await axios.post('http://localhost:3000/integratepage', { user });
+        const result = await axios.post('http://localhost:3000/integratepage', { user }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
         setIntegrated(result.data.reviewLink)
-        console.log('result',result.data);
+        console.log('result', result.data);
       } catch (error) {
         console.error("Error fetching integrations:", error);
       }
     }
     fetchIntegrations();
   }, []);
-  
+
 
 
   const handleEditClick = (platform) => {
@@ -172,8 +189,8 @@ const Integrations = () => {
   };
 
   const handleIntegrateClick = (platform) => {
-    console.log('platform',platform);
-    console.log('integrated',integrated);
+    console.log('platform', platform);
+    console.log('integrated', integrated);
     setCurrentPlatform(platform);
     setLinkModalOpen(true);
   };
@@ -210,28 +227,28 @@ const Integrations = () => {
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-  {platforms.map((platform) => (
-    <IntegrationCard
-      key={platform.name}
-      platform={platform}
-      onEdit={handleEditClick}
-      onIntegrate={handleIntegrateClick}
-      integrated={integrated}
-    />
-  ))}
-</div>
+            {platforms.map((platform) => (
+              <IntegrationCard
+                key={platform.name}
+                platform={platform}
+                onEdit={handleEditClick}
+                onIntegrate={handleIntegrateClick}
+                integrated={integrated}
+              />
+            ))}
+          </div>
 
         </div>
       </div>
-      <Modal 
-        isOpen={isEditModalOpen} 
-        onClose={handleCloseModals} 
-        platform={currentPlatform} 
+      <Modal
+        isOpen={isEditModalOpen}
+        onClose={handleCloseModals}
+        platform={currentPlatform}
       />
-      <LinkPageModal 
-        isOpen={isLinkModalOpen} 
-        onClose={handleCloseModals} 
-        platform={currentPlatform} 
+      <LinkPageModal
+        isOpen={isLinkModalOpen}
+        onClose={handleCloseModals}
+        platform={currentPlatform}
         integrated={integrated}
 
       />

@@ -25,7 +25,11 @@ const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       const user = localStorage.getItem("user");
-      const result = await axios.post("http://localhost:3000/reviews", { user });
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
+      const result = await axios.post("http://localhost:3000/reviews", { user },{headers: {
+        Authorization: `Bearer ${token}`,
+      }});
       console.log("result", result);
       setReviews(result.data.review); // Assuming the response contains the review data
     };
@@ -124,14 +128,48 @@ const Reviews = () => {
 
 
         <div className="bg-[#f2f2f2] rounded-xl p-4 overflow-y-auto max-h-[calc(121vh-250px)]">
-          {filteredReviews.length > 0 ? (
-            filteredReviews.map((review, index) => (
-              <ReviewCard key={index} review={review} />
-            ))
-          ) : (
-            <p className="text-black text-center">No reviews available.</p>
-          )}
-        </div>
+  {filteredReviews.length > 0 ? (
+    filteredReviews.map((review, index) => (
+      <ReviewCard key={index} review={review} />
+    ))
+  ) : (
+    <div className="flex flex-col items-center justify-center h-full p-8 text-center transition-all duration-300">
+      {/* Add a refined icon with a gradient background */}
+      <div className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full p-4 mb-6 shadow-lg">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="h-20 w-20 text-white"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+        </svg>
+      </div>
+      
+      {/* Elegant and larger text for better readability */}
+      <p className="text-2xl font-bold text-gray-800 mb-2">No Reviews Available</p>
+      
+      {/* Subtext with a professional tone */}
+      <p className="text-md text-gray-500">
+        It seems like no one has shared their thoughts yet. Be the first to leave a review!
+      </p>
+      
+      {/* Add a subtle button encouraging engagement */}
+     <a href="http://localhost:5173/integrations">
+      <button
+        className="mt-6 px-6 py-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-transform transform hover:scale-105"
+      >
+        Integrate a Review
+      </button>
+      </a>
+    </div>
+  )}
+</div>
+
       </div>
     </section>
   );

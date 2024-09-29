@@ -23,7 +23,13 @@ const EditReviews = () => {
 
     try {
       const user = JSON.parse(localStorage.getItem('user')); 
-      const response = await axios.post('http://localhost:3000/editReview', { data, user });
+      const parsedToken = localStorage.getItem('user');
+      const token = JSON.parse('token');
+      const response = await axios.post('http://localhost:3000/editReview', { data, user },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      });
 
       if (response.status === 200) {
         // Handle successful submission

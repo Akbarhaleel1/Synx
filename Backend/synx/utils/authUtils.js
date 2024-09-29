@@ -9,7 +9,7 @@ function generateToken(user) {
         email: user.email,
     };
 
-    const options = { expiresIn: '5s' }; 
+    const options = { expiresIn: '1h' }; 
 
     return jwt.sign(payload, secretKey, options);
 }
@@ -21,7 +21,7 @@ function generateRefreshToken(user) {
         email: user.email,
     };
 
-    const options = { expiresIn: '3s' }; 
+    const options = { expiresIn: '24h' }; 
 
     return jwt.sign(payload, secretKey, options);
 }

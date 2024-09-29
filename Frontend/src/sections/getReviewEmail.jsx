@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
 
@@ -23,17 +23,17 @@ const GetReviewsEmail = () => {
 
   useAuth()
 
-  useEffect(()=>{
-    const fetchData = async()=>{
+  useEffect(() => {
+    const fetchData = async () => {
       const user = localStorage.getItem('user')
-      const result = await axios.post('http://localhost:3000/ePageLoad',{user});
-      console.log('result',result.data)
+      const result = await axios.post('http://localhost:3000/ePageLoad', { user });
+      console.log('result', result.data)
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)
       setLink(result.data.link)
     }
     fetchData()
-  },[])
+  }, [])
 
   const handleSubmitForEmail = async () => {
     if (!companyName || !emailContent) {
@@ -44,14 +44,20 @@ const GetReviewsEmail = () => {
     try {
       // Send data to the backend
       let user = localStorage.getItem('user')
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
 
       const response = await axios.post('http://localhost:3000/ePage', {
         user,
         companyName,
         emailContent,
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
-      console.log('responce',response);
-      
+      console.log('responce', response);
+
       // Handle success response
       alert('Template updated successfully!');
     } catch (error) {
@@ -85,11 +91,17 @@ const GetReviewsEmail = () => {
       }
 
       console.log('input', inputs)
-      let user = localStorage.getItem('user')
+      let user = localStorage.getItem('user');
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('http://localhost:3000/sendEmailReviews', { user:user,email: inputs });
+      const response = await axios.post('http://localhost:3000/sendEmailReviews', { user: user, email: inputs }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log('responsce is', response);
-      
+
       // Handle success response
       alert('Reviews requested successfully!');
     } catch (error) {
@@ -99,10 +111,10 @@ const GetReviewsEmail = () => {
     }
   };
 
-  console.log('companyName',companyName);
-  console.log('emailContent',emailContent);
-  console.log('inputs',inputs);
-  
+  console.log('companyName', companyName);
+  console.log('emailContent', emailContent);
+  console.log('inputs', inputs);
+
 
   return (
     <div className="flex min-h-screen bg-[rgb(241,241,241)] ">
@@ -161,10 +173,10 @@ const GetReviewsEmail = () => {
                 onChange={(e) => handleInputChange(index, e)}
               />
               <input
-                type="text"
+                type="email"
                 name="contact"
                 value={input.contact}
-                placeholder="Contact Number"
+                placeholder="Email"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-1/2 text-white"
                 onChange={(e) => handleInputChange(index, e)}
               />
@@ -184,7 +196,7 @@ const GetReviewsEmail = () => {
             >
               + Add Line
             </button>
-            <button  onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
+            <button onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
               Request a Review
             </button>
           </div>
@@ -192,120 +204,77 @@ const GetReviewsEmail = () => {
 
         {/* Edit Template */}
         <div className="bg-white p-6 rounded-lg mb-6">
-      <h2 className="text-lg sm:text-2xl font-bold mb-6">Edit Template</h2>
-      <div className="flex flex-col sm:flex-row gap-4">
-        {/* Preview Section */}
-        <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4">Preview</h3>
-          <div className="bg-white p-4 rounded-lg shadow-lg text-gray-800">
-            <div className="mb-4">
-              <p className="font-semibold">
-                From: <span className="font-normal">company@example.com</span>
-              </p>
-              <p className="font-semibold">
-                To: <span className="font-normal">customer@example.com</span>
-              </p>
-              <p className="font-semibold">
-                Subject: <span className="font-normal">We'd love your feedback!</span>
-              </p>
-            </div>
-            <div className="border-t border-gray-300 pt-4">
-              <p className="mb-2">Hi [Name],</p>
-              <p className="mb-2">{emailContent}</p>
-              <a href={`${link}`} className="text-blue-500 underline">
-                [Review Link]
-              </a>
-              <p className="mt-4">
-                Best regards,
-                <br />
-                {companyName}
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Customization Section */}
-        <div className="w-full sm:w-1/2">
-          <h3 className="text-lg sm:text-xl font-semibold mb-4">Customize</h3>
-          <div className="mb-4">
-            <label htmlFor="company-name" className="block text-sm font-medium mb-2">
-              Company Name
-            </label>
-            <input
-              type="text"
-              id="company-name"
-              value={companyName}
-              onChange={(e) => setCompanyName(e.target.value)}
-              placeholder="Enter your company name"
-              className="w-full p-2 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 text-white"
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email-content" className="block text-sm font-medium mb-2">
-              Email Content
-            </label>
-            <textarea
-              id="email-content"
-              rows="6"
-              value={emailContent}
-              onChange={(e) => setEmailContent(e.target.value)}
-              className="w-full p-2 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 text-white"
-              placeholder="Hi [Name], thank you for choosing [Company Name]. We'd love to hear your feedback. [Review Link]"
-            ></textarea>
-          </div>
-
-          <button
-            onClick={handleSubmitForEmail}
-            className="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg"
-          >
-            Update Template
-          </button>
-        </div>
-      </div>
-    </div>
-
-        {/* Automatic Email Reminders */}
-        {/* <div className="bg-white p-6 rounded-lg mb-6">
-          <h2 className="text-lg sm:text-xl font-bold mb-4">
-            Send an automatic SMS reminder every 3 and/or 7 days if the customer did not leave a review.
-          </h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-6">Edit Template</h2>
           <div className="flex flex-col sm:flex-row gap-4">
-            <div className="bg-white shadow-inner p-4 rounded-lg w-full sm:w-1/2">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold">Trigger reminders after 3 days</h3>
-                <ToggleSwitch checked={autoReminder3Days} onChange={() => setAutoReminder3Days(!autoReminder3Days)} />
+            {/* Preview Section */}
+            <div className="w-full sm:w-1/2 mb-4 sm:mb-0">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Preview</h3>
+              <div className="bg-white p-4 rounded-lg shadow-lg text-gray-800">
+                <div className="mb-4">
+                  <p className="font-semibold">
+                    From: <span className="font-normal">company@example.com</span>
+                  </p>
+                  <p className="font-semibold">
+                    To: <span className="font-normal">customer@example.com</span>
+                  </p>
+                  <p className="font-semibold">
+                    Subject: <span className="font-normal">We'd love your feedback!</span>
+                  </p>
+                </div>
+                <div className="border-t border-gray-300 pt-4">
+                  <p className="mb-2">Hi [Name],</p>
+                  <p className="mb-2">{emailContent}</p>
+                  <a href={`${link}`} className="text-blue-500 underline">
+                    [Review Link]
+                  </a>
+                  <p className="mt-4">
+                    Best regards,
+                    <br />
+                    {companyName}
+                  </p>
+                </div>
               </div>
-              <h4 className="text-md font-semibold mb-2">Customize the message</h4>
-              <textarea
-                className="bg-gray-900 p-2 rounded-lg w-full h-24 mb-4"
-                placeholder="Hi [Name], thanks for choosing [Company Name]. We ask you to leave us a review. [Link here]"
-              ></textarea>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Company Name</span>
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Name</span>
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Link Here</span>
-              </div>
-              <button className="bg-black text-white px-4 py-2 rounded-lg w-full">Save</button>
             </div>
-            <div className="bg-white shadow-inner p-4 rounded-lg w-full sm:w-1/2">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-lg font-bold">Trigger reminders after 7 days</h3>
-                <ToggleSwitch checked={autoReminder7Days} onChange={() => setAutoReminder7Days(!autoReminder7Days)} />
+
+            {/* Customization Section */}
+            <div className="w-full sm:w-1/2">
+              <h3 className="text-lg sm:text-xl font-semibold mb-4">Customize</h3>
+              <div className="mb-4">
+                <label htmlFor="company-name" className="block text-sm font-medium mb-2">
+                  Company Name
+                </label>
+                <input
+                  type="text"
+                  id="company-name"
+                  value={companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                  placeholder="Enter your company name"
+                  className="w-full p-2 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 text-white"
+                />
               </div>
-              <h4 className="text-md font-semibold mb-2">Customize the message</h4>
-              <textarea
-                className="bg-gray-900 p-2 rounded-lg w-full h-24 mb-4"
-                placeholder="Hi [Name], thanks for choosing [Company Name]. We would appreciate your feedback. [Link here]"
-              ></textarea>
-              <div className="flex flex-wrap gap-2 mb-4">
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Company Name</span>
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Name</span>
-                <span className="bg-purple-500 text-white rounded-full px-2 py-1 text-xs">Link Here</span>
+              <div className="mb-4">
+                <label htmlFor="email-content" className="block text-sm font-medium mb-2">
+                  Email Content
+                </label>
+                <textarea
+                  id="email-content"
+                  rows="6"
+                  value={emailContent}
+                  onChange={(e) => setEmailContent(e.target.value)}
+                  className="w-full p-2 bg-gray-800 rounded-lg border border-gray-700 focus:border-purple-500 focus:ring focus:ring-purple-200 focus:ring-opacity-50 text-white"
+                  placeholder="Hi [Name], thank you for choosing [Company Name]. We'd love to hear your feedback. [Review Link]"
+                ></textarea>
               </div>
-              <button className="bg-black text-white px-4 py-2 rounded-lg w-full">Save</button>
+
+              <button
+                onClick={handleSubmitForEmail}
+                className="mt-4 bg-purple-500 text-white px-4 py-2 rounded-lg"
+              >
+                Update Template
+              </button>
             </div>
           </div>
-        </div> */}
+        </div>
       </main>
     </div>
   );

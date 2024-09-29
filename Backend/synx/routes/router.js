@@ -33,6 +33,7 @@ Route.post("/ePage",authMiddleware,getReview.saveOrUpdateETemplate)
 Route.post("/emailPage",authMiddleware,getReview.emailpage)
 Route.post("/ePageLoad",authMiddleware,getReview.epage)
 
+Route.post("/sendWhatsapp",sender.sendWhatsAppMessages)
 Route.post("/sendReviews",sender.sms)
 Route.post("/sendEmailReviews",sender.email)
 
@@ -42,7 +43,6 @@ Route.post("/forgot-password",authentication.forgotPassword);
 Route.post("/reset-password", authentication.resetPassword);
 
 // custom reviewpage route
-
 Route.post("/customreviews", customreview.getReview)
 Route.post("/showcustomreviews", customreview.getUserReviews)
 

@@ -24,7 +24,7 @@ const Nav = () => {
   ];
 
   const bottomItems = [
-    { name: 'Negative Reviews', href: '/negativeReview' },
+    { name: 'Negative Reviews', href: '/negetiveReview' },
     { name: 'Logout', href: '/login' },
   ];
 

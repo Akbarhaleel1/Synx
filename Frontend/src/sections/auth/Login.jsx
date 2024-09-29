@@ -39,6 +39,7 @@ const EnhancedLogin = () => {
           if(result.data.token){
             localStorage.setItem('token',JSON.stringify(result.data.token))
           localStorage.setItem('refreshToken',JSON.stringify(result.data.refreshToken))
+          localStorage.setItem('user',JSON.stringify(result.data.user))
           }
 
           navigate('/reviews');

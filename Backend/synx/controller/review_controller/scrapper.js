@@ -82,7 +82,7 @@ const IntegratedSite = require("../../models/integration");
 
 const integrate = async (req, res) => {
     const { user, platform, pageLink } = req.body;
-
+   
     // Enhanced Logging
     console.log('Request Body:', req.body);
 

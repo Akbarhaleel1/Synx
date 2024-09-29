@@ -54,8 +54,14 @@ const GetReviews = () => {
 
       console.log('input', inputs)
       let user = localStorage.getItem('user')
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('http://localhost:3000/sendReviews', { user:user,contacts: inputs });
+      const response = await axios.post('http://localhost:3000/sendReviews', { user:user,contacts: inputs },{
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       console.log('responsce is', response);
       
       // Handle success response
@@ -70,9 +76,15 @@ const GetReviews = () => {
   useEffect(() => {
     const fetchData = async () => {
       const user = localStorage.getItem("user");
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken)
       try {
         const result = await axios.post("http://localhost:3000/emailPage", {
           user,
+        },{
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         });
         setCompanyName(result.data.email.name);
         setMessage(result.data.email.message);
@@ -95,6 +107,10 @@ const GetReviews = () => {
             message,
             companyName,
             user,
+          },{
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
           });
         } catch (error) {
           console.error("Error saving template:", error);

@@ -159,7 +159,7 @@ const login = async (req, res) => {
     console.log('token',token);
     console.log('refreshToken',refreshToken);
    
-    res.status(200).json({ msg: "Login successful. Redirecting to dashboard...",token,refreshToken });
+    res.status(200).json({ msg: "Login successful. Redirecting to dashboard...",token,refreshToken,user });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server error");

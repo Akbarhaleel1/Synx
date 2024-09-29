@@ -13,7 +13,14 @@ app.use(session({
     cookie: { secure: false } 
   }));
 
-app.use(cors());
+// app.use(cors());
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  credentials: true, 
+  allowedHeaders: ['Authorization', 'Content-Type'] 
+}));
+
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

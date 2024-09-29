@@ -49,7 +49,7 @@ const App = () => {
           <Route path="/OTPVerificationPage" element={<OTPVerificationPage />} />
           <Route path="/QrCode" element={<QrCode />} />
           <Route path="/HotelReview" element={<HotelReview />} />
-          <Route path="/review" element={<NegativeReview />} />
+          <Route path="/userReview" element={<NegativeReview />} />
           <Route path="/negetiveReview" element={<NegativeReviewsDisplay />} />
 
         </Routes>
