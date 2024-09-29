@@ -1,6 +1,5 @@
 import useAuth from './customHooks/useAuth';
-
-
+import { useNavigate } from 'react-router-dom'; 
 
 import { useState } from 'react';
 import axios from 'axios';
@@ -12,6 +11,9 @@ const EditReviews = () => {
   const [initialPage, setInitialPage] = useState('enabled');
 
   useAuth()
+
+  const navigate = useNavigate(); 
+
   const handleSubmit = async () => {
     const data = {
       endpoint,
@@ -42,6 +44,12 @@ const EditReviews = () => {
       console.error('Error:', error);
     }
   };
+
+
+  const handleVisitLink = () => { 
+    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}`);
+  };
+
 
   return (
     <div className="flex flex-col lg:flex-row bg-[rgb(241,241,241)] min-h-screen text-white">
@@ -110,11 +118,11 @@ const EditReviews = () => {
               </div>
             </div>
             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
-              <button type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
+              <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
               <button
                 type="button"
                 className="bg-gray-700 px-4 py-2 rounded"
-                onClick={handleSubmit} // Attach handleSubmit to button click
+                onClick={handleSubmit} 
               >
                 Add Changes
               </button>
@@ -130,7 +138,7 @@ const EditReviews = () => {
             </div>
             <div className="text-center">
               <i className="fas fa-store text-6xl mb-4"></i>
-              <h3 className="text-2xl font-bold mb-2">How was your experience with hot dain castle?</h3>
+              <h3 className="text-2xl font-bold mb-2">{linkTitle}</h3>
               <div className="flex justify-center space-x-2 mb-4">
                 {[...Array(5)].map((_, index) => (
                   <i key={index} className="fas fa-star text-3xl"></i>

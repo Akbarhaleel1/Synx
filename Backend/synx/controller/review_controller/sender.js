@@ -89,7 +89,7 @@ const email=async (req, res) => {
   
     for (const mail of email) {
       const { name, contact } = mail;
-      console.log(mail)
+      console.log(name)
   
       if (!contact) {
         results.push({ name, status: 'Failed', error: 'Invalid mail id' });
@@ -126,10 +126,133 @@ const email=async (req, res) => {
     }
     console.log(results)
     return res.status(200).json({msg:"email sent "});
-  }
+}
 
 
-const sendWhatsAppMessages = async (req, res) => {
+// const email = async (req, res) => {
+//   const { user, email } = req.body;
+//   console.log("keri", req.body);
+//   const userData = JSON.parse(user);
+//   const emailtemp = await Etemplate.findOne({ user: userData._id });
+//   const linkdata = await ReviewLink.findOne({ user: userData._id });
+
+//   if (!email || !Array.isArray(email)) {
+//       return res.status(400).send({ error: 'Invalid contacts data' });
+//   }
+
+//   if (!emailtemp) {
+//       return res.status(404).send({ error: 'Email template not found' });
+//   }
+
+//   if (!linkdata) {
+//       return res.status(404).send({ error: 'Link data not found' });
+//   }
+
+//   const results = [];
+
+//   for (const mail of email) {
+//       const { name, contact } = mail;
+//       console.log(mail);
+
+//       if (!contact) {
+//           results.push({ name, status: 'Failed', error: 'Invalid mail id' });
+//           continue;
+//       }
+
+//       try {
+//           const mailOptions = {
+//               from: 'fito.kripp@gmail.com',
+//               to: contact,
+//               subject: `Hi ${name}`,
+//               text: `Hi ${name}, ${emailtemp.message} ${linkdata.link}`,
+//           };
+//           transporter.sendMail(mailOptions, (error, info) => {
+//               if (error) {
+//                   console.log("kitteela", error);
+//                   results.push({ name, msg: "Error sending OTP email" });
+//               } else {
+//                   console.log("kitty");
+//                   results.push({ name, msg: "sent to your email", info: info.response });
+//               }
+//           });
+//       } catch (error) {
+//           results.push({ name, status: 'Failed', error: error.message });
+//       }
+//   }
+
+//   console.log(results);
+//   return res.status(200).json({ msg: "email sent ", results });
+// };
+
+
+
+// const email = async (req, res) => {
+//   try {
+//     const { user, email } = req.body;
+//     console.log('req.body',req.body)
+//     if (!user || !email || !Array.isArray(email)) {
+//       return res.status(400).send({ error: 'Invalid input data' });
+//     }
+
+//     const userData = JSON.parse(user);
+//     const emailtemp = await Etemplate.findOne({ user: userData._id });
+//     const linkdata = await ReviewLink.findOne({ user: userData._id });
+
+//     if (!emailtemp) {
+//       return res.status(404).send({ error: 'Email template not found' });
+//     }
+
+//     if (!linkdata) {
+//       return res.status(404).send({ error: 'Link data not found' });
+//     }
+
+//     // Function to promisify the transporter.sendMail
+//     const sendMailAsync = (mailOptions) => {
+//       return new Promise((resolve, reject) => {
+//         transporter.sendMail(mailOptions, (error, info) => {
+//           if (error) {
+//             reject(error);
+//           } else {
+//             resolve(info);
+//           }
+//         });
+//       });
+//     };
+
+//     // Process emails in parallel
+//     const emailPromises = email.map(async (mail) => {
+//       const { name, contact } = mail;
+
+//       if (!contact) {
+//         return { name, status: 'Failed', error: 'Invalid email id' };
+//       }
+
+//       try {
+//         const mailOptions = {
+//           from: 'fito.kripp@gmail.com',
+//           to: contact,
+//           subject: `Hi ${name}`,
+//           text: `Hi ${name}, ${emailtemp.message} ${linkdata.link}`,
+//         };
+//         const info = await sendMailAsync(mailOptions);
+//         return { name, msg: "Email sent successfully", info: info.response };
+//       } catch (error) {
+//         return { name, status: 'Failed', error: error.message };
+//       }
+//     });
+
+//     const results = await Promise.all(emailPromises);
+
+//     return res.status(200).json({ msg: "Email processing complete", results });
+
+//   } catch (error) {
+//     console.error('Error processing emails:', error);
+//     return res.status(500).send({ error: 'An error occurred while processing emails' });
+//   }
+// };
+
+
+  const sendWhatsAppMessages = async (req, res) => {
     const accessToken = process.env.META_WHATSAPP_ACCESS_TOKEN; // Your Meta WhatsApp API Access Token
     const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID; // Your WhatsApp phone number ID
     const { user, contacts } = req.body;
