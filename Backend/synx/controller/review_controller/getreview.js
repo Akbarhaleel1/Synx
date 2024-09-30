@@ -11,9 +11,11 @@ const generateqr= async (req, res) => {
   try {
     const linkdata= await ReviewLink.findOne({user:userData._id})
     
-    const qrCodeDataURL = await generateQRCode(linkdata.link);
+    let link=`${linkdata.link}&qr=qr`
+    const qrCodeDataURL = await generateQRCode(link);
 
-    return res.status(200).send({msg:"qrcode",qrCodeDataURL,link:linkdata.link});
+
+    return res.status(200).send({msg:"qrcode",qrCodeDataURL,link});
   } catch (error) {
     res.status(500).json({ message: 'Failed to generate QR code' });
   }

@@ -151,8 +151,10 @@ const NegativeReview = () => {
     console.log('Form submitted:', formData);
     const stars = localStorage.getItem('star');
     const endpoint = localStorage.getItem('endpoint');
+    const qrPoint = localStorage.getItem('qrPoint');
     formData.stars = stars;
     formData.endpoint = endpoint;
+    formData.qrpoint = qrPoint;
     console.log('formData', formData);
 
     try {

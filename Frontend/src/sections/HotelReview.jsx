@@ -15,10 +15,11 @@ const HotelReview = () => {
     const params = new URLSearchParams(location.search);
     return {
       endpoint: params.get('endpoint'), 
+      qrPoint: params.get('qr')
     };
   };
 
-  const { endpoint } = getQueryParams();
+  const { endpoint,qrPoint } = getQueryParams();
 
   const submitStart = (star) => {
     setRating(star);
@@ -27,6 +28,7 @@ const HotelReview = () => {
     };
     localStorage.setItem('star',star)
     localStorage.setItem('endpoint',endpoint)
+    localStorage.setItem('qrPoint',qrPoint)
   }
 
   return (

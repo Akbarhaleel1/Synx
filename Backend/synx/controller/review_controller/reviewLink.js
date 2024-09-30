@@ -8,7 +8,7 @@ const createOrUpdateReviewLink = async (req, res) => {
       
       const reviewLinkData = {
         user: user._id,
-        link: `http://localhost:5173/HotelReview?name=${data.endpoint}`,
+        link: `http://localhost:5173/HotelReview?endpoint=${data.endpoint}`,
         endpoint: data.endpoint,
         title: data.linkTitle,
         starFilter: data.initialPage,

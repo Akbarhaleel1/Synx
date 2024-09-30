@@ -1,13 +1,31 @@
 const CustomReview = require("../../models/customreview");
 const ReviewLink = require("../../models/reviewLink");
+const Analytics = require("../../models/analise");
 
 const reviewPage = async (req, res) => {
   try {
-    const {  email, name, phone, review, endpoint,stars } = req.body.formData;
-    console.log(req.body.formData)
 
-  
+    const {  email, name, phone, review, endpoint,stars,qrpoint} = req.body.formData;
+    console.log(req.body.formData)
     const reviewLink = await ReviewLink.findOne({ endpoint: endpoint });
+    let analytics = await Analytics.findOne({ user: reviewLink.user });
+
+    if (!analytics) {
+      analytics = new Analitics({
+        user: reviewLink.user,
+        qr: [],
+        visitCount: [],
+      });
+    }
+
+    if (qrpoint!='null') {
+      analytics.visitCount.push({ date: new Date() });
+      analytics.qr.push({ date: new Date() });
+    } else {
+      analytics.visitCount.push({ date: new Date() });
+    }
+
+    await analytics.save();
 
     if (!reviewLink) {
       return res.status(404).json({ message: "Review link not found" });
