@@ -32,4 +32,4 @@ app.use("/", Route);
 
 app.listen(port, () => {
     console.log(`Server is running and you can listen from this port: http://localhost:${port}`);
-});
+}); 
