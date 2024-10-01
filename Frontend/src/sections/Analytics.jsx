@@ -1,20 +1,42 @@
 import { useEffect } from "react";
 import Nav from "../components/Nav";
 import useAuth from './customHooks/useAuth';
+import axios from 'axios';
+
+
 
 
 const AnalyticsDashboard = () => {
   useAuth()
 
-  useEffect(()=>{
-    const fetchData = async () =>{
-      const parsedUser = localStorage.getItem('user');
-      const user = JSON.parse(parsedUser)
-      const responce = await axios.post(('http://localhost:3000/analytics',{user}));
-      console.log('responce',responce)
-    }
-    fetchData()
-  },[])
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const parsedUser = localStorage.getItem('user');
+        const user = parsedUser ? JSON.parse(parsedUser) : null;
+        const getToken = localStorage.getItem('token');
+        const token = getToken ? JSON.parse(getToken) : null;
+
+        if (!user || !token) {
+          console.error('User or token is not available in local storage');
+          return;
+        }
+
+        console.log('useEffect is working');
+        const response = await axios.post('http://localhost:3000/analytics', { user }, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        console.log('response', response);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
       {/* Adjust the width of the Nav component based on screen size */}

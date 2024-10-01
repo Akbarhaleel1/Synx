@@ -201,7 +201,13 @@ const EditReviews = () => {
     const fetchEndPoint = async()=>{
       const getUser = localStorage.getItem('user');
       const user = JSON.parse(getUser);
-      const responce = await axios.post('http://localhost:3000/editLinkEndpoint',{user});
+      const responce = await axios.post('http://localhost:3000/editLinkEndpoint',{user},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       console.log('respoince',responce)
       const endPoint = responce.data.link.endpoint;      ;
       console.log('endPoint',endPoint)

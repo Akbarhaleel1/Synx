@@ -46,6 +46,6 @@ Route.post("/reset-password", authentication.resetPassword);
 Route.post("/showcustomreviews", authMiddleware,customreview.getUserReviews)
 Route.post("/editLinkEndpoint", reviewLink.reviewlink)
 Route.post("/userReview",feedback.reviewPage)
-Route.post("/analytics",Analytics.getAnalytics)
+Route.post("/analytics",authMiddleware,Analytics.getAnalytics)
 
 module.exports=Route
