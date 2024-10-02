@@ -113,7 +113,6 @@ const integrate = async (req, res) => {
 
         let reviews;
 
-        // Fetch Reviews Based on Platform
         try {
             switch (platform.toLowerCase()) {
                 case 'airbnb':
