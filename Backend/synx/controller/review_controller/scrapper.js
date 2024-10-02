@@ -292,8 +292,8 @@ const automate = async () => {
   }
 };
 
-cron.schedule("*/1 * * * *", async () => {
-  console.log("Running the review scraping cron job every 20 minutes.");
+cron.schedule("*/30 * * * *", async () => {
+  console.log("Running the review scraping cron job every 30 minutes.");
   await automate();
 });
 module.exports = {
