@@ -207,7 +207,7 @@ const EditReviews = () => {
       const getToken = localStorage.getItem('token')
       const token = JSON.parse(getToken)
 
-      const responce = await axios.post('http://localhost:3000/editLinkEndpoint',{user},
+      const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint',{user},
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -234,7 +234,7 @@ const EditReviews = () => {
       const parsedToken = localStorage.getItem('token');
       const token = JSON.parse(parsedToken)
       
-      const response = await axios.post('http://localhost:3000/editReview', { data, user }, {
+      const response = await axios.post('https://synxbackend.synxautomate.com/editReview', { data, user }, {
         headers: {
           Authorization: `Bearer ${token}`,
         }

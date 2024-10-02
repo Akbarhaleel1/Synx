@@ -158,7 +158,7 @@ const NegativeReviewsPage = () => {
 
         // Perform the API call
         const result = await axios.post(
-          'http://localhost:3000/showcustomreviews',
+          'https://synxbackend.synxautomate.com/showcustomreviews',
           { user },
           {
             headers: {

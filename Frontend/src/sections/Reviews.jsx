@@ -27,7 +27,7 @@ const Reviews = () => {
       const user = localStorage.getItem("user");
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
-      const result = await axios.post("http://localhost:3000/reviews", { user },{headers: {
+      const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
       console.log("result", result);

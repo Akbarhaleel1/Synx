@@ -105,7 +105,7 @@ const GetReviews = () => {
       const token = JSON.parse(getToken)
       const updateTemplate = async () => {
         try {
-          await axios.post("http://localhost:3000/saveEmailTemplate", {
+          await axios.post("https://synxbackend.synxautomate.com/saveEmailTemplate", {
             message,
             companyName,
             user,

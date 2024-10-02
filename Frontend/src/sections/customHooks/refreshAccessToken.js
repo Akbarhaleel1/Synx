@@ -10,7 +10,7 @@ const refreshAccessToken = async () => {
     console.log('3')
 
     try {
-        const response = await axios.post('http://localhost:3000/refresh_token', { refreshToken });
+        const response = await axios.post('https://synxbackend.synxautomate.com/refresh_token', { refreshToken });
         console.log('4')
 
         console.log('respocne is ', response)
