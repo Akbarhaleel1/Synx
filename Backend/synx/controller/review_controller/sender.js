@@ -253,8 +253,8 @@ const email= async (req, res) => {
 
 
   const sendWhatsAppMessages = async (req, res) => {
-    const accessToken = process.env.META_WHATSAPP_ACCESS_TOKEN; // Your Meta WhatsApp API Access Token
-    const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID; // Your WhatsApp phone number ID
+    const accessToken ="EAAfzoIo8iDEBO7CtVoDZBneS2a1fqvmWKiMwLZC2ZCMjVJRSZBwT87BXZACZAamc68hvJxrGZCSJhQj5ZAkIaonqFBiviaaOd52U32UZClWaXbanc2MytyZA0OhlKVHjqZBL8DZBaaLlbegmjRaRpVTMZCZBsMvfuwE6jMMESKf54zEF6C03QYRaGOQ8lcbw6IptI9ERAXo1oZCvszQmZBioIcvc8xHbBypIqkgTP68lSxwZD" //process.env.META_WHATSAPP_ACCESS_TOKEN; // Your Meta WhatsApp API Access Token
+    const phoneNumberId ="426089207257238" //process.env.WHATSAPP_PHONE_NUMBER_ID; // Your WhatsApp phone number ID
     const { user, contacts } = req.body;
   
     const userData = JSON.parse(user);
@@ -280,20 +280,23 @@ const email= async (req, res) => {
         const response = await axios.post(
           `https://graph.facebook.com/v17.0/${phoneNumberId}/messages`,
           {
-            messaging_product: 'whatsapp',
-            to: contact,  // WhatsApp receiver's phone number in international format
-            type: 'text',
-            text: {
-              body: `Hi ${name}, ${whatsaptemp.message} ${linkdata.link}`, // WhatsApp message content
-            },
+              messaging_product: 'whatsapp',
+              to: contact,
+              type: 'template',
+              template: {
+                  name: 'hello_world', 
+                  language: {
+                      code: 'en_US'
+                  }
+              }
           },
           {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              'Content-Type': 'application/json',
-            },
+              headers: {
+                  Authorization: `Bearer ${accessToken}`,
+                  'Content-Type': 'application/json',
+              },
           }
-        );
+      );
   
         results.push({ name, status: 'Sent', messageId: response.data.messages[0].id });
       } catch (error) {
