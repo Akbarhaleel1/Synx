@@ -420,7 +420,12 @@
 // }
 
 
-const puppeteer = require('puppeteer');
+// const puppeteer = require('puppeteer');
+const puppeteer = require("puppeteer-core");
+const chromium = require("@sparticuz/chromium")
+
+
+
 
 function convertToNormalDateAndExtractRating(reviews) {
   return reviews.map(review => {
@@ -579,7 +584,13 @@ const agoda = async (url) => {
 };
 
 const trustpilot = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteerExtra.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await createPage(browser);
   
   try {

@@ -38,8 +38,9 @@
     "nodemailer": "^6.9.14",
     "nodemon": "^3.1.4",
     "plivo": "^4.68.3",
-    "puppeteer": "^23.2.0",
-    "puppeteer-core": "^10.4.0",
+    "puppeteer": "^23.5.0",
+    "puppeteer-core": "19.6",
+    "puppeteer-extra": "^3.3.6",
     "qrcode": "^1.5.4",
     "razorpay": "^2.9.4",
     "redis": "^4.7.0",
@@ -47,5 +48,8 @@
     "request-promise": "^4.2.6",
     "synx": "file:",
     "twilio": "^5.3.0"
+  },
+  "devDependencies": {
+    "@sparticuz/chromium": "^112.0.2"
   }
 }
