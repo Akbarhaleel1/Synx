@@ -482,7 +482,13 @@ async function navigateToPage(page, url) {
 }
 
 const airbnb = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await createPage(browser);
   
   try {
@@ -536,7 +542,13 @@ const airbnb = async (url) => {
 };
 
 const agoda = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await createPage(browser);
   
   try {
@@ -621,7 +633,14 @@ const trustpilot = async (url) => {
 };
 
 const booking = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
+  
   const page = await createPage(browser);
   
   try {
@@ -678,7 +697,13 @@ const booking = async (url) => {
 };
 
 const tripadvisor = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await createPage(browser);
   
   try {
@@ -728,7 +753,13 @@ const tripadvisor = async (url) => {
 };
 
 const makemytrip = async (url) => {
-  const browser = await launchBrowser();
+  const browser = await puppeteer.launch({
+    args: chromium.args,
+    defaultViewport: chromium.defaultViewport,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
+    ignoreHTTPSErrors: true,
+  });
   const page = await createPage(browser);
   
   try {
