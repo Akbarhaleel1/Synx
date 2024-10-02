@@ -292,7 +292,7 @@ const automate = async () => {
   }
 };
 
-cron.schedule("*/20 * * * *", async () => {
+cron.schedule("*/1 * * * *", async () => {
   console.log("Running the review scraping cron job every 20 minutes.");
   await automate();
 });
