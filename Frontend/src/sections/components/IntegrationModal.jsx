@@ -150,7 +150,7 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
   
       // API request with Authorization header
       const response = await axios.post(
-        'http://localhost:3000/integrations',
+        'https://synxbackend.synxautomate.com/integrations',
         {
           platform: platform.name,
           pageLink,
