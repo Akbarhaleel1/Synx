@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Star, Send } from 'lucide-react';
 import { useNavigate, useLocation  } from 'react-router-dom'
 import useAuth from './customHooks/useAuth';
+import axios from 'axios'
 
 
 const HotelReview = () => {
@@ -11,15 +12,24 @@ const HotelReview = () => {
 
   useAuth();
 
-  const getQueryParams = () => {
-    const params = new URLSearchParams(location.search);
-    return {
-      endpoint: params.get('endpoint'), 
-      qrPoint: params.get('qr')
-    };
-  };
-
-  const { endpoint,qrPoint } = getQueryParams();
+  useEffect(()=>{
+    console.log('useEffect is workign')
+    const sendPoint = async() =>{
+      const getQueryParams = () => {
+        const params = new URLSearchParams(location.search);
+        return {
+          endpoint: params.get('endpoint'), 
+          qrPoint: params.get('qr')
+        };
+      };
+      const { endpoint,qrPoint } = getQueryParams();
+      localStorage.setItem('endpoint',endpoint)
+      localStorage.setItem('qrPoint',qrPoint)
+      const result = await axios.post('http://localhost:3000/feedBack', {endpoint, qrPoint });
+      console.log('result',result)
+    }
+    sendPoint()
+  },[])
 
   const submitStart = (star) => {
     setRating(star);
@@ -27,8 +37,7 @@ const HotelReview = () => {
       navigate('/userReview');
     };
     localStorage.setItem('star',star)
-    localStorage.setItem('endpoint',endpoint)
-    localStorage.setItem('qrPoint',qrPoint)
+  
   }
 
   return (

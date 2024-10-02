@@ -21,6 +21,21 @@ const analize = new mongoose.Schema({
                 type:Date
             }
         }
+    ],
+    negative:[
+        {
+            date:{
+                type:Date
+            }
+        }
+    ],
+
+    inviteSend:[
+        {
+            date:{
+                type:Date
+            }
+        }
     ]
   });
   

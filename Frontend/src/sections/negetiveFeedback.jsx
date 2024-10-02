@@ -132,9 +132,9 @@ const NegativeReview = () => {
     consent: false,
   });
 
-  const [showModal, setShowModal] = useState(false); // State to control the modal visibility
+  const [showModal, setShowModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [isFormVisible, setIsFormVisible] = useState(true); // State to control form visibility
+  const [isFormVisible, setIsFormVisible] = useState(true);
 
   useAuth();
 
@@ -151,10 +151,10 @@ const NegativeReview = () => {
     console.log('Form submitted:', formData);
     const stars = localStorage.getItem('star');
     const endpoint = localStorage.getItem('endpoint');
-    const qrPoint = localStorage.getItem('qrPoint');
+    // const qrPoint = localStorage.getItem('qrPoint');
     formData.stars = stars;
     formData.endpoint = endpoint;
-    formData.qrpoint = qrPoint;
+    // formData.qrpoint = qrPoint;
     console.log('formData', formData);
 
     try {

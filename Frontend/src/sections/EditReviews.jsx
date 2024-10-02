@@ -198,9 +198,15 @@ const EditReviews = () => {
   };
 
   useEffect(()=>{
+    console.log('useEffe4ct is wokring')
     const fetchEndPoint = async()=>{
+      console.log('fetchEndPoint is wokring')
       const getUser = localStorage.getItem('user');
       const user = JSON.parse(getUser);
+      console.log('user is wokring',user)
+      const getToken = localStorage.getItem('token')
+      const token = JSON.parse(getToken)
+
       const responce = await axios.post('http://localhost:3000/editLinkEndpoint',{user},
         {
           headers: {

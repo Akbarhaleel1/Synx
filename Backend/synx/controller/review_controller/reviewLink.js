@@ -34,6 +34,7 @@ const createOrUpdateReviewLink = async (req, res) => {
 const reviewlink= async(req,res)=>{
   try {
     const {user}=req.body
+    console.log(user)
     console.log("reviewlinkkkkkkkkkkkkkkkkkkkkkkk",req.body)
     const link= await ReviewLink.findOne({user:user._id})
     return res.status(200).json({ message: "Review link created successfully",link });
