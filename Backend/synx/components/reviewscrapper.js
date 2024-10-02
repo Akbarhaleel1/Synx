@@ -584,7 +584,7 @@ const agoda = async (url) => {
 };
 
 const trustpilot = async (url) => {
-  const browser = await puppeteerExtra.launch({
+  const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
