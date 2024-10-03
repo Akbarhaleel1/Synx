@@ -121,7 +121,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
-import useAuth from './customHooks/useAuth';
+// import useAuth from './customHooks/useAuth';
 
 const NegativeReview = () => {
   const [formData, setFormData] = useState({
@@ -136,7 +136,7 @@ const NegativeReview = () => {
   const [successMessage, setSuccessMessage] = useState('');
   const [isFormVisible, setIsFormVisible] = useState(true);
 
-  useAuth();
+  // useAuth();
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
