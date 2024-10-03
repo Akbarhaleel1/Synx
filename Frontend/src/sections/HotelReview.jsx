@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Star, Send } from 'lucide-react';
 import { useNavigate, useLocation  } from 'react-router-dom'
-import useAuth from './customHooks/useAuth';
+// import useAuth from './customHooks/useAuth';
 import axios from 'axios'
 
 
@@ -10,7 +10,7 @@ const HotelReview = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useAuth();
+  // useAuth();
 
   useEffect(()=>{
     console.log('useEffect is workign')
