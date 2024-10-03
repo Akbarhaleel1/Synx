@@ -14,14 +14,21 @@ app.use(session({
     cookie: { secure: false } 
   }));
 
-app.use(cors());
+// app.use(cors());
 
-// app.use(cors({
-//   origin: 'http://localhost:5173',
-//   credentials: true, 
-//   allowedHeaders: ['Authorization', 'Content-Type'] 
-// }));
+// // app.use(cors({
+// //   origin: 'http://localhost:5173',
+// //   credentials: true, 
+// //   allowedHeaders: ['Authorization', 'Content-Type'] 
+// // }));
 
+const allowedOrigins = ['https://synx-frontend-hosting-9kae.vercel.app'];
+
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true, 
+}));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());

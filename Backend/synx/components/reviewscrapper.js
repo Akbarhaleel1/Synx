@@ -489,6 +489,7 @@ const airbnb = async (url) => {
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
+  
   const page = await createPage(browser);
   
   try {
