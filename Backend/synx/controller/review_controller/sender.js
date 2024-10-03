@@ -7,8 +7,8 @@ const Etemplate=require("../../models/template")
 const axios = require('axios');
 const whatsapTemplate=require("../../models/whatsappTemplate")
 
+const plivoClient = new plivo.Client(process.env.PLIVO_AUTH_ID, process.env.PLIVO_AUTH_TOKEN);
 const sms = async (req, res) => {
-  const plivoClient = new plivo.Client(process.env.PLIVO_AUTH_ID, process.env.PLIVO_AUTH_TOKEN);
   const { user, contacts } = req.body;
   console.log("keri");
   const userData = JSON.parse(user);
