@@ -34,10 +34,9 @@ const sms = async (req, res) => {
       results.push({ name, status: 'Failed', error: 'Invalid phone number' });
       continue;
     }
-
     try {
       const response = await plivoClient.messages.create(
-        "+14159430799", // Sender's phone number
+        process.env.PLIVO_NUM, // Sender's phone number
         contact, // Receiver's phone number
         `Hi ${name}, ${emailtemp.message} ${linkdata.link}`
       );
