@@ -8,7 +8,7 @@ const createOrUpdateReviewLink = async (req, res) => {
       
       const reviewLinkData = {
         user: user._id,
-        link: `http://localhost:5173/HotelReview?endpoint=${data.endpoint}`,
+        link: `https://synx-frontend-hosting-9kae.vercel.app/HotelReview?endpoint=${data.endpoint}`,
         endpoint: data.endpoint,
         title: data.linkTitle,
         starFilter: data.initialPage,

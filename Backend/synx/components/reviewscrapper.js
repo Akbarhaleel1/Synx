@@ -810,6 +810,53 @@ const makemytrip = async (url) => {
 };
 
 
+// gobigo.............
+const gobigo=async (url)=> {
+    const browser = await puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      ignoreHTTPSErrors: true,
+    });
+    const page = await browser.newPage();
+    
+  
+    try {
+      await page.setViewport({width: 1080, height: 1024});
+      page.setDefaultNavigationTimeout(60000);
+      await page.goto(url, { waitUntil: 'networkidle2' }); 
+  
+    
+        await page.waitForSelector('div[itemprop="reviews"]');
+  
+        
+        const reviews = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('div[itemprop="reviews"]')).map(element => ({
+            platform:"gobigo",
+            image: element.querySelector('img')?.src || null,
+            date: element.querySelector('div span')?.textContent.trim() || null,
+            name: element.querySelector('span[itemprop="name"]')?.textContent.trim() || null,
+            title: element.querySelector('div[data-test-target="review-title"] span')?.textContent.trim() || null,
+            review: element.querySelector('span span span')?.textContent.trim() || null,
+            rating: element.querySelector('span[itemprop="ratingValue"]')?.textContent || null,
+          }));
+        });
+
+  
+      console.log(reviews);
+      return reviews
+  
+    } catch (error) {
+      console.error("Error fetching reviews:", error);
+    } finally {
+      await browser.close();
+    }
+  }
+
+
+
+
 module.exports={
-  airbnb,agoda,trustpilot,makemytrip,tripadvisor,booking
+  airbnb,agoda,trustpilot,makemytrip,tripadvisor,booking,gobigo
 }
