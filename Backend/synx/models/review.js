@@ -26,7 +26,7 @@ const reviewSchema =new mongoose.Schema({
     },
     platform: {
         type: String,
-        enum: ['airbnb', 'agoda', 'trustpilot', 'booking.com', 'tripadvisor', 'makemytrip', 'gobigo'],
+        enum: ['airbnb', 'agoda', 'trustpilot', 'booking.com', 'tripadvisor', 'makemytrip', 'gobigo',"google"],
         // required: true
     },
     image: {

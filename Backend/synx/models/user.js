@@ -42,22 +42,11 @@ const userBase = new mongoose.Schema({
   isVerified:{
     type: Boolean,
     default:false
+  },
+  customerId:{
+    type:String,
+    required:true
   }
-  ,
-  membership: [
-    {
-      type: {
-        type: String,
-        enum: ["free", "silver", "gold", "premium"],
-      },
-      dateFrom: {
-        type: Date,
-      },
-      dateTo: {
-        type: Date,
-      },
-    },
-  ],
 });
 const User = mongoose.model('User', userBase);
 

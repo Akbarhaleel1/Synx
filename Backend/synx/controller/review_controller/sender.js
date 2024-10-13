@@ -6,66 +6,87 @@ const nodemailer = require("nodemailer");
 const Etemplate=require("../../models/template")
 const axios = require('axios');
 const whatsapTemplate=require("../../models/whatsappTemplate")
+const Subscription = require('../../models/subscription');
 
 const plivoClient = new plivo.Client(process.env.PLIVO_AUTH_ID, process.env.PLIVO_AUTH_TOKEN);
 const sms = async (req, res) => {
   const { user, contacts } = req.body;
-  console.log("keri");
+  console.log("keri" ,req.body);
   const userData = JSON.parse(user);
   const emailtemp = await EmailTemplate.findOne({ user: userData._id });
   const linkdata = await ReviewLink.findOne({ user: userData._id });
-  // const monthlydata = await MonthlyLimit.findOne({ user: userData._id });
+  console.log('emailtemp',emailtemp)
+  console.log('emailtemp',linkdata)
+  console.log('userDatassssssssssssssssssssssssss',userData)
 
-  // if(monthlydata.phone > contacts.length) {
-  //   return res.status(400).send({ msg: 'it seems more than monthly limit' });
-  // }
+  const monthlydata = await Subscription.findOne({ userId: userData._id });
+  console.log('monthlydata',monthlydata)
+
+  if(monthlydata.msgLimit < contacts.length) {
+    console.log('monthlydata msg liimit is missing')
+    return res.status(200).send({ msg: 'it seems more than monthly limit' });
+  }
+  console.log('monthlydata.msgLimit is working',monthlydata.msgLimit )
 
   if (!contacts || !Array.isArray(contacts)) {
     return res.status(400).send({ error: 'Invalid contacts data' });
   }
 
-  const results = [];
+  console.log('contacts is working',contacts)
 
+
+  const results = [];
+  let count = monthlydata.msgLimit;
+  console.log('first count',count)
   for (const q of contacts) {
     const { name, contact } = q;
     console.log(q);
+    console.log('1')
 
     if (!contact) {
       results.push({ name, status: 'Failed', error: 'Invalid phone number' });
+      console.log('Invalid phone number')
       continue;
     }
+    console.log('2')
     try {
       const response = await plivoClient.messages.create(
         process.env.PLIVO_NUM, // Sender's phone number
         contact, // Receiver's phone number
         `Hi ${name}, ${emailtemp.message} ${linkdata.link}`
       );
+      console.log('3')
 
       results.push({ name, status: 'Sent', messageUuid: response.messageUuid });
     } catch (error) {
       results.push({ name, status: 'Failed', error: error.message });
     }
+    console.log('4')
+    
+    count--;
 
-    // let count = monthlydata.phone;
-    // count--;
-    // const monthlycount = await MonthlyLimit.findOneAndUpdate(
-    //   { user: userData._id },
-    //   { phone: count },
-    //   { new: true, upsert: true }
-    // );
+    console.log('second count',count)
+
+    const monthlycount = await Subscription.findOneAndUpdate(
+      { userId: userData._id },
+      { msgLimit: count },
+      { new: true, upsert: true }
+    );
   }
-
+  console.log('5')
   console.log(results);
   return res.status(200).json({ msg: "sms sent " });
 };
  
-  const transporter = nodemailer.createTransport({
-    service: "gmail", 
-    auth: {
-      user: process.env.NODEMAILER_USER,
-      pass: process.env.NODEMAILER_PASS,
-    },
-  });
+const transporter = nodemailer.createTransport({
+  host: "smtp.hostinger.com",
+  encryption: "SSL",
+  port: 465,
+  auth: {
+    user:process.env.NODEMAILER_USER,
+    pass:process.env.NODEMAILER_PASS,
+  },
+});
 
 const email= async (req, res) => {
     const {user,email} = req.body
@@ -74,12 +95,6 @@ const email= async (req, res) => {
     const emailtemp=await Etemplate.findOne({user:userData._id})
     const linkdata=await ReviewLink.findOne({user:userData._id})
     console.log(linkdata)
-    // const monthlydata=await MonthlyLimit.findOne({user:userData._id})
-
-
-    // if(monthlydata.phone>contacts.length){
-    //     return res.status(400).send({ msg: 'it seems more than monthly limit' });
-    // }
     if (!email || !Array.isArray(email)) {
       return res.status(400).send({ error: 'Invalid contacts data' });
     }
@@ -95,13 +110,77 @@ const email= async (req, res) => {
         results.push({ name, status: 'Failed', error: 'Invalid mail id' });
         continue;
       }
+      const emailTemplate = `
+      <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Email Template</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    body { margin: 0; padding: 0; width: 100%; background-color: #f4f4f4; font-family: 'Montserrat', Arial, sans-serif; }
+    table { max-width: 600px; width: 100%; background-color: #fff; margin: 0 auto; border-spacing: 0; border-collapse: collapse; }
+    .header, .footer { background-image: url(https://i.postimg.cc/j5pr82Jq/black-370118-1920.png); background-repeat: no-repeat; background-size: 800px 452px; background-position: top center;; color: #ffffff; padding: 20px; text-align: center; }
+    .header{display: flex;justify-content:space-between ;}
+    .header img { height: 50px; }
+    .content { padding: 30px 20px; text-align: center; }
+    h1 { font-size: 24px; color: #2A3C51; margin: 0 0 20px; }
+    p {  font-size: 14px; line-height: 1.6; margin-bottom: 20px; }
+    .button { display: inline-block; padding: 12px 25px; background-color: #ED3A4B; color: #ffffff; text-decoration: none; border-radius: 25px; font-size: 16px; }
+    .footer p { font-size: 12px; margin: 10px 0 0; color: #ffffff; }
+    @media only screen and (max-width: 600px) {
+      .content { padding: 20px; }
+      h1 { font-size: 20px; }
+      .button { font-size: 14px; padding: 10px 20px; }
+    }
+  </style>
+</head>
+<body>
+  <table role="presentation">
+    <!-- Header Section -->
+    <tr>
+      <td class="header">
+        <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=210,fit=crop,q=95/A0xVOQqjK4S17GrG/untitled-design-86-mv0jGPqKXZhKz4k8.png" alt="Logo">
+        <p>${'currentDate'}</p>
+      </td>
+    </tr>
+    
+    <!-- Body Content -->
+    <tr>
+      <td class="content">
+        <h1>Hello, ${name}!</h1>
+        <p>${emailtemp.message}</p>
+        <a href="${linkdata.link}" class="button">review link</a>
+      </td>
+    </tr>
+
+    <!-- Footer Section -->
+    <tr>
+      <td class="footer">
+       <footer style="width: 100%; max-width: 490px; margin: 20px auto 0; text-align: center; border-top: 1px solid #e6ebf1;">
+              <p style="margin: 0; margin-top: 40px; font-size: 16px; font-weight: 600; color: #f4f4f4;">Synx Automation Pvt Ltd</p>
+              <p style="margin: 0; margin-top: 8px; color: #f4f3f3;"> Disclaimer: This email was sent via Synx+ on behalf of ${emailtemp.name}. Synx+ is a brand under Synx Automation Private Limited. For more information, visit ${linkdata.link}. Synx+ is not responsible for the content. To unsubscribe, please contact ${emailtemp.name} directly.
+         </p>
+              <p style="margin: 0; margin-top: 16px; color: #b6b3b3;">
+                Copyright © 2024 Company. All rights reserved.
+              </p>
+            </footer>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+
+      `;
   console.log(emailtemp)
       try {
         const mailOptions = {
-            from: 'fito.kripp@gmail.com',
+            from: process.env.NODEMAILER_USER,
             to: contact,
             subject: `Hi ${name}`,
-            text: `Hi ${name}, ${emailtemp.message} ${linkdata.link}`,
+            html: emailTemplate,
           };
            transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
@@ -117,13 +196,6 @@ const email= async (req, res) => {
         console.log(error)
         results.push({ name, status: 'Failed', error: error.message });
       }
-      // let count=monthlydata.phone;
-      // count--;
-      // const monthlycount= await MonthlyLimit.findOneAndUpdate(
-      //   { user: userData._id }, 
-      //   { phone:count},
-      //   { new: true, upsert: true } 
-      // );
     }
     console.log(results)
     return res.status(200).json({msg:"email sent "});
@@ -250,61 +322,96 @@ const email= async (req, res) => {
 //   }
 // };
 
+const accessToken ="EAAfzoIo8iDEBO6WAAHAkErmPLKsDeMc1mTqsWu4tWEdZCv4rSfvWmzKjlAMSEcfATKTk6N6ZC5EMKxZB04d1jwI5gED3r3CCFHdjzIg2yR8B1A4McD01RLdZAi1bJho3mBIVZA4nSkP7ZCxGLk1Ai8fPReZAV3XaUUfXTV7NBpJp2vLFxsHOiPaBqX3ZBcoGAubj" //process.env.META_WHATSAPP_ACCESS_TOKEN; // Your Meta WhatsApp API Access Token
+const phoneNumberId ="426089207257238" //process.env.WHATSAPP_PHONE_NUMBER_ID; // Your WhatsApp phone number ID
 
   const sendWhatsAppMessages = async (req, res) => {
-    const accessToken ="EAAfzoIo8iDEBO7CtVoDZBneS2a1fqvmWKiMwLZC2ZCMjVJRSZBwT87BXZACZAamc68hvJxrGZCSJhQj5ZAkIaonqFBiviaaOd52U32UZClWaXbanc2MytyZA0OhlKVHjqZBL8DZBaaLlbegmjRaRpVTMZCZBsMvfuwE6jMMESKf54zEF6C03QYRaGOQ8lcbw6IptI9ERAXo1oZCvszQmZBioIcvc8xHbBypIqkgTP68lSxwZD" //process.env.META_WHATSAPP_ACCESS_TOKEN; // Your Meta WhatsApp API Access Token
-    const phoneNumberId ="426089207257238" //process.env.WHATSAPP_PHONE_NUMBER_ID; // Your WhatsApp phone number ID
     const { user, contacts } = req.body;
-  
+    console.log('user is', user)
+    console.log(req.body)
     const userData = JSON.parse(user);
     const whatsaptemp = await whatsapTemplate.findOne({ user: userData._id });
     const linkdata = await ReviewLink.findOne({ user: userData._id });
+    const monthlydata = await Subscription.findOne({ userId: userData._id });
+
+    if(monthlydata.whatsappLimit < contacts.length) {
+      return res.status(200).send({ message: 'it seems more than monthly limit' });
+    }
   
     if (!contacts || !Array.isArray(contacts)) {
-      return res.status(400).send({ error: 'Invalid contacts data' });
+      return res.status(200).send({ error: 'Invalid contacts data' });
     }
   
     const results = [];
-  
+    let count = monthlydata.whatsappLimit;
     for (const q of contacts) {
-      const { name, contact } = q;
+      const { name, number } = q;
+      console.log(q)
+      console.log(`${whatsaptemp.message},${linkdata.link}`)
   
-      if (!contact) {
+      if (!number) {
         results.push({ name, status: 'Failed', error: 'Invalid phone number' });
         continue;
       }
   
       try {
-        // Sending WhatsApp message using Meta API
+       
         const response = await axios.post(
-          `https://graph.facebook.com/v17.0/${phoneNumberId}/messages`,
+          `https://graph.facebook.com/v20.0/${phoneNumberId}/messages`,
           {
-              messaging_product: 'whatsapp',
-              to: contact,
-              type: 'template',
-              template: {
-                  name: 'hello_world', 
-                  language: {
-                      code: 'en_US'
-                  }
-              }
+            messaging_product: "whatsapp",
+            to: number, 
+            type: "template",
+            template: {
+              name: "synx_plus",
+              language: {
+                code: "en_US"
+              },
+              components: [
+                {
+                  type: "header", 
+                  parameters: [
+                    {
+                      type: "text",
+                      text: name 
+                    }
+                  ]
+                },
+                {
+                  type: "body", 
+                  parameters: [
+                    {
+                      type: "text",
+                      text: `${whatsaptemp.message},${linkdata.link}` // Provide dynamic text for body placeholder
+                    }
+                  ]
+                }
+              ]
+            }
           },
           {
-              headers: {
-                  Authorization: `Bearer ${accessToken}`,
-                  'Content-Type': 'application/json',
-              },
+            headers: {
+              Authorization: `Bearer ${accessToken}`, 
+              'Content-Type': 'application/json', 
+            },
           }
-      );
-  
+        );
+        console.log(response.data)
         results.push({ name, status: 'Sent', messageId: response.data.messages[0].id });
       } catch (error) {
         results.push({ name, status: 'Failed', error: error.response ? error.response.data : error.message });
       }
+      
+    count--;
+    const monthlycount = await Subscription.findOneAndUpdate(
+      { userId: userData._id },
+      { whatsappLimit: count },
+      { new: true, upsert: true }
+    );
     }
   
     console.log(results);
-    return res.status(200).json({ msg: 'WhatsApp messages sent', results });
+    return res.status(200).json({ message: 'WhatsApp messages sent', results });
   };
   
   module.exports={

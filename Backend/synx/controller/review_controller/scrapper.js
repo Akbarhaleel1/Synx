@@ -3,6 +3,8 @@ const Scrapper = require("../../models/scrapper");
 const review = require("../../components/reviewscrapper");
 const ScrapData = require("../../models/review");
 const IntegratedSite = require("../../models/integration");
+const analytics = require("../../components/analytics");
+
 
 // const integrate = async (req, res) => {
 // const { user, platform, pageLink } = req.body;
@@ -94,7 +96,7 @@ const integrate = async (req, res) => {
         console.error('Error parsing user data:', parseError);
         return res.status(400).json({ msg: "Invalid user data format." });
     }
-
+  
     try {
         // Update or Create Scrapper Data
         const scrapperData = {
@@ -133,8 +135,11 @@ const integrate = async (req, res) => {
                 case 'makemytrip':
                     reviews = await review.makemytrip(pageLink);
                     break;
-                case 'gobigo':
-                    reviews = await review.gobigo(pageLink);
+                case 'goibibo':
+                    reviews = await review.goibibo(pageLink);
+                    break;
+                case 'google':
+                    reviews = await review.google(pageLink);
                     break;
                 default:
                     console.warn('Unsupported platform:', platform);
@@ -164,6 +169,7 @@ const integrate = async (req, res) => {
             link: pageLink
         }));
 
+       
         // Insert Reviews into Database
         try {
             await ScrapData.insertMany(reviewEntries);
@@ -182,7 +188,35 @@ const integrate = async (req, res) => {
         res.status(502).send("Bad Gateway: Server encountered an error.");
     }
 };
+async function createanalytics(user,url){
+  try{
+    let result;
 
+    // Switch case to call the correct scraping function based on platform
+    switch (platform) {
+        case 'booking.com':
+            result = await analytics.booking(url);  // Scrape Booking.com data
+            break;
+        case 'agoda':
+            result = await analytics.agoda(url);  // Scrape Agoda data
+            break;
+        case 'trustpilot':
+            result = await analytics.trustpilot(url);  // Scrape Trustpilot data
+            break;
+        case 'makemytrip':
+            result = await analytics.makemytrip(url);  // Scrape MakeMyTrip data
+            break;
+        default:
+            return res.status(400).json({ message: 'Platform not supported' });
+    }
+    if(result){
+      await saveAnalyticsData(userId, platform, result.averageRating, result.totalReviews);
+    }
+
+  }catch(err){
+
+  }
+}
   
 const integratepage = async (req, res) => {
   const { user } = req.body;
@@ -251,9 +285,12 @@ const automate = async () => {
         case "makemytrip":
           reviews = await review.makemytrip(scrapper.link);
           break;
-        case "gobigo":
-          reviews = await review.gobigo(scrapper.link);
+        case "goibibo":
+          reviews = await review.goibibo(scrapper.link);
           break;
+        case "google":
+            reviews = await review.google(scrapper.link);
+            break;
         default:
           console.log("Unsupported platform", scrapper.platform);
           continue;
