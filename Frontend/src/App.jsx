@@ -22,7 +22,7 @@ import HotelReview from './sections/HotelReview.jsx'
 import NegativeReview from './sections/negetiveFeedback.jsx'
 import NegativeReviewsDisplay from './sections/getNegetiveReviews.jsx'
 import PricingTable from "./sections/auth/PricingPlans.jsx";
-import ResetPassword from "./sections/auth/resetPassword.jsx";
+import ResetPassword from "./sections/auth/ResetPassword.jsx";
 import ForgotPasswordOtp from "./sections/auth/ForgotPasswordOtp.jsx";
 import PlanSuccessPage from "./sections/auth/PaymentSuccess.jsx";
 
