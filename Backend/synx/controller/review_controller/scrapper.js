@@ -153,7 +153,7 @@ const integrate = async (req, res) => {
 
         if (!Array.isArray(reviews)) {
             console.error('Reviews data is not an array:', reviews);
-            return res.status(500).json({ msg: "Invalid reviews data." ,reviews:reviews});
+            return res.status(500).json({ msg: "Invalid reviews data is not found." ,reviews:reviews});
         }
 
         // Prepare Review Entries for Database Insertion
