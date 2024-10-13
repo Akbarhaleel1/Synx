@@ -978,11 +978,10 @@ const google = async (url) => {
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
-    headless: true,
+    headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
-  // const page = await browser.newPage();
-  const page = await createPage(browser);
+  const page = await browser.newPage();
 
   try {
     await page.setViewport({ width: 1080, height: 1024 });
