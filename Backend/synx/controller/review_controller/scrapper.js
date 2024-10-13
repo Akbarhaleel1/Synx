@@ -4,6 +4,8 @@ const review = require("../../components/reviewscrapper");
 const ScrapData = require("../../models/review");
 const IntegratedSite = require("../../models/integration");
 const analytics = require("../../components/analytics");
+const AnalyticsDB=require("../../models/analytics");
+const { default: plans } = require("razorpay/dist/types/plans");
 
 
 // const integrate = async (req, res) => {
@@ -178,9 +180,13 @@ const integrate = async (req, res) => {
             console.error('Error saving reviews:', dbError);
             return res.status(500).json({ msg: "Error saving reviews." });
         }
-
+       const data = await createanalytics(user,pageLink,platform)
+       if(!data){
+        res.status(200).json({ msg: "Integration unsuccessful.", data });
+        return
+       }
         // Successful Integration Response
-        res.status(200).json({ msg: "Integration successful." });
+        res.status(200).json({ msg: "Integration successful.", data });
         console.log("Integration completed successfully.");
 
     } catch (error) {
@@ -188,7 +194,7 @@ const integrate = async (req, res) => {
         res.status(502).send("Bad Gateway: Server encountered an error.");
     }
 };
-async function createanalytics(user,url){
+async function createanalytics(user,url,platform){
   try{
     let result;
 
@@ -210,14 +216,42 @@ async function createanalytics(user,url){
             return res.status(400).json({ message: 'Platform not supported' });
     }
     if(result){
-      await saveAnalyticsData(userId, platform, result.averageRating, result.totalReviews);
+      await saveAnalyticsData(user, platform, result.averageRating, result.totalReviews);
     }
 
   }catch(err){
 
   }
 }
-  
+async function saveAnalyticsData(user, platform, averageRating, totalReviews){
+  try{
+   let analyticsdata=await AnalyticsDB.findOne({userid:user._id});
+   let currentData=new Date()
+   let count
+   if(analyticsdata){
+     count=analyticsdata.reviewCount;
+    count.push({date:currentData,count:totalReviews})
+   }else{
+    count={
+      date:currentData,
+      count:totalReviews
+    }
+   }
+   let data=await AnalyticsDB.findOneAndUpdate(
+    {userid:user._id,platform},
+    {$set:{
+      averagerating:averageRating,
+      reviewCount:count
+    }},{
+      upsert:true
+    }
+  )
+  return data
+
+  }catch (err){
+
+  }
+}
 const integratepage = async (req, res) => {
   const { user } = req.body;
   const userData = JSON.parse(user);
