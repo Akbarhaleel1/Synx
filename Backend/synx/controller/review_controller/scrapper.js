@@ -223,35 +223,69 @@ async function createanalytics(user,url,platform){
 
   }
 }
-async function saveAnalyticsData(user, platform, averageRating, totalReviews){
-  try{
-   let analyticsdata=await AnalyticsDB.findOne({userid:user._id});
-   let currentData=new Date()
-   let count
-   if(analyticsdata){
-     count=analyticsdata.reviewCount;
-    count.push({date:currentData,count:totalReviews})
-   }else{
-    count={
-      date:currentData,
-      count:totalReviews
-    }
-   }
-   let data=await AnalyticsDB.findOneAndUpdate(
-    {userid:user._id,platform},
-    {$set:{
-      averagerating:averageRating,
-      reviewCount:count
-    }},{
-      upsert:true
-    }
-  )
-  return data
+// async function saveAnalyticsData(user, platform, averageRating, totalReviews){
+//   try{
+//    let analyticsdata=await AnalyticsDB.findOne({userid:user._id});
+//    let currentData=new Date()
+//    let count;
+//    if(analyticsdata){
+//      count=analyticsdata.reviewCount;
+//     count.push({date:currentData,count:totalReviews})
+//    }else{
+//     count={
+//       date:currentData,
+//       count:totalReviews
+//     }
+//    }
+//    let data=await AnalyticsDB.findOneAndUpdate(
+//     {userid:user._id,platform},
+//     {$set:{
+//       averagerating:averageRating,
+//       reviewCount:count
+//     }},{
+//       upsert:true
+//     }
+//   )
+//   return data
 
-  }catch (err){
+//   }catch (err){
+//   }
+// }
 
+async function saveAnalyticsData(user, platform, averageRating, totalReviews) {
+  try {
+    let analyticsdata = await AnalyticsDB.findOne({ userid: user._id, platform });
+    let currentDate = new Date();
+    let count = [];
+
+    // If analytics data exists, append to the reviewCount array
+    if (analyticsdata) {
+      count = analyticsdata.reviewCount || []; // Ensure it's an array
+      count.push({ date: currentDate, count: totalReviews });
+    } else {
+      count.push({ date: currentDate, count: totalReviews });
+    }
+
+    // Update or create new analytics data
+    let data = await AnalyticsDB.findOneAndUpdate(
+      { userid: user._id, platform },
+      { 
+        $set: {
+          averagerating: averageRating,
+          reviewCount: count
+        }
+      },
+      { upsert: true, new: true }
+    );
+    
+    return data;
+
+  } catch (err) {
+    console.error('Error saving analytics data:', err);
+    throw err; // rethrow the error after logging or handle it as needed
   }
 }
+
 const integratepage = async (req, res) => {
   const { user } = req.body;
   const userData = JSON.parse(user);
