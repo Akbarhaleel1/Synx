@@ -1,4 +1,6 @@
-import React from "react";
+
+
+import React, { useEffect, useState } from "react";
 import {
   FaStar,
   FaEnvelope,
@@ -20,15 +22,153 @@ import {
   FaSearch,
   FaChevronDown,
   FaCheckDouble,
+  FaTrash, // Added remove icon
 } from "react-icons/fa";
 import Nav from "../components/Nav";
-
-
 import useAuth from './customHooks/useAuth';
-
+import axios from "axios";
+import CenteredSweetAlert from "./components/TemplateUpdated";
+import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
+import { SuccessModal } from "./components/SweatAlert";
+import BeautifulErrorModal from "./components/BeautifulErrorModal";
+import { Plus } from "lucide-react";
+import {useNavigate} from 'react-router-dom'
 
 const SynXPlusReviewRequest = () => {
-  useAuth()
+  useAuth();
+
+  const [contacts, setContacts] = useState([{ name: "", number: "" }]);
+  const [companyName, setCompanyName] = useState("");
+  const [messageTemplate, setMessageTemplate] = useState(
+    "Thanks for choosing [Company Name]. We'd love to hear your feedback. Please leave us a review here:"
+  );
+  const [link, setLink] = useState('');
+  const [showAlert, setShowAlert] = useState(false)
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
+
+  const navigate = useNavigate()
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Retrieve the user and token from localStorage
+      const user = localStorage.getItem("user"); // Assuming this is a string
+      const getToken = localStorage.getItem('token'); // Fetch the token string
+      const token = JSON.parse(getToken); // Parse the token from JSON
+
+      console.log('Fetching data...');
+
+      try {
+        // Make a POST request to the backend
+        const result = await axios.post("https://synxbackend.synxautomate.com/whatsappage", {
+          user, // Sending user data as the request body
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Include the Bearer token in headers
+          },
+        });
+
+        if(result.data.message === "Not Found"){
+          navigate('/PricingTable')
+          return
+        }
+        // Log the result from the server
+        console.log('result', result.data);
+
+        // Uncomment the following lines to set state with the received data
+        setCompanyName(result.data.whatsap.name);
+        setMessageTemplate(result.data.whatsap.message);
+        setLink(result.data.link);
+
+      } catch (error) {
+        console.error("Error fetching data:", error); // Log any errors
+      }
+    };
+
+    fetchData(); // Call the fetchData function
+  }, []); // Empty dependency array means this effect runs once when the component mounts
+
+  const handleAddContact = () => {
+    setContacts([...contacts, { name: "", number: "" }]);
+  };
+
+  const handleContactChange = (index, event) => {
+    const newContacts = [...contacts];
+    newContacts[index][event.target.name] = event.target.value;
+    setContacts(newContacts);
+  };
+
+  const handleRemoveContact = (index) => {
+    const newContacts = contacts.filter((_, i) => i !== index);
+    setContacts(newContacts);
+  };
+
+
+  const handleSubmit = async () => {
+    console.log('contacts', contacts);
+
+    let user = localStorage.getItem('user')
+    const getToken = localStorage.getItem('token');
+    const token = JSON.parse(getToken)
+
+    for (const input of contacts) {
+      console.log('input', input)
+      if (!input.name || !input.number) {
+        setIsErrorModalOpen(true);
+        return;
+      }
+    }
+
+    console.log('companyName',companyName)
+    console.log('messageTemplate',messageTemplate)
+    if(!companyName||!messageTemplate){
+      setIsErrorModalOpen(true);
+      return
+    }
+
+    // Send the data to the backend
+    const response = await axios.post('https://synxbackend.synxautomate.com/sendWhatsapp', { user: user, contacts }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    console.log('responsce is', response);
+
+    if(response.data.message == "it seems more than monthly limit"){
+      alert('it seems more than monthly limit')
+      return
+    }
+
+
+    setSuccessModalOpen(true);
+
+    // alert("Review requests sent!");
+  };
+
+
+
+
+
+  const handlePreviewMessage = async () => {
+    // Logic for previewing the message
+    let user = localStorage.getItem('user');
+    const getToken = localStorage.getItem('token');
+    const token = JSON.parse(getToken)
+    console.log('user', user, 'companyName', companyName, 'messageTemplate', messageTemplate)
+    // Send the data to the backend
+    const response = await axios.post('https://synxbackend.synxautomate.com/sendTemplate', { user: user, companyName, messageTemplate }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    console.log('responsce is', response);
+    setShowAlert(true)
+    // alert(`Preview:\n${messageTemplate.replace("[Company Name]", companyName)}`);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row h-screen bg-gray-900 text-white">
       {/* Sidebar */}
@@ -64,40 +204,62 @@ const SynXPlusReviewRequest = () => {
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-4 lg:mb-8">
           <h2 className="text-xl font-bold mb-4 text-black">Request reviews via SMS</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
-            <p>Invite Your Customers</p>
+            <p className="text-black">Invite Your Customers</p>
             <p className="text-gray-700">Monthly limits: 0/10</p>
           </div>
           <p className="mb-2">
             Do you have a list of contacts?{" "}
-            <span className="text-blue-800 cursor-pointer">Upload CSV</span>
           </p>
-          <div className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4">
-            <input
-              type="text"
-              placeholder="Name"
-              className="bg-gray-800 p-2 rounded-lg flex-1"
-            />
-            <input
-              type="text"
-              placeholder="Contact Number"
-              className="bg-gray-800 p-2 rounded-lg flex-1"
-            />
-          </div>
-          <div className="flex items-center mb-4 text-black">
-            <input type="checkbox" id="consent" className="mr-2" />
-            <label htmlFor="consent">
-              I have consent to send messages to this contact
-            </label>
-          </div>
-          <div className="flex flex-col lg:flex-row justify-between">
-            <button className="border border-black text-black px-4 py-2 rounded-lg mb-4 lg:mb-0 lg:w-1/2">
-              + Add Line
+
+          {/* Company Name Input */}
+
+
+          {contacts.map((contact, index) => (
+            <div key={index} className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4">
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={contact.name}
+                onChange={(event) => handleContactChange(index, event)}
+                className="bg-gray-800 p-2 rounded-lg flex-1"
+              />
+              <input
+                type="text"
+                name="number"
+                placeholder="Contact Number"
+                value={contact.number}
+                onChange={(event) => handleContactChange(index, event)}
+                className="bg-gray-800 p-2 rounded-lg flex-1"
+              />
+              <button onClick={() => handleRemoveContact(index)} className="text-red-500">
+                <FaTrash /> {/* Remove icon */}
+              </button>
+            </div>
+          ))}
+          {/* <div className="flex flex-col lg:flex-row justify-between">
+            <button onClick={handleAddContact} className="border text-black px-1 py-2 rounded-lg mb-4 lg:mb-0 lg:w-1/2">
+              + Add Contact
             </button>
-            <button className="bg-black text-white px-4 py-2 rounded-lg lg:w-1/2">
-              Request a Review
+            <EnhancedSubmitButton onSubmit={handleSubmit} />
+          </div> */}
+          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
+            <button
+              onClick={handleAddContact}
+              className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+            >
+              <Plus className="w-5 h-5 mr-2 text-gray-400" />
+              Add Contact
             </button>
+            <EnhancedSubmitButton
+              onSubmit={handleSubmit}
+              className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+            />
           </div>
         </div>
+
+        <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)} message="Request reviews send to whatsapp successfully!" />
+
 
         {/* Edit Template */}
         <div className="bg-gray-900 p-4 lg:p-6 rounded-lg flex flex-col lg:flex-row">
@@ -122,7 +284,7 @@ const SynXPlusReviewRequest = () => {
                     <FaUser className="text-gray-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-semibold text-white">Company Name</p>
+                    <p className="font-semibold text-white">{companyName}</p>
                     <p className="text-xs text-gray-400">online</p>
                   </div>
                   <FaVideo className="text-white ml-2" />
@@ -136,26 +298,27 @@ const SynXPlusReviewRequest = () => {
                   </div>
                   <div className="bg-[#025D4B] text-white p-2 rounded-lg max-w-[80%] ml-auto mb-1">
                     <p className="text-sm">
-                      Thanks for choosing [Company Name]. We'd love to hear your
+                      Hi [Name], Thanks for choosing {companyName}. We'd love to hear your
                       feedback.
                     </p>
                   </div>
                   <div className="bg-[#025D4B] text-white p-2 rounded-lg max-w-[80%] ml-auto">
                     <p className="text-sm">Please leave us a review here:</p>
-                    <a href="#" className="text-sm text-[#34B7F1] break-all">
+                    <a href={`${link}`} className="text-sm text-[#34B7F1] break-all">
                       [Link here]
                     </a>
                     <span className="text-[10px] text-[#ffffff99] float-right mt-1">
-                      9:41 AM <FaCheckDouble className="text-[#34B7F1]" />
+                      9:41 AM <FaCheckDouble className="inline-block text-xs" />
                     </span>
                   </div>
                 </div>
-                {/* Message input */}
-                <div className="bg-[#1F2C34] p-2 flex items-center">
-                  <FaSmile className="text-[#8696A0] mr-2" />
-                  <div className="flex-1 bg-[#2A3942] rounded-full px-4 py-2 text-sm text-gray-400">
-                    Type a message
-                  </div>
+                {/* Input area */}
+                <div className="flex items-center p-2">
+                  <input
+                    type="text"
+                    placeholder="Type a message"
+                    className="flex-1 bg-transparent border border-[#3D4347] p-2 rounded-lg text-white"
+                  />
                   <FaPaperclip className="text-[#8696A0] ml-2" />
                   <FaMicrophone className="text-[#8696A0] ml-2" />
                 </div>
@@ -163,35 +326,38 @@ const SynXPlusReviewRequest = () => {
             </div>
           </div>
           <div className="w-full lg:w-1/2 lg:pl-4">
-            {/* Message customization */}
-            <h3 className="text-lg font-bold mb-2">Customize the sender</h3>
+            <h2 className="text-xl font-bold mb-4">Message Template</h2>
             <input
               type="text"
               placeholder="Company Name"
-              className="bg-gray-800 p-2 rounded-lg w-full mb-4"
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              className="bg-gray-800 p-2 rounded-lg mb-4 w-full"
             />
-            <h3 className="text-lg font-bold mb-2">Customize the message</h3>
             <textarea
-              className="bg-gray-800 p-2 rounded-lg w-full h-32 mb-4"
-              placeholder="Hi [Name], thanks for choosing [Company Name]. We'd love to hear your feedback. Please leave us a review here: [Link here]"
+              value={messageTemplate}
+              onChange={(e) => setMessageTemplate(e.target.value)}
+              rows="4"
+              className="w-full p-2 bg-gray-800 text-white rounded-lg"
             ></textarea>
-            <div className="flex flex-wrap mb-4">
-              <span className="bg-[#00A884] text-white rounded-full px-2 py-1 text-xs mr-2 mb-2">
-                [Name]
-              </span>
-              <span className="bg-[#00A884] text-white rounded-full px-2 py-1 text-xs mr-2 mb-2">
-                [Company Name]
-              </span>
-              <span className="bg-[#00A884] text-white rounded-full px-2 py-1 text-xs mr-2 mb-2">
-                [Link here]
-              </span>
-            </div>
-            <button className="bg-blue-500 px-4 py-2 rounded-lg w-full">
-              Preview Message
+            <button
+              onClick={handlePreviewMessage}
+              className="bg-black text-white px-4 py-2 rounded-lg mt-2"
+            >
+              Update Template
             </button>
+            {showAlert && (
+              <CenteredSweetAlert title="Success!" message={'Template Updated Successfully!'} onClose={() => setShowAlert(false)} />
+            )}
           </div>
         </div>
       </div>
+      <BeautifulErrorModal
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+        errors={errorMessages}
+      />
+
     </div>
   );
 };

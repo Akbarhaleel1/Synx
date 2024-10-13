@@ -158,6 +158,7 @@ const NegativeReview = () => {
     console.log('formData', formData);
 
     try {
+      // const result = await axios.post('https://synxbackend.synxautomate.com/userReview', { formData });
       const result = await axios.post('https://synxbackend.synxautomate.com/userReview', { formData });
       console.log('result', result);
       // Set success message and show modal on successful submission

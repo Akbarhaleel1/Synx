@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 import useAuth from './customHooks/useAuth';
+import CenteredSweetAlert from './components/TemplateUpdated';
+import EnhancedSubmitButton from './components/EnhancedSubmitButton';
+import { SuccessModal } from './components/successModal';
+import BeautifulErrorModal from './components/BeautifulErrorModal';
 
 const ToggleSwitch = ({ checked, onChange }) => (
   <label className="toggle-switch">
@@ -12,28 +17,39 @@ const ToggleSwitch = ({ checked, onChange }) => (
 );
 
 const GetReviewsEmail = () => {
-  // const [autoReminder3Days, setAutoReminder3Days] = useState(false);
-  // const [autoReminder7Days, setAutoReminder7Days] = useState(false);
   const [link, setLink] = useState("");
-
   const [inputs, setInputs] = useState([{ name: "", contact: "" }]);
-
   const [companyName, setCompanyName] = useState('');
   const [emailContent, setEmailContent] = useState('');
+  const [showAlert, setShowAlert] = useState(false)
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
+
+  const navigate = useNavigate()
 
   useAuth()
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log('email page is working')
       const user = localStorage.getItem('user')
       const getToken = localStorage.getItem('token');
-      const token = JSON.parse(getToken)
+      const token = JSON.parse(getToken);
+      console.log('1')
       const result = await axios.post('https://synxbackend.synxautomate.com/ePageLoad', { user },{
         headers:{
           Authorization: `Bearer ${token}`
         }
       });
+
       console.log('result', result.data)
+
+      if(result.data.message === "Not Found"){
+        navigate('/PricingTable')
+        return
+      }
+   
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)
       setLink(result.data.link)
@@ -43,7 +59,8 @@ const GetReviewsEmail = () => {
 
   const handleSubmitForEmail = async () => {
     if (!companyName || !emailContent) {
-      alert('Please fill out both fields.');
+      // alert('Please fill out both fields.');
+      setIsErrorModalOpen(true)
       return;
     }
 
@@ -65,7 +82,8 @@ const GetReviewsEmail = () => {
       console.log('responce', response);
 
       // Handle success response
-      alert('Template updated successfully!');
+      setShowAlert(true)
+      // alert('Template updated successfully!');
     } catch (error) {
       // Handle error response
       console.error('Error updating template:', error);
@@ -87,11 +105,14 @@ const GetReviewsEmail = () => {
 
   const handleSubmit = async () => {
     try {
-      // Ensure all fields are filled
+
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('Review submitted');
       for (const input of inputs) {
         console.log('input', input)
         if (!input.name || !input.contact) {
-          alert('Please fill out all fields');
+          // alert('Please fill out all fields');
+          setIsErrorModalOpen(true)
           return;
         }
       }
@@ -107,9 +128,7 @@ const GetReviewsEmail = () => {
         },
       });
       console.log('responsce is', response);
-
-      // Handle success response
-      alert('Reviews requested successfully!');
+      setSuccessModalOpen(true);
     } catch (error) {
       // Handle error response
       console.error('Error sending review requests:', error);
@@ -154,15 +173,12 @@ const GetReviewsEmail = () => {
         </div>
         {/* Request Reviews via SMS */}
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
+          <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p>Invite Your Customers</p>
             <p className="text-gray-400">Monthly limits: 0/10</p>
           </div>
-          <p className="mb-2">
-            Do you have a list of contacts?{" "}
-            <span className="text-blue-500">Upload CSV</span>
-          </p>
+
 
           {/* Render input fields dynamically */}
           {inputs.map((input, index) => (
@@ -188,13 +204,13 @@ const GetReviewsEmail = () => {
               />
             </div>
           ))}
-
+{/* 
           <div className="flex items-center mb-4">
             <input type="checkbox" id="consent" className="mr-2 text-white" />
             <label htmlFor="consent">
               I have consent to send messages to this contact
             </label>
-          </div>
+          </div> */}
           <div className="flex flex-col lg:flex-row justify-between">
             <button
               onClick={handleAddLine}
@@ -202,9 +218,11 @@ const GetReviewsEmail = () => {
             >
               + Add Line
             </button>
-            <button onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
+            {/* <button onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
               Request a Review
-            </button>
+            </button> */}
+           <EnhancedSubmitButton onSubmit={handleSubmit} />
+
           </div>
         </div>
 
@@ -278,10 +296,19 @@ const GetReviewsEmail = () => {
               >
                 Update Template
               </button>
+              {showAlert&&(
+                <CenteredSweetAlert  title="Success!" message={'Template Updated Successfully!'}  onClose={()=>setShowAlert(false)}/>
+              )}
             </div>
           </div>
         </div>
       </main>
+      <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)}  message="Review request sent successfully via Email!"/>
+      <BeautifulErrorModal
+          isOpen={isErrorModalOpen}
+          onClose={() => setIsErrorModalOpen(false)}
+          errors={errorMessages}
+        />
     </div>
   );
 };

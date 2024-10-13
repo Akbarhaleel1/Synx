@@ -4,13 +4,14 @@ import Nav from "../components/Nav";
 import bellIcon from "../assets/images/bellIcon.png";
 import axios from 'axios'
 import useAuth from './customHooks/useAuth';
+import {useNavigate} from 'react-router-dom'
 const Reviews = () => {
   const [isToggled, setToggled] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [selectedFilter, setSelectedFilter] = useState("Types"); // State for filter selection
-
+  const navigate = useNavigate()
   useAuth();
 
   
@@ -27,16 +28,28 @@ const Reviews = () => {
       const user = localStorage.getItem("user");
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
+      // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
+      //   Authorization: `Bearer ${token}`,
+      // }});
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
-      console.log("result", result);
-      setReviews(result.data.review); // Assuming the response contains the review data
+      console.log("result",result.data);
+      if(result.data.message === "Not Found"){
+        navigate('/PricingTable')
+        return
+      }
+      setReviews(result.data.review); 
     };
     fetchReviews();
   }, []);
 
-  // Filter reviews based on the search query and selected filter
+
+  // if(!reviews){
+  //   // console.log('review',)
+  //   navigate('/PricingTable')
+  // }
+  
   const filteredReviews = reviews.filter((review) => {
     const reviewText = review.review?.toLowerCase() || "";
     const reviewerName = review.name?.toLowerCase() || "";

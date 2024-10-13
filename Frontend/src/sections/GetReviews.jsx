@@ -10,8 +10,14 @@ import {
 } from "react-icons/fa";
 import Nav from "../components/Nav";
 import axios from "axios";
+import {useNavigate} from 'react-router-dom'
 
 import useAuth from './customHooks/useAuth';
+import CustomModal from "./components/customModal";
+import BeautifulErrorModal from "./components/BeautifulErrorModal";
+import { SuccessModal } from "./components/successModal";
+import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
+import { Plus } from "lucide-react";
 
 
 const ToggleSwitch = ({ checked, onChange }) => (
@@ -22,12 +28,17 @@ const ToggleSwitch = ({ checked, onChange }) => (
 );
 
 const GetReviews = () => {
-  const [autoReminder3Days, setAutoReminder3Days] = useState(false);
-  const [autoReminder7Days, setAutoReminder7Days] = useState(false);
   const [companyName, setCompanyName] = useState("");
   const [message, setMessage] = useState("");
   const [link, setLink] = useState("");
   const [inputs, setInputs] = useState([{ name: "", contact: "" }]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+  const [errorMessages, setErrorMessages] = useState([]);
+  const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+
+  const navigate = useNavigate();
+
 
   const handleAddLine = () => {
     setInputs([...inputs, { name: "", contact: "" }]);
@@ -44,28 +55,42 @@ const GetReviews = () => {
   const handleSubmit = async () => {
     try {
       // Ensure all fields are filled
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('Review submitted');
       for (const input of inputs) {
         console.log('input', input)
         if (!input.name || !input.contact) {
-          alert('Please fill out all fields');
+          // alert('Please fill out all fields');
+          setIsErrorModalOpen(true);
           return;
         }
       }
 
       console.log('input', inputs)
+
+      if (!companyName || !message) {
+        setIsModalOpen(true);
+        return;
+      }
+
       let user = localStorage.getItem('user')
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('https://synxbackend.synxautomate.com/sendReviews', { user:user,contacts: inputs },{
+      const response = await axios.post('https://synxbackend.synxautomate.com/sendReviews', { user: user, contacts: inputs }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
       console.log('responsce is', response);
-      
-      // Handle success response
-      alert('Reviews requested successfully!');
+
+      if(response.data.msg=='it seems more than monthly limit'){
+        alert('it seems more than monthly limit')
+        return
+      }
+
+      setSuccessModalOpen(true);
+
     } catch (error) {
       // Handle error response
       console.error('Error sending review requests:', error);
@@ -81,11 +106,16 @@ const GetReviews = () => {
       try {
         const result = await axios.post("https://synxbackend.synxautomate.com/emailPage", {
           user,
-        },{
+        }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log("result",result.data.message);
+        if(result.data.message === "Not Found"){
+          navigate('/PricingTable')
+          return
+        }
         setCompanyName(result.data.email.name);
         setMessage(result.data.email.message);
         setLink(result.data.link);
@@ -109,7 +139,7 @@ const GetReviews = () => {
             message,
             companyName,
             user,
-          },{
+          }, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -122,6 +152,10 @@ const GetReviews = () => {
     }
   }, [companyName, message]);
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row">
       <Nav />
@@ -129,8 +163,7 @@ const GetReviews = () => {
       {/* Main Content */}
       <div className="flex-1 bg-[rgb(241,241,241)]  p-4 lg:p-8 overflow-auto lg:ml-64">
         {" "}
-        {/* Adjust padding and margin for mobile */}
-        {/* Tabs */}
+    
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
           <a href="/GetReviews">
             <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
@@ -159,10 +192,7 @@ const GetReviews = () => {
             <p>Invite Your Customers</p>
             <p className="text-gray-400">Monthly limits: 0/10</p>
           </div>
-          <p className="mb-2">
-            Do you have a list of contacts?{" "}
-            <span className="text-blue-500">Upload CSV</span>
-          </p>
+
 
           {/* Render input fields dynamically */}
           {inputs.map((input, index) => (
@@ -189,22 +219,25 @@ const GetReviews = () => {
             </div>
           ))}
 
-          <div className="flex items-center mb-4">
+          {/* <div className="flex items-center mb-4">
             <input type="checkbox" id="consent" className="mr-2 text-white" />
             <label htmlFor="consent">
               I have consent to send messages to this contact
             </label>
-          </div>
-          <div className="flex flex-col lg:flex-row justify-between">
+          </div> */}
+  
+          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
             <button
               onClick={handleAddLine}
-              className="border border-white px-4 py-2 rounded-lg mb-4 lg:mb-0"
+              className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
             >
-              + Add Line
+              <Plus className="w-5 h-5 mr-2 text-gray-400" />
+              Add Contact
             </button>
-            <button  onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
-              Request a Review
-            </button>
+            <EnhancedSubmitButton
+              onSubmit={handleSubmit}
+              className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+            />
           </div>
         </div>
         {/* Edit Template */}
@@ -306,39 +339,22 @@ const GetReviews = () => {
             </div>
           </div>
         </div>
-        {/* Automated Reminders */}
-        <div className="bg-white p-4 lg:p-6 rounded-lg">
-          <h2 className="text-xl font-bold mb-4">Automated Reminders</h2>
-          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-4">
-            <p className="mb-2 lg:mb-0">
-              Send reminders to customers who haven’t reviewed you yet:
-            </p>
-            <div className="flex space-x-4">
-              <div className="flex items-center mb-2 lg:mb-0">
-                <ToggleSwitch
-                  checked={autoReminder3Days}
-                  onChange={() => setAutoReminder3Days(!autoReminder3Days)}
-                />
-                <label className="ml-2">3 Days</label>
-              </div>
-              <div className="flex items-center">
-                <ToggleSwitch
-                  checked={autoReminder7Days}
-                  onChange={() => setAutoReminder7Days(!autoReminder7Days)}
-                />
-                <label className="ml-2">7 Days</label>
-              </div>
-            </div>
-          </div>
-          <p className="text-gray-400 mb-2">
-            Reminders will be sent to all customers who haven’t reviewed you
-            yet.
-          </p>
-          <p className="text-gray-400">
-            Reminder emails will be sent to your customers.
-          </p>
-        </div>
+        <CustomModal
+          companyName={companyName}
+          message={message}
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+        />
+
+        <BeautifulErrorModal
+          isOpen={isErrorModalOpen}
+          onClose={() => setIsErrorModalOpen(false)}
+          errors={errorMessages}
+        />
+
+        <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)} message="Review request sent successfully via SMS!" />
       </div>
+
     </div>
   );
 };

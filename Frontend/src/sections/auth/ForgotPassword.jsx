@@ -1,19 +1,26 @@
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom'
 import { Mail, ArrowRight, Loader2 } from 'lucide-react';
+import axios from 'axios';
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const navigation = useNavigate()
+
+  const handleSubmit =async(e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
+    const result = axios.post('https://synxbackend.synxautomate.com/forgot-password',{email})
+    localStorage.setItem('forgotEmail', email)
     setTimeout(() => {
       console.log('Password reset requested for:', email);
       setIsSubmitting(false);
-      setIsSubmitted(true);
+      navigation('/ForgotPasswordOtp')
+      // setIsSubmitted(true); 
+      
     }, 2000);
   };
 

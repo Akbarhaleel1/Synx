@@ -21,12 +21,16 @@ import QrCode from './sections/QrCode.jsx'
 import HotelReview from './sections/HotelReview.jsx'
 import NegativeReview from './sections/negetiveFeedback.jsx'
 import NegativeReviewsDisplay from './sections/getNegetiveReviews.jsx'
+import PricingTable from "./sections/auth/PricingPlans.jsx";
+import ResetPassword from "./sections/auth/resetPassword.jsx";
+import ForgotPasswordOtp from "./sections/auth/ForgotPasswordOtp.jsx";
+import PlanSuccessPage from "./sections/auth/PaymentSuccess.jsx";
 
 const App = () => {
   const [isActive, setIsActive] = useState(false);
 
   const toggleForm = () => {
-    setIsActive(!isActive);
+    setIsActive(!isActive); 
   };
 
   return (
@@ -51,7 +55,10 @@ const App = () => {
           <Route path="/HotelReview" element={<HotelReview />} />
           <Route path="/userReview" element={<NegativeReview />} />
           <Route path="/negetiveReview" element={<NegativeReviewsDisplay />} />
-
+          <Route path="/PricingTable" element={<PricingTable/>} />
+          <Route path="/ForgotPasswordOtp" element={<ForgotPasswordOtp/>} />
+          <Route path="/ResetPassword" element={<ResetPassword/>} />
+          <Route path="/PlanSuccessPage" element={<PlanSuccessPage/>} />
         </Routes>
       </Router>
 

@@ -34,6 +34,9 @@ const ReviewLinkAndQRCode = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const user = localStorage.getItem('user');
+      // const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
+      //   Authorization: `Bearer ${token}`,
+      // }});
       const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});

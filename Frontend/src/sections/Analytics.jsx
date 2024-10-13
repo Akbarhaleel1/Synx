@@ -1,273 +1,22 @@
-// import { useEffect } from "react";
-// import Nav from "../components/Nav";
-// import useAuth from './customHooks/useAuth';
-// import axios from 'axios';
-
-
-
-// const getStartOfWeek = () => {
-//   const now = new Date();
-//   const firstDayOfWeek = now.getDate() - now.getDay();
-//   return new Date(now.setDate(firstDayOfWeek));
-// };
-
-// const getStartOfMonth = () => {
-//   const now = new Date();
-//   return new Date(now.getFullYear(), now.getMonth(), 1);
-// };
-
-// const getStartOfYear = () => {
-//   const now = new Date();
-//   return new Date(now.getFullYear(), 0, 1);
-// };
-
-// const filterDataByDateRange = (data, rangeStart) => {
-//   return data.filter(item => {
-//     const itemDate = new Date(item.date);
-//     return itemDate >= rangeStart;
-//   });
-// };
-
-
-// const AnalyticsDashboard = () => {
-//   useAuth();
-
-
-//   const [weeklyData, setWeeklyData] = useState(null);
-//   const [monthlyData, setMonthlyData] = useState(null);
-//   const [yearlyData, setYearlyData] = useState(null);
-//   const [selectedRange, setSelectedRange] = useState('Weekly'); // For Dropdown
-//   const [funnelData, setFunnelData] = useState({
-//     invitesSent: 0,
-//     uniqueVisits: 0,
-//     qrVisits: 0,
-//     publicReviews: 0,
-//     negativeFeedbacks: 0,
-//   });
-
-
-
-//   // useEffect(() => {
-//   //   const fetchData = async () => {
-//   //     try {
-//   //       const parsedUser = localStorage.getItem('user');
-//   //       const user = parsedUser ? JSON.parse(parsedUser) : null;
-//   //       const getToken = localStorage.getItem('token');
-//   //       const token = getToken ? JSON.parse(getToken) : null;
-
-//   //       if (!user || !token) {
-//   //         console.error('User or token is not available in local storage');
-//   //         return;
-//   //       }
-
-//   //       console.log('useEffect is working');
-//   //       const response = await axios.post('http://localhost:3000/analytics', { user }, {
-//   //         headers: {
-//   //           Authorization: `Bearer ${token}`,
-//   //         },
-//   //       });
-
-//   //       console.log('response', response);
-//   //     } catch (error) {
-//   //       console.error('Error fetching data:', error);
-//   //     }
-//   //   };
-
-//   //   fetchData();
-//   // }, []);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         const parsedUser = localStorage.getItem('user');
-//         const user = parsedUser ? JSON.parse(parsedUser) : null;
-//         const getToken = localStorage.getItem('token');
-//         const token = getToken ? JSON.parse(getToken) : null;
-
-//         if (!user || !token) {
-//           console.error('User or token is not available in local storage');
-//           return;
-//         }
-
-//         const response = await axios.post('http://localhost:3000/analytics', { user }, {
-//           headers: {
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         const data = response.data.data;
-
-//         // Filter data based on weekly, monthly, and yearly ranges
-//         const weekStart = getStartOfWeek();
-//         const monthStart = getStartOfMonth();
-//         const yearStart = getStartOfYear();
-
-//         setWeeklyData({
-//           negative: filterDataByDateRange(data.negative, weekStart),
-//           qr: filterDataByDateRange(data.qr, weekStart),
-//           visitCount: filterDataByDateRange(data.visitCount, weekStart),
-//         });
-
-//         setMonthlyData({
-//           negative: filterDataByDateRange(data.negative, monthStart),
-//           qr: filterDataByDateRange(data.qr, monthStart),
-//           visitCount: filterDataByDateRange(data.visitCount, monthStart),
-//         });
-
-//         setYearlyData({
-//           negative: filterDataByDateRange(data.negative, yearStart),
-//           qr: filterDataByDateRange(data.qr, yearStart),
-//           visitCount: filterDataByDateRange(data.visitCount, yearStart),
-//         });
-
-//         // Assuming funnel-related data comes from the response
-//         setFunnelData({
-//           invitesSent: data.invitesSent || 0,
-//           uniqueVisits: data.uniqueVisits || 0,
-//           qrVisits: data.qrVisits || 0,
-//           publicReviews: data.publicReviews || 0,
-//           negativeFeedbacks: data.negativeFeedbacks || 0,
-//         });
-
-//       } catch (error) {
-//         console.error('Error fetching data:', error);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   const getCurrentData = () => {
-//     if (selectedRange === 'Weekly') return weeklyData;
-//     if (selectedRange === 'Monthly') return monthlyData;
-//     if (selectedRange === 'Yearly') return yearlyData;
-//     return null;
-//   };
-
-
-//   return (
-//     <div className="flex flex-col md:flex-row min-h-screen bg-gray-900 text-white">
-//       {/* Adjust the width of the Nav component based on screen size */}
-//       <Nav className="w-full md:w-64" />
-
-//       {/* Ensure the main content fills the remaining space and adjusts accordingly */}
-//       <main className="flex-1 p-4 md:p-8 bg-[rgb(241,241,241)] md:ml-64">
-//         <div className="max-w-7xl mx-auto">
-//           <h2 className="text-2xl font-semibold mb-2 text-black">Analytics</h2>
-//           <p className="text-black mb-6">
-//             Monitor how your online reputation is improving over time. The
-//             reported data is updated once a day.
-//           </p>
-
-//           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-//             {/* New Public Review */}
-//             <div className="bg-gray-950 rounded-lg p-6">
-//               <div className="flex justify-between items-center mb-4">
-//                 <span className="text-gray-400">since July 28</span>
-//                 <h3 className="text-lg font-semibold">New Public Review</h3>
-//               </div>
-//               <p className="text-3xl font-bold mb-4">+3</p>
-//               <p className="text-sm text-gray-400 mb-2">
-//                 Number of new public reviews
-//               </p>
-//               <div className="space-y-1">
-//                 <div className="flex items-center">
-//                   <span className="w-8">5★</span>
-//                   <div className="flex-1 h-2 bg-green-500 rounded"></div>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <span className="w-8">4★</span>
-//                   <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <span className="w-8">3★</span>
-//                   <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <span className="w-8">2★</span>
-//                   <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-//                 </div>
-//                 <div className="flex items-center">
-//                   <span className="w-8">1★</span>
-//                   <div className="flex-1 h-2 bg-red-500 rounded w-1/4"></div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Review Growth */}
-//             <div className="bg-gray-950 rounded-lg p-6">
-//               <h3 className="text-lg font-semibold mb-4">Review Growth</h3>
-//               <div className="h-48 bg-gray-950 rounded relative">
-//                 <div className="absolute bottom-0 left-0 w-full h-full flex items-end justify-around">
-//                   <div className="w-1/5 bg-red-400 h-1/3"></div>
-//                   <div className="w-1/5 bg-red-400 h-2/3"></div>
-//                   <div className="w-1/5 bg-red-400 h-1/2"></div>
-//                   <div className="w-1/5 bg-red-400 h-5/6"></div>
-//                 </div>
-//               </div>
-//             </div>
-
-//             {/* Review Funnel */}
-//             <div className="bg-gray-950 rounded-lg p-6">
-//               <h3 className="text-lg font-semibold mb-4">Review Funnel</h3>
-//               <ul className="space-y-2">
-//                 <li className="flex justify-between items-center">
-//                   <span>🌟 Invites Sent</span>
-//                   <span className="bg-gray-600 px-3 py-1 rounded-full">4</span>
-//                 </li>
-//                 <li className="flex justify-between items-center">
-//                   <span>👁️ Total Unique Visits</span>
-//                   <span className="bg-gray-600 px-3 py-1 rounded-full">1</span>
-//                 </li>
-//                 <li className="flex justify-between items-center">
-//                   <span>📱 QR Code Unique Visits</span>
-//                   <span className="bg-gray-600 px-3 py-1 rounded-full">3</span>
-//                 </li>
-//                 <li className="flex justify-between items-center">
-//                   <span>💬 New Public Reviews</span>
-//                   <span className="bg-gray-600 px-3 py-1 rounded-full">0</span>
-//                 </li>
-//                 <li className="flex justify-between items-center">
-//                   <span>⚠️ Negative Feedbacks</span>
-//                   <span className="bg-gray-600 px-3 py-1 rounded-full">0</span>
-//                 </li>
-//               </ul>
-//             </div>
-
-//             {/* Average Rating Growth */}
-//             <div className="bg-gray-950 rounded-lg p-6">
-//               <h3 className="text-lg font-semibold mb-4">Average Rating Growth</h3>
-//               <div className="h-48 bg-gray-950 rounded relative">
-//                 <div className="absolute bottom-0 left-0 w-full h-full flex items-end justify-around">
-//                   <div className="w-1/5 bg-red-400 h-1/4"></div>
-//                   <div className="w-1/5 bg-red-400 h-1/2"></div>
-//                   <div className="w-1/5 bg-red-400 h-1/3"></div>
-//                   <div className="w-1/5 bg-red-400 h-3/4"></div>
-//                 </div>
-//               </div>
-//             </div>
-
-//           </div>
-//         </div>
-//       </main>
-//     </div>
-//   );
-// };
-
-// export default AnalyticsDashboard;
-
 
 import React, { useState, useEffect } from "react";
 import Nav from "../components/Nav";
 import useAuth from './customHooks/useAuth';
 import axios from 'axios';
 import { ChevronDown } from 'lucide-react';
+import CustomPieChart from "./components/graph/CustomPieChart";
+import IncomeChart from "./components/graph/IncomeChart";
+import PublicReviewChart from "./components/graph/starRating";
+import {useNavigate} from 'react-router-dom';
+
+
 
 const getStartOfWeek = () => {
   const now = new Date();
   const firstDayOfWeek = now.getDate() - now.getDay();
   return new Date(now.setDate(firstDayOfWeek));
 };
+
 
 const getStartOfMonth = () => {
   const now = new Date();
@@ -352,6 +101,9 @@ const ReviewFunnel = ({ funnelData, selectedRange, setSelectedRange }) => {
 const AnalyticsDashboard = () => {
   useAuth();
 
+  const navigate = useNavigate()
+
+
   const [weeklyData, setWeeklyData] = useState(null);
   const [monthlyData, setMonthlyData] = useState(null);
   const [yearlyData, setYearlyData] = useState(null);
@@ -382,6 +134,11 @@ const AnalyticsDashboard = () => {
             Authorization: `Bearer ${token}`,
           },
         });
+
+        if(response.data.message === "Not Found"){
+          navigate('/PricingTable')
+          return
+        }
 
         const data = response.data.data;
 
@@ -419,8 +176,8 @@ const AnalyticsDashboard = () => {
 
   const updateFunnelData = (data, range) => {
     const rangeStart = range === 'Weekly' ? getStartOfWeek() :
-                       range === 'Monthly' ? getStartOfMonth() :
-                       getStartOfYear();
+      range === 'Monthly' ? getStartOfMonth() :
+        getStartOfYear();
 
     setFunnelData({
       invitesSent: filterDataByDateRange(data.invitesSent || [], rangeStart).length,
@@ -450,71 +207,19 @@ const AnalyticsDashboard = () => {
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* New Public Review */}
-            <div className="bg-gray-950 rounded-lg p-6">
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-gray-400">since July 28</span>
-                <h3 className="text-lg font-semibold">New Public Review</h3>
-              </div>
-              <p className="text-3xl font-bold mb-4">+3</p>
-              <p className="text-sm text-gray-400 mb-2">
-                Number of new public reviews
-              </p>
-              <div className="space-y-1">
-                <div className="flex items-center">
-                  <span className="w-8">5★</span>
-                  <div className="flex-1 h-2 bg-green-500 rounded"></div>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-8">4★</span>
-                  <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-8">3★</span>
-                  <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-8">2★</span>
-                  <div className="flex-1 h-2 bg-gray-600 rounded"></div>
-                </div>
-                <div className="flex items-center">
-                  <span className="w-8">1★</span>
-                  <div className="flex-1 h-2 bg-red-500 rounded w-1/4"></div>
-                </div>
-              </div>
-            </div>
+            <PublicReviewChart />
 
-            {/* Review Growth */}
-            <div className="bg-gray-950 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Review Growth</h3>
-              <div className="h-48 bg-gray-950 rounded relative">
-                <div className="absolute bottom-0 left-0 w-full h-full flex items-end justify-around">
-                  <div className="w-1/5 bg-red-400 h-1/3"></div>
-                  <div className="w-1/5 bg-red-400 h-2/3"></div>
-                  <div className="w-1/5 bg-red-400 h-1/2"></div>
-                  <div className="w-1/5 bg-red-400 h-5/6"></div>
-                </div>
-              </div>
-            </div>
+
+            <CustomPieChart />
 
             {/* Review Funnel */}
-            <ReviewFunnel 
-              funnelData={funnelData} 
-              selectedRange={selectedRange} 
-              setSelectedRange={setSelectedRange} 
+            <ReviewFunnel
+              funnelData={funnelData}
+              selectedRange={selectedRange}
+              setSelectedRange={setSelectedRange}
             />
 
-            {/* Average Rating Growth */}
-            <div className="bg-gray-950 rounded-lg p-6">
-              <h3 className="text-lg font-semibold mb-4">Average Rating Growth</h3>
-              <div className="h-48 bg-gray-950 rounded relative">
-                <div className="absolute bottom-0 left-0 w-full h-full flex items-end justify-around">
-                  <div className="w-1/5 bg-red-400 h-1/4"></div>
-                  <div className="w-1/5 bg-red-400 h-1/2"></div>
-                  <div className="w-1/5 bg-red-400 h-1/3"></div>
-                  <div className="w-1/5 bg-red-400 h-3/4"></div>
-                </div>
-              </div>
-            </div>
+            <IncomeChart />
           </div>
         </div>
       </main>
