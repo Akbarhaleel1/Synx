@@ -58,7 +58,7 @@ const emailpage=async(req,res)=>{
   try {
     const emailtemp=await EmailTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
-    const subscribeData=await Subscription.findOne({user:user._id})
+    const subscribeData=await Subscription.findOne({user:userData._id})
     let limit;
     if(subscribeData.subscriptionType=="SILVER"){
       limit=20
