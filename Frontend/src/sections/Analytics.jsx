@@ -198,7 +198,7 @@ const AnalyticsDashboard = () => {
         getStartOfYear();
 
     setFunnelData({
-      invitesSent: filterDataByDateRange(data.invitesSent || [], rangeStart).length,
+      invitesSent: filterDataByDateRange(data.linksentcount || [], rangeStart).length,
       uniqueVisits: filterDataByDateRange(data.visitCount || [], rangeStart).length,
       qrVisits: filterDataByDateRange(data.qr || [], rangeStart).length,
       // publicReviews: filterDataByDateRange(data.publicReviews || [], rangeStart).length,
