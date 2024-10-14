@@ -237,7 +237,7 @@ const Integrations = () => {
               className="border p-2 rounded-lg w-full sm:w-1/3 mb-4 sm:mb-0"
             />
             <span className="text-gray-600">
-              Platforms Integrated: {integratedPlatforms} / {platforms.length}
+              Platforms Integrated: {integrated.length} / {platforms.length}
             </span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

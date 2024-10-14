@@ -176,7 +176,7 @@ const GetReviewsEmail = () => {
           <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p>Invite Your Customers</p>
-            <p className="text-gray-400">Monthly limits: 0/10</p>
+            <p className="text-gray-400">Monthly limits: Unlimited</p>
           </div>
 
 
