@@ -4,6 +4,7 @@ const ReviewLink=require("../../models/reviewLink")
 const EmailTemplate=require("../../models/emailtemp")
 const Etemplate=require("../../models/template")
 const WhatsapTemplate=require("../../models/whatsappTemplate")
+const Subscription = require('../../models/subscription');
 
 const generateqr= async (req, res) => {
   const {user}=req.body
@@ -57,11 +58,20 @@ const emailpage=async(req,res)=>{
   try {
     const emailtemp=await EmailTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
+    const subscribeData=await Subscription.findOne({user:user._id})
+    let limit;
+    if(subscribeData.subscriptionType=="SILVER"){
+      limit=20
+    }else if(subscribeData.subscriptionType=="GOLD"){
+      limit=50
+    }else if(subscribeData.subscriptionType=="DIAMOND"){
+      limit=100
+    }
     if(!emailtemp||!linkdata){
       return res.status(200).send({status:false})
     }
     console.log('emailtemp',emailtemp)
-    return res.status(200).send({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true})
+    return res.status(200).send({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
     
   }
@@ -142,12 +152,21 @@ const wpage=async(req,res)=>{
   try {
     const whatsaptemp=await WhatsapTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
+    const subscribeData=await Subscription.findOne({user:user._id})
+    let limit;
+    if(subscribeData.subscriptionType=="SILVER"){
+      limit=20
+    }else if(subscribeData.subscriptionType=="GOLD"){
+      limit=50
+    }else if(subscribeData.subscriptionType=="DIAMOND"){
+      limit=100
+    }
     console.log('whatsapp',whatsaptemp);
     console.log('linkdata',linkdata);
     if(!whatsaptemp||!linkdata){
       return res.status(200).send({status:false})
     }
-    return res.status(200).json({msg:"whatspage",whatsap:whatsaptemp,link:linkdata.link,status:true})
+    return res.status(200).json({msg:"whatspage",whatsap:whatsaptemp,link:linkdata.link,status:true,balance:subscribeData.whatsappLimit,limit:limit})
   } catch (error) {
     return res.status(500).json({msg:"error "})
   }
