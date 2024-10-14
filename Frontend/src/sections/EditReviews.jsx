@@ -44,7 +44,7 @@ const EditReviews = () => {
       console.log('respoince',responce.data)
       const endPoint = responce.data.link.endpoint;      ;
       console.log('endPoint',endPoint)
-      setLinkTitle(result.data.reviewLink.title)
+      setLinkTitle(result.data.title)
       setEndpoint(endPoint)
     }
     fetchEndPoint()
