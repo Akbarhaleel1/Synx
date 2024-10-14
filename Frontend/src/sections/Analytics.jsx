@@ -85,10 +85,10 @@ const ReviewFunnel = ({ funnelData, selectedRange, setSelectedRange }) => {
           <span>📱 QR Code Unique Visits</span>
           <span className="bg-gray-600 px-3 py-1 rounded-full">{funnelData.qrVisits}</span>
         </li>
-        <li className="flex justify-between items-center">
+        {/* <li className="flex justify-between items-center">
           <span>💬 New Public Reviews</span>
           <span className="bg-gray-600 px-3 py-1 rounded-full">{funnelData.publicReviews}</span>
-        </li>
+        </li> */}
         <li className="flex justify-between items-center">
           <span>⚠️ Negative Feedbacks</span>
           <span className="bg-gray-600 px-3 py-1 rounded-full">{funnelData.negativeFeedbacks}</span>
@@ -186,7 +186,7 @@ const AnalyticsDashboard = () => {
       invitesSent: filterDataByDateRange(data.invitesSent || [], rangeStart).length,
       uniqueVisits: filterDataByDateRange(data.visitCount || [], rangeStart).length,
       qrVisits: filterDataByDateRange(data.qr || [], rangeStart).length,
-      publicReviews: filterDataByDateRange(data.publicReviews || [], rangeStart).length,
+      // publicReviews: filterDataByDateRange(data.publicReviews || [], rangeStart).length,
       negativeFeedbacks: filterDataByDateRange(data.negative || [], rangeStart).length,
     });
   };

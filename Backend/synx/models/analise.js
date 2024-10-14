@@ -13,6 +13,13 @@ const analize = new mongoose.Schema({
                 type:Date
             }
         }
+    ],
+    linksentcount:[
+        {
+            date:{
+                type:Date
+            }
+        }
     ]
     ,
     visitCount:[

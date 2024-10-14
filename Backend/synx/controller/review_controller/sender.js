@@ -7,6 +7,8 @@ const Etemplate=require("../../models/template")
 const axios = require('axios');
 const whatsapTemplate=require("../../models/whatsappTemplate")
 const Subscription = require('../../models/subscription');
+const Analytics = require("../../models/analise");
+
 
 const plivoClient = new plivo.Client(process.env.PLIVO_AUTH_ID, process.env.PLIVO_AUTH_TOKEN);
 const sms = async (req, res) => {
@@ -62,6 +64,19 @@ const sms = async (req, res) => {
       results.push({ name, status: 'Failed', error: error.message });
     }
     console.log('4')
+    const currentDate = new Date();
+    const update = {
+      $push: {
+        linksentcount: { date: currentDate },
+        ...(qrPoint != null && { qr: { date: currentDate } }),
+      },
+    };
+
+    const analytics = await Analytics.findOneAndUpdate(
+      { user: linkData.user },
+      update,
+      { new: true, upsert: true }
+    );
     
     count--;
 
