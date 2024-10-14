@@ -29,7 +29,7 @@ app.use(passport.session());
 //   allowedHeaders: ['Authorization', 'Content-Type'] 
 // }));
 
-const allowedOrigins = [process.env.DOMAIN, process.env.LOCALDOMAIN];
+const allowedOrigins = [process.env.DOMAIN];
 
 console.log(allowedOrigins)
 
