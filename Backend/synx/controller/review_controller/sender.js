@@ -20,6 +20,7 @@ const sms = async (req, res) => {
   if(!linkdata){
     return res.status(200).send({ msg: 'end data node available' });
   }
+  console.log('Linkdata is',linkdata?.user)
   console.log('emailtemp',emailtemp)
   console.log('emailtemp',linkdata)
   console.log('userDatassssssssssssssssssssssssss',userData)
@@ -74,7 +75,7 @@ const update = {
     linksentcount: { date: currentDate },
   },
 };
-console.log(linkData.user)
+
 const analytics = await Analitics.findOneAndUpdate(
   { user: linkData.user },
   update,
