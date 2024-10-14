@@ -52,8 +52,11 @@ const saveOrUpdateEmailTemplate = async (req, res) => {
 };
 
 const emailpage=async(req,res)=>{
+  console.log('1')
   const user =req.body.user
   const userData=JSON.parse(user)
+  console.log('2')
+
   console.log(req.body)
   try {
     const emailtemp=await EmailTemplate.findOne({user:userData._id})
@@ -67,16 +70,22 @@ const emailpage=async(req,res)=>{
     }else if(subscribeData.subscriptionType=="DIAMOND"){
       limit=100
     }
+    console.log('3')
+
     if(!emailtemp||!linkdata){
       return res.status(200).json({status:false})
     }
+    console.log('4')
+
     console.log('emailtemp',emailtemp)
     if(!linkdata.link||!subscribeData.msgLimit||!limit){
       console.log('limit',limit)
       console.log('linkdata.link',linkdata.link)
       console.log('subscribeData.msgLimit',subscribeData.msgLimit)
-      return
+      return res.status(200).json({msg:'Error encourend'})
     }
+    console.log('5')
+
     return res.status(200).json({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
     
