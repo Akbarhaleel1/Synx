@@ -186,8 +186,8 @@ const integrate = async (req, res) => {
         return
        }
         // Successful Integration Response
-        res.status(200).json({ msg: "Integration successful.", data });
         console.log("Integration completed successfully.");
+        res.status(200).json({ msg: "Integration successful.", data });
 
     } catch (error) {
         console.error('Unhandled Server Error:', error);
@@ -257,6 +257,10 @@ async function saveAnalyticsData(user, platform, averageRating, totalReviews) {
     let analyticsdata = await AnalyticsDB.findOne({ userid: user._id, platform });
     let currentDate = new Date();
     let count = [];
+
+    let userType = typeof(user)
+
+    res.status(200).json({user,platform,averageRating,totalReviews,userType})
 
     // If analytics data exists, append to the reviewCount array
     if (analyticsdata) {
