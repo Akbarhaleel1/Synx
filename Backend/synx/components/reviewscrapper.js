@@ -987,13 +987,13 @@ const google = async (url) => {
   try {
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
-    await page.goto(url, { waitUntil: "networkidle2" });
+    await page.goto(url, { waitUntil: "domcontentloaded" });
 console.log('1')
     // await page.waitForSelector('button[aria-label*="Reviews"]');
 
     console.log('2')
 
-    await page.waitForSelector('div[.LRkQ2]', { visible: true });
+    await page.waitForSelector('div[class="LRkQ2"]', { visible: true });
     console.log('3')
 
 
