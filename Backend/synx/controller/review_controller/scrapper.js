@@ -186,8 +186,8 @@ const integrate = async (req, res) => {
         return
        }
         // Successful Integration Response
-        console.log("Integration completed successfully.");
         res.status(200).json({ msg: "Integration successful.", data });
+        console.log("Integration completed successfully.");
 
     } catch (error) {
         console.error('Unhandled Server Error:', error);
@@ -293,7 +293,7 @@ const integratepage = async (req, res) => {
   const reviewLink = await Scrapper.find({ user: userData._id });
   try {
     if (reviewLink) {
-      res.status(200).json({ msg: "integrated items is working mahhhhh", reviewLink });
+      res.status(200).json({ msg: "integrated items is working mahhhh", reviewLink });
       console.log(reviewLink);
     }
   } catch (error) {
