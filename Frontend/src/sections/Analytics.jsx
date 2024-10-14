@@ -128,26 +128,34 @@ const AnalyticsDashboard = () => {
           console.error('User or token is not available in local storage');
           return;
         }
+        console.log('1')
 
         const response = await axios.post('https://synxbackend.synxautomate.com/analytics', { user }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         });
+        console.log('2')
+
 
         if(response.data.message === "Not Found"){
           navigate('/PricingTable')
           return
         }
+        console.log('3')
+
 
         const data = response.data.data;
+        console.log('4')
 
         console.log('response'.response)
         console.log('data is'.data)
+        console.log('5')
 
         const weekStart = getStartOfWeek();
         const monthStart = getStartOfMonth();
         const yearStart = getStartOfYear();
+        console.log('6')
 
         setWeeklyData({
           negative: filterDataByDateRange(data.negative, weekStart),
@@ -171,6 +179,7 @@ const AnalyticsDashboard = () => {
         });
 
         updateFunnelData(data, selectedRange);
+        console.log('7')
 
       } catch (error) {
         console.error('Error fetching data:', error);
