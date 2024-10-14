@@ -71,6 +71,12 @@ const emailpage=async(req,res)=>{
       return res.status(200).json({status:false})
     }
     console.log('emailtemp',emailtemp)
+    if(!linkdata.link||!subscribeData.msgLimit||!limit){
+      console.log('limit',limit)
+      console.log('linkdata.link',linkdata.link)
+      console.log('subscribeData.msgLimit',subscribeData.msgLimit)
+      return
+    }
     return res.status(200).json({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
     
