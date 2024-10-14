@@ -77,7 +77,7 @@ const update = {
 };
 
 const analytics = await analitics.findOneAndUpdate(
-  { user: linkData.user },
+  { user: linkdata.user },
   update,
   { new: true, upsert: true } 
 );
