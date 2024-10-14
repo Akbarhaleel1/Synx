@@ -5,7 +5,6 @@ const ScrapData = require("../../models/review");
 const IntegratedSite = require("../../models/integration");
 const analytics = require("../../components/analytics");
 const AnalyticsDB=require("../../models/analytics");
-const { default: plans } = require("razorpay/dist/types/plans");
 
 
 // const integrate = async (req, res) => {
