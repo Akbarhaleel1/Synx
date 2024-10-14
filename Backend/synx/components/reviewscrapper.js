@@ -1066,7 +1066,8 @@ const google = async (url) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    headless: false, // Set to false for debugging
+    executablePath: '/usr/bin/chromium-browser', // Replace with your Chromium path
+    headless: true,
     ignoreHTTPSErrors: true,
   });
 
@@ -1077,37 +1078,32 @@ const google = async (url) => {
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
-    await page.waitForSelector('button[aria-label*="Reviews"]', { visible: true });
+    await page.waitForSelector('button[aria-label*="Reviews"]');
     console.log("Found Reviews button!");
 
     await page.evaluate(() => {
-      const button = Array.from(document.querySelectorAll("button"))
-        .find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
+      const button = Array.from(document.querySelectorAll("button")).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
       if (button) {
         button.click();
         console.log("Clicked Reviews button");
       }
     });
 
-    await page.waitForNavigation({ waitUntil: "networkidle2" });
-    console.log("Navigation completed.");
-
-    await page.waitForSelector('button[aria-label="Sort reviews"]', { timeout: 60000 });
+    await page.waitForNavigation();
+    await page.waitForSelector('button[aria-label="Sort reviews"]');
     await page.click('button[aria-label="Sort reviews"]');
-    console.log("Clicked Sort reviews button.");
+    await page.waitForSelector('div[role="menuitemradio"][aria-checked="false"]');
 
-    await page.waitForSelector('div[role="menuitemradio"][aria-checked="false"]', { timeout: 60000 });
     await page.evaluate(() => {
-      const newestElement = Array.from(document.querySelectorAll('div[role="menuitemradio"]'))
-        .find((el) => el.innerText.includes("Newest"));
+      const newestElement = Array.from(document.querySelectorAll('div[role="menuitemradio"]')).find((el) => el.innerText.includes("Newest"));
       if (newestElement) {
         newestElement.click();
         console.log("Clicked on Newest sort option.");
       }
     });
 
-    await page.waitForNavigation({ waitUntil: "networkidle2" });
-    await page.waitForSelector("div[data-review-id]", { timeout: 60000 });
+    await page.waitForNavigation();
+    await page.waitForSelector("div[data-review-id]");
 
     const reviews = await page.$$eval("div[data-review-id]", (reviewEls) => {
       return reviewEls.map((reviewEl) => {
@@ -1131,7 +1127,6 @@ const google = async (url) => {
     await browser.close();
   }
 };
-
 module.exports = {
   airbnb,
   agoda,
