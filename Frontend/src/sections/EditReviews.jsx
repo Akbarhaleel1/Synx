@@ -43,7 +43,7 @@ const EditReviews = () => {
       }
       console.log('respoince',responce.data)
       const endPoint = responce.data.link.endpoint;
-      const title = result.data.link.title;
+      const title = responce.data.link.title;
       console.log('endPoint',endPoint)
       console.log('title',title)
       setLinkTitle(title)
