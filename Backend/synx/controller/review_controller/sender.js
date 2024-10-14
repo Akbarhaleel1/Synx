@@ -17,6 +17,9 @@ const sms = async (req, res) => {
   const userData = JSON.parse(user);
   const emailtemp = await EmailTemplate.findOne({ user: userData._id });
   const linkdata = await ReviewLink.findOne({ user: userData._id });
+  if(!linkdata){
+    return res.status(200).send({ msg: 'end data node available' });
+  }
   console.log('emailtemp',emailtemp)
   console.log('emailtemp',linkdata)
   console.log('userDatassssssssssssssssssssssssss',userData)
@@ -64,18 +67,19 @@ const sms = async (req, res) => {
       results.push({ name, status: 'Failed', error: error.message });
     }
     console.log('4')
-    const currentDate = new Date();
-    const update = {
-      $push: {
-        linksentcount: { date: currentDate },
-      },
-    };
-
-    const analytics = await Analytics.findOneAndUpdate(
-      { user: linkData.user },
-      update,
-      { new: true, upsert: true }
-    );
+    // Usage:
+const currentDate = new Date();
+const update = {
+  $push: {
+    linksentcount: { date: currentDate },
+  },
+};
+console.log(linkData.user)
+const analytics = await Analitics.findOneAndUpdate(
+  { user: linkData.user },
+  update,
+  { new: true, upsert: true }  // 'new' to return the updated document, 'upsert' to create if not found
+);
     
     count--;
 
