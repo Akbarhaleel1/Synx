@@ -140,7 +140,7 @@ const AnalyticsDashboard = () => {
           return
         }
 
-        const data = response.data;
+        const data = response.data.data;
 
         console.log('response'.response)
         console.log('data is'.data)
