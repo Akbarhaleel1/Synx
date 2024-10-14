@@ -61,7 +61,7 @@ const emailpage=async(req,res)=>{
   try {
     const emailtemp=await EmailTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
-    const subscribeData=await Subscription.findOne({user:userData._id})
+    const subscribeData=await Subscription.findOne({userId:userData._id})
     let limit;
     if(subscribeData.subscriptionType=="SILVER"){
       limit=20
@@ -88,7 +88,8 @@ const emailpage=async(req,res)=>{
 
     return res.status(200).json({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
-    
+    console.log('error encouted')
+    res.status(500).json({ error: "Failed to save or update email template" });
   }
 }
 
@@ -167,7 +168,7 @@ const wpage=async(req,res)=>{
   try {
     const whatsaptemp=await WhatsapTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
-    const subscribeData=await Subscription.findOne({user:user._id})
+    const subscribeData=await Subscription.findOne({userId:userData._id})
     let limit;
     if(subscribeData.subscriptionType=="SILVER"){
       limit=20
