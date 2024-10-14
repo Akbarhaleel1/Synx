@@ -989,15 +989,11 @@ const google = async (url) => {
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "domcontentloaded" });
 console.log('1')
-    // await page.waitForSelector('button[aria-label*="Reviews"]');
+    await page.waitForSelector('button[aria-label*="Reviews"]');
 
     console.log('2')
 
-    await page.waitForSelector('div[class="LRkQ2"]', { visible: true });
     console.log('3')
-
-
-
     await page.evaluate(() => {
       const button = Array.from(
         document.querySelectorAll("button")
