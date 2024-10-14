@@ -985,7 +985,7 @@ const google = async (url) => {
   console.log("live share",url)
 
   try {
-    // await page.setViewport({ width: 1080, height: 1024 });
+    await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
