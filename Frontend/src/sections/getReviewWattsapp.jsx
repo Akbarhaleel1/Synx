@@ -301,8 +301,7 @@ const SynXPlusReviewRequest = () => {
                   </div>
                   <div className="bg-[#025D4B] text-white p-2 rounded-lg max-w-[80%] ml-auto mb-1">
                     <p className="text-sm">
-                      Hi [Name], Thanks for choosing {companyName}. We'd love to hear your
-                      feedback.
+                      {messageTemplate}
                     </p>
                   </div>
                   <div className="bg-[#025D4B] text-white p-2 rounded-lg max-w-[80%] ml-auto">
