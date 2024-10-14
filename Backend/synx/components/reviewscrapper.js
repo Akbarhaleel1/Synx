@@ -1066,62 +1066,67 @@ const google = async (url) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
+    headless: false, // Set to false for debugging
     ignoreHTTPSErrors: true,
   });
-  
+
   const page = await createPage(browser);
-  console.log("live share", url);
+  console.log("Visiting:", url);
 
   try {
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
-    await page.waitForSelector('button[aria-label*="Reviews"]', { visible: true, timeout: 60000 });
-    
+    await page.waitForSelector('button[aria-label*="Reviews"]', { visible: true });
+    console.log("Found Reviews button!");
+
     await page.evaluate(() => {
       const button = Array.from(document.querySelectorAll("button"))
         .find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
       if (button) {
         button.click();
+        console.log("Clicked Reviews button");
       }
     });
 
-    await page.waitForNavigation();
-    await page.waitForSelector('button[aria-label="Sort reviews"]');
-    
-    await page.click('button[aria-label="Sort reviews"]');
-    await page.waitForSelector('div[role="menuitemradio"][aria-checked="false"]');
+    await page.waitForNavigation({ waitUntil: "networkidle2" });
+    console.log("Navigation completed.");
 
+    await page.waitForSelector('button[aria-label="Sort reviews"]', { timeout: 60000 });
+    await page.click('button[aria-label="Sort reviews"]');
+    console.log("Clicked Sort reviews button.");
+
+    await page.waitForSelector('div[role="menuitemradio"][aria-checked="false"]', { timeout: 60000 });
     await page.evaluate(() => {
       const newestElement = Array.from(document.querySelectorAll('div[role="menuitemradio"]'))
         .find((el) => el.innerText.includes("Newest"));
       if (newestElement) {
         newestElement.click();
+        console.log("Clicked on Newest sort option.");
       }
     });
 
-    await page.waitForNavigation();
-    await page.waitForSelector("div[data-review-id]");
+    await page.waitForNavigation({ waitUntil: "networkidle2" });
+    await page.waitForSelector("div[data-review-id]", { timeout: 60000 });
 
     const reviews = await page.$$eval("div[data-review-id]", (reviewEls) => {
       return reviewEls.map((reviewEl) => {
         const platform = "google";
-        const image = reviewEl.querySelector("button.WEBjve img")?.src || reviewEl.querySelector("img.NBa7we")?.src || "";
+        const image = reviewEl.querySelector("button.WEBjve img")?.src || "";
         const name = reviewEl.querySelector("div.d4r55")?.innerText || "";
-        const review = reviewEl.querySelector(".MyEned")?.innerText || reviewEl.querySelector("span.wiI7pd")?.innerText || "";
-        const date = reviewEl.querySelector(".rsqaWe")?.innerText || reviewEl.querySelector("span.xRkPPb")?.innerText || "";
-        const rating = reviewEl.querySelectorAll(".NhBTye.elGi1d").length || reviewEl.querySelector("span.fzvQIb")?.innerText[0] || "";
+        const review = reviewEl.querySelector(".MyEned")?.innerText || "";
+        const date = reviewEl.querySelector(".rsqaWe")?.innerText || "";
+        const rating = reviewEl.querySelectorAll(".NhBTye.elGi1d").length || "";
 
         return { platform, image, name, review, date, rating };
       });
     });
 
+    console.log("Fetched Reviews:", reviews);
     return reviews;
+
   } catch (error) {
     console.error("Error fetching reviews:", error);
-    await page.screenshot({ path: 'error_screenshot.png', fullPage: true }); // Take a screenshot on error
   } finally {
     await browser.close();
   }
