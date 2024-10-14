@@ -68,7 +68,6 @@ const sms = async (req, res) => {
     const update = {
       $push: {
         linksentcount: { date: currentDate },
-        ...(qrPoint != null && { qr: { date: currentDate } }),
       },
     };
 
