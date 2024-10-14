@@ -258,11 +258,6 @@ async function saveAnalyticsData(user, platform, averageRating, totalReviews) {
     let currentDate = new Date();
     let count = [];
 
-    let userType = typeof(user)
-
-    res.status(200).json({user,platform,averageRating,totalReviews,userType})
-    return
-
     // If analytics data exists, append to the reviewCount array
     if (analyticsdata) {
       count = analyticsdata.reviewCount || []; // Ensure it's an array
@@ -298,7 +293,7 @@ const integratepage = async (req, res) => {
   const reviewLink = await Scrapper.find({ user: userData._id });
   try {
     if (reviewLink) {
-      res.status(200).json({ msg: "integrated items", reviewLink });
+      res.status(200).json({ msg: "integrated items is working mahhhhh", reviewLink });
       console.log(reviewLink);
     }
   } catch (error) {
