@@ -68,10 +68,10 @@ const emailpage=async(req,res)=>{
       limit=100
     }
     if(!emailtemp||!linkdata){
-      return res.status(200).send({status:false})
+      return res.status(200).json({status:false})
     }
     console.log('emailtemp',emailtemp)
-    return res.status(200).send({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
+    return res.status(200).json({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
     
   }
