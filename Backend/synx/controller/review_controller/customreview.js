@@ -114,7 +114,7 @@ const feedback = async (req, res) => {
 
     console.log('Analytics:', analytics);
 
-    return res.status(200).json({ message: "Feedback recorded successfully." });
+    return res.status(200).json({ message: "Feedback recorded successfully." ,reviewLink});
     
   } catch (error) {
     console.error('Error in feedback function:', error);

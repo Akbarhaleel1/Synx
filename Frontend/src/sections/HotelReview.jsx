@@ -7,8 +7,10 @@ import axios from 'axios'
 
 const HotelReview = () => {
   const [rating, setRating] = useState(0);
+  const [message,setMessage] = useState('')
   const navigate = useNavigate();
   const location = useLocation();
+  
 
   // useAuth();
 
@@ -28,6 +30,7 @@ const HotelReview = () => {
       // const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', {endpoint, qrPoint });
       const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', {endpoint, qrPoint });
       console.log('result',result)
+      setMessage(result.data.reviewLink.title)
     }
     sendPoint()
   },[])
@@ -53,7 +56,7 @@ const HotelReview = () => {
                 <path d="M40 90 V70 H60 V90" strokeWidth="4" stroke="white" fill="none" />
               </svg>
             </div>
-            <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">How was your stay at Hotel Dain Castle?</h2>
+            <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">{message}</h2>
             <div className="flex justify-center space-x-2 mb-8">
               {[1, 2, 3, 4, 5].map((star) => (
                 <Star
