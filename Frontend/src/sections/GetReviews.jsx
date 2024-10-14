@@ -156,6 +156,11 @@ const GetReviews = () => {
     setIsModalOpen(false);
   };
 
+  const handleDeleteLine = (index) => {
+    const newInputs = inputs.filter((_, i) => i !== index);
+    setInputs(newInputs);
+  };
+
   return (
     <div className="flex flex-col lg:flex-row">
       <Nav />
@@ -186,60 +191,61 @@ const GetReviews = () => {
             </button>
           </a>
         </div>
+
+
+
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
-          <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
-          <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
-            <p>Invite Your Customers</p>
-            <p className="text-gray-400">Monthly limits: 0/10</p>
-          </div>
-
-
-          {/* Render input fields dynamically */}
-          {inputs.map((input, index) => (
-            <div
-              key={index}
-              className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4"
-            >
-              <input
-                type="text"
-                name="name"
-                value={input.name}
-                placeholder="Name"
-                className="bg-gray-800 p-2 rounded-lg w-full lg:w-1/2 text-white"
-                onChange={(e) => handleInputChange(index, e)}
-              />
-              <input
-                type="text"
-                name="contact"
-                value={input.contact}
-                placeholder="Contact Number"
-                className="bg-gray-800 p-2 rounded-lg w-full lg:w-1/2 text-white"
-                onChange={(e) => handleInputChange(index, e)}
-              />
-            </div>
-          ))}
-
-          {/* <div className="flex items-center mb-4">
-            <input type="checkbox" id="consent" className="mr-2 text-white" />
-            <label htmlFor="consent">
-              I have consent to send messages to this contact
-            </label>
-          </div> */}
-  
-          <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
-            <button
-              onClick={handleAddLine}
-              className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
-            >
-              <Plus className="w-5 h-5 mr-2 text-gray-400" />
-              Add Contact
-            </button>
-            <EnhancedSubmitButton
-              onSubmit={handleSubmit}
-              className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
-            />
-          </div>
+      <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
+        <p>Invite Your Customers</p>
+        <p className="text-gray-400">Monthly limits: 0/10</p>
+      </div>
+      {inputs.map((input, index) => (
+        <div
+          key={index}
+          className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
+        >
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            placeholder="Name"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <input
+            type="text"
+            name="contact"
+            value={input.contact}
+            placeholder="Contact Number"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <button
+            onClick={() => handleDeleteLine(index)}
+            className="p-2 rounded-lg bg-red-500 hover:bg-red-600 transition duration-150 ease-in-out"
+          >
+            <Trash2 className="w-5 h-5 text-white" />
+          </button>
         </div>
+      ))}
+      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
+        <button
+          onClick={handleAddLine}
+          className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+        >
+          <Plus className="w-5 h-5 mr-2 text-gray-400" />
+          Add Contact
+        </button>
+        <EnhancedSubmitButton
+          onSubmit={handleSubmit}
+          className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+        />
+      </div>
+    </div>
+
+
+
         {/* Edit Template */}
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
           <h2 className="text-xl font-bold mb-4">Edit Template</h2>
