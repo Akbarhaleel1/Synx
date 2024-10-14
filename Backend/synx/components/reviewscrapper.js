@@ -916,7 +916,7 @@ const goibibo = async (url) => {
     ignoreHTTPSErrors: true,
   });
 
-  const page = await browser.newPage();
+  const page = await createPage(browser);
 
   try {
     await page.setViewport({ width: 1080, height: 1024 });
@@ -981,7 +981,7 @@ const google = async (url) => {
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
-  const page = await browser.newPage();
+  const page = await createPage(browser);
 
   try {
     await page.setViewport({ width: 1080, height: 1024 });

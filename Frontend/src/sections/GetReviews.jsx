@@ -270,7 +270,7 @@ const GetReviews = () => {
             onClick={() => handleDeleteLine(index)}
             className="p-2 rounded-lg bg-red-500 hover:bg-red-600 transition duration-150 ease-in-out"
           >
-            {/* <Trash2 className="w-5 h-5 text-white" /> */}
+            <Trash2 className="w-5 h-5 text-white" />
           </button>
         </div>
       ))}
