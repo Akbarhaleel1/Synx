@@ -7,9 +7,9 @@ const getAnalytics= async (req,res)=>{
         console.log(user)
         const data=await Analytics.findOne({user:user._id});
         console.log('Analytics data is this',data)
-        return res.status(200).send({msg:"data send successfully",data})
+        return res.status(200).json({msg:"data send successfully",data})
     } catch (error) {
-        return res.status(500).send({msg:"error",error})
+        return res.status(500).json({msg:"error",error})
     }
 }
 
