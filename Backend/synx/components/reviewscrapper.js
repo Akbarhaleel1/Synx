@@ -982,6 +982,7 @@ const google = async (url) => {
     ignoreHTTPSErrors: true,
   });
   const page = await createPage(browser);
+  console.log("live share",url)
 
   try {
     // await page.setViewport({ width: 1080, height: 1024 });
@@ -1051,6 +1052,8 @@ const google = async (url) => {
         };
       });
     });
+
+    console.log("reviews",reviews)
 
     return reviews;
   } catch (error) {
