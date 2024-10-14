@@ -57,7 +57,7 @@ const emailpage=async(req,res)=>{
   const userData=JSON.parse(user)
   console.log('2')
 
-  console.log(req.body)
+  console.log('userData',userData)
   try {
     const emailtemp=await EmailTemplate.findOne({user:userData._id})
     const linkdata= await ReviewLink.findOne({user:userData._id})
@@ -85,7 +85,7 @@ const emailpage=async(req,res)=>{
       return res.status(200).json({msg:'Error encourend'})
     }
     console.log('5')
-
+    
     return res.status(200).json({msg:"emailpage",email:emailtemp,link:linkdata.link,status:true,balance:subscribeData.msgLimit,limit:limit})
   } catch (error) {
     console.log('error encouted')
