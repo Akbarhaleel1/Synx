@@ -988,12 +988,14 @@ const google = async (url) => {
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
-
+console.log('1')
     // await page.waitForSelector('button[aria-label*="Reviews"]');
 
-    await page.waitForSelector('div.RWPxGd', { visible: true });
-    await page.waitForSelector('button[aria-label*="Reviews"]', { visible: true });
-    
+    console.log('2')
+
+    await page.waitForSelector('div[.LRkQ2]', { visible: true });
+    console.log('3')
+
 
 
     await page.evaluate(() => {
@@ -1004,6 +1006,8 @@ const google = async (url) => {
         button.click();
       }
     });
+    console.log('4')
+
     await page.waitForNavigation();
     await page.waitForSelector('button[aria-label="Sort reviews"]');
     await page.click('button[aria-label="Sort reviews"]');
