@@ -38,6 +38,8 @@ const filterDataByDateRange = (data, rangeStart) => {
 const ReviewFunnel = ({ funnelData, selectedRange, setSelectedRange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
+  console.log('funnelData',funnelData)
+
   const toggleDropdown = () => setIsOpen(!isOpen);
 
   const handleRangeSelect = (range) => {
