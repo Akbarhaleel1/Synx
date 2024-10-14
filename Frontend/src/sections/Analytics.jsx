@@ -139,10 +139,11 @@ const AnalyticsDashboard = () => {
           navigate('/PricingTable')
           return
         }
-
-        const data = response.data;
-
         console.log('response'.response)
+        
+        const data = response.data.data;
+
+       
         console.log('data is'.data)
 
         const weekStart = getStartOfWeek();
