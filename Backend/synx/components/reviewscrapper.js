@@ -991,11 +991,9 @@ const google = async (url) => {
 
     // await page.waitForSelector('button[aria-label*="Reviews"]');
 
-    await page.evaluate(() => {
-      const buttons = Array.from(document.querySelectorAll('button'));
-      return buttons.find(button => button.getAttribute('aria-label')?.includes('Reviews'));
-    });
-    
+    await page.waitForSelector('button.hh2c6');
+const reviewButton = await page.$eval('button.hh2c6', el => el.textContent.includes('Reviews') ? el : null);
+
 
     await page.evaluate(() => {
       const button = Array.from(
