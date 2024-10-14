@@ -162,7 +162,7 @@ const email= async (req, res) => {
     <tr>
       <td class="header">
         <img src="https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=210,fit=crop,q=95/A0xVOQqjK4S17GrG/untitled-design-86-mv0jGPqKXZhKz4k8.png" alt="Logo">
-        <p>${'currentDate'}</p>
+        <p></p>
       </td>
     </tr>
     
