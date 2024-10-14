@@ -10,14 +10,14 @@ import {
 } from "react-icons/fa";
 import Nav from "../components/Nav";
 import axios from "axios";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import { Plus, Trash2 } from 'lucide-react';
 
 import useAuth from './customHooks/useAuth';
 import CustomModal from "./components/customModal";
 import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { SuccessModal } from "./components/successModal";
 import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
-import { Plus } from "lucide-react";
 
 
 const ToggleSwitch = ({ checked, onChange }) => (
@@ -84,7 +84,7 @@ const GetReviews = () => {
       });
       console.log('responsce is', response);
 
-      if(response.data.msg=='it seems more than monthly limit'){
+      if (response.data.msg == 'it seems more than monthly limit') {
         alert('it seems more than monthly limit')
         return
       }
@@ -111,8 +111,8 @@ const GetReviews = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("result",result.data.message);
-        if(result.data.message === "Not Found"){
+        console.log("result", result.data.message);
+        if (result.data.message === "Not Found") {
           navigate('/PricingTable')
           return
         }
@@ -168,7 +168,7 @@ const GetReviews = () => {
       {/* Main Content */}
       <div className="flex-1 bg-[rgb(241,241,241)]  p-4 lg:p-8 overflow-auto lg:ml-64">
         {" "}
-    
+
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
           <a href="/GetReviews">
             <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
@@ -193,16 +193,13 @@ const GetReviews = () => {
         </div>
 
 
-
+{/* 
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
           <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p>Invite Your Customers</p>
             <p className="text-gray-400">Monthly limits: 0/10</p>
           </div>
-
-
-          {/* Render input fields dynamically */}
           {inputs.map((input, index) => (
             <div
               key={index}
@@ -226,7 +223,7 @@ const GetReviews = () => {
               />
             </div>
           ))}
-  
+
           <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
             <button
               onClick={handleAddLine}
@@ -240,7 +237,57 @@ const GetReviews = () => {
               className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
             />
           </div>
+        </div> */}
+
+<div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
+      <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
+        <p>Invite Your Customers</p>
+        <p className="text-gray-400">Monthly limits: 0/10</p>
+      </div>
+      {inputs.map((input, index) => (
+        <div
+          key={index}
+          className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
+        >
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            placeholder="Name"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <input
+            type="text"
+            name="contact"
+            value={input.contact}
+            placeholder="Contact Number"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <button
+            onClick={() => handleDeleteLine(index)}
+            className="p-2 rounded-lg bg-red-500 hover:bg-red-600 transition duration-150 ease-in-out"
+          >
+            <Trash2 className="w-5 h-5 text-white" />
+          </button>
         </div>
+      ))}
+      <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
+        <button
+          onClick={handleAddLine}
+          className="flex-1 flex items-center justify-center px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+        >
+          <Plus className="w-5 h-5 mr-2 text-gray-400" />
+          Add Contact
+        </button>
+        <EnhancedSubmitButton
+          onSubmit={handleSubmit}
+          className="flex-1 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-150 ease-in-out"
+        />
+      </div>
+    </div>
 
 
 
