@@ -137,6 +137,7 @@ const AnalyticsDashboard = () => {
         });
         console.log('2')
 
+        console.log('response',response)
 
         if(response.data.message === "Not Found"){
           navigate('/PricingTable')
@@ -148,8 +149,8 @@ const AnalyticsDashboard = () => {
         const data = response.data.data;
         console.log('4')
 
-        console.log('response'.response)
-        console.log('data is'.data)
+
+        console.log('data is',data)
         console.log('5')
 
         const weekStart = getStartOfWeek();
