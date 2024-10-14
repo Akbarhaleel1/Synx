@@ -112,7 +112,7 @@ const GetReviews = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("result", result.data.message);
+        console.log("result", result.data);
         if (result.data.message === "Not Found") {
           navigate('/PricingTable')
           return
