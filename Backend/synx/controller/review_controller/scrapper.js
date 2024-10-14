@@ -261,6 +261,7 @@ async function saveAnalyticsData(user, platform, averageRating, totalReviews) {
     let userType = typeof(user)
 
     res.status(200).json({user,platform,averageRating,totalReviews,userType})
+    return
 
     // If analytics data exists, append to the reviewCount array
     if (analyticsdata) {
