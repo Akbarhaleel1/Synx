@@ -179,11 +179,11 @@ const integrate = async (req, res) => {
             console.error('Error saving reviews:', dbError);
             return res.status(500).json({ msg: "Error saving reviews." });
         }
-       const data = await createanalytics(user,pageLink,platform)
-       if(!data){
-        res.status(200).json({ msg: "Integration unsuccessful.", data });
-        return
-       }
+      //  const data = await createanalytics(user,pageLink,platform)
+      //  if(!data){
+      //   res.status(200).json({ msg: "Integration unsuccessful.", data });
+      //   return
+      //  }
         // Successful Integration Response
         res.status(200).json({ msg: "Integration successful.", data });
         console.log("Integration completed successfully.");
