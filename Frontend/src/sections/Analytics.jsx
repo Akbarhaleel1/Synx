@@ -162,21 +162,21 @@ const AnalyticsDashboard = () => {
           negative: filterDataByDateRange(data.negative, weekStart),
           qr: filterDataByDateRange(data.qr, weekStart),
           visitCount: filterDataByDateRange(data.visitCount, weekStart),
-          inviteSend: filterDataByDateRange(data.linksentcount, weekStart)
+          invitesSent: filterDataByDateRange(data.linksentcount, weekStart)
         });
 
         setMonthlyData({
           negative: filterDataByDateRange(data.negative, monthStart),
           qr: filterDataByDateRange(data.qr, monthStart),
           visitCount: filterDataByDateRange(data.visitCount, monthStart),
-          inviteSend: filterDataByDateRange(data.linksentcount, monthStart)
+          invitesSent: filterDataByDateRange(data.linksentcount, monthStart)
         });
 
         setYearlyData({
           negative: filterDataByDateRange(data.negative, yearStart),
           qr: filterDataByDateRange(data.qr, yearStart),
           visitCount: filterDataByDateRange(data.visitCount, yearStart),
-          inviteSend: filterDataByDateRange(data.linksentcount, yearStart)
+          invitesSent: filterDataByDateRange(data.linksentcount, yearStart)
         });
 
         updateFunnelData(data, selectedRange);
