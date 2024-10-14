@@ -36,6 +36,8 @@ const GetReviews = () => {
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
+  const [balence,setBalence] = useState('')
+  const [limit,setLimit] = useState('')
 
   const navigate = useNavigate();
 
@@ -111,11 +113,16 @@ const GetReviews = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        console.log("result", result.data);
+        console.log("result", result);
+        
         if (result.data.message === "Not Found") {
           navigate('/PricingTable')
           return
         }
+
+        setBalence(result.data.balance);
+        setLimit(result.data.limit)
+
         setCompanyName(result.data.email.name);
         setMessage(result.data.email.message);
         setLink(result.data.link);
@@ -243,7 +250,7 @@ const GetReviews = () => {
       <h2 className="text-xl font-bold mb-4">Request reviews via SMS</h2>
       <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
         <p>Invite Your Customers</p>
-        <p className="text-gray-400">Monthly limits: 0/10</p>
+            <p className="text-gray-700">Monthly limits: <span>{balence}</span>/<span>{limit}</span></p>
       </div>
       {inputs.map((input, index) => (
         <div
