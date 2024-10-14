@@ -80,27 +80,27 @@ const CustomPieChart = () => {
     switch (frame) {
       case 'yearly':
         return [
-          { value: 400, name: '2023' },
-          { value: 335, name: '2022' },
-          { value: 310, name: '2021' },
-          { value: 274, name: '2020' },
-          { value: 235, name: '2019' },
+          { value: 40, name: '2024' },
+          { value: 0, name: '2023' },
+          { value: 0, name: '2022' },
+          { value: 0, name: '2021' },
+          { value: 0, name: '2020' },
         ];
       case 'monthly':
         return [
-          { value: 400, name: 'Dec' },
-          { value: 335, name: 'Nov' },
-          { value: 310, name: 'Oct' },
-          { value: 274, name: 'Sep' },
-          { value: 235, name: 'Aug' },
+          { value: 55, name: 'Oct' },
+          { value: 0, name: 'Sep' },
+          { value: 0, name: 'Aug' },
+          { value: 0, name: 'July' },
+          { value: 0, name: 'June' },
         ];
       case 'weekly':
         return [
-          { value: 400, name: 'Week 5' },
-          { value: 335, name: 'Week 4' },
-          { value: 310, name: 'Week 3' },
-          { value: 274, name: 'Week 2' },
-          { value: 235, name: 'Week 1' },
+          { value: 0, name: 'Week 5' },
+          { value: 0, name: 'Week 4' },
+          { value: 0, name: 'Week 3' },
+          { value: 0, name: 'Week 2' },
+          { value: 55, name: 'Week 1' },
         ];
       default:
         return [];
