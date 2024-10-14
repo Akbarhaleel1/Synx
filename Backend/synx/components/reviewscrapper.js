@@ -929,12 +929,11 @@ const goibibo = async (url) => {
     // Wait for the dropdown options to be visiblea
     await page.waitForSelector('div[data-testid="SortByOptions"]');
 
- 
     const mostRecentOption = await page.$(
       'input[type="radio"][name="Most Recent First"]'
     );
     if (mostRecentOption) {
-      await mostRecentOption.click(); 
+      await mostRecentOption.click();
       console.log('Selected "Most Recent First" option.');
     } else {
       console.log('"Most Recent First" option not found.');
@@ -982,27 +981,34 @@ const google = async (url) => {
     ignoreHTTPSErrors: true,
   });
   const page = await createPage(browser);
-  console.log("live share",url)
+  console.log("live share", url);
 
   try {
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "domcontentloaded" });
-console.log('1')
-    await page.waitForSelector('button[aria-label*="Reviews"]');
-
-    console.log('2')
-
-    console.log('3')
+    console.log("1");
     await page.evaluate(() => {
-      const button = Array.from(
-        document.querySelectorAll("button")
-      ).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
+      window.scrollBy(0, window.innerHeight);
+    });
+
+    // Then wait for the "Reviews" button
+    await page.waitForSelector('button[aria-label*="Reviews"]', {
+      visible: true,
+    });
+
+    console.log("2");
+
+    console.log("3");
+    await page.evaluate(() => {
+      const button = Array.from(document.querySelectorAll("button")).find(
+        (el) => el.getAttribute("aria-label")?.includes("Reviews")
+      );
       if (button) {
         button.click();
       }
     });
-    console.log('4')
+    console.log("4");
 
     await page.waitForNavigation();
     await page.waitForSelector('button[aria-label="Sort reviews"]');
@@ -1058,15 +1064,15 @@ console.log('1')
       });
     });
 
-    console.log("reviews",reviews)
+    console.log("reviews", reviews);
 
     return reviews;
   } catch (error) {
     console.error("Error fetching reviews:", error);
   } finally {
     await browser.close();
-  } 
-}; 
+  }
+};
 
 module.exports = {
   airbnb,
@@ -1076,5 +1082,5 @@ module.exports = {
   tripadvisor,
   booking,
   goibibo,
-  google
+  google,
 };
