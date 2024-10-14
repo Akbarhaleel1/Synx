@@ -47,6 +47,8 @@ const SynXPlusReviewRequest = () => {
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
+  const [balence,setBalence] = useState('')
+  const [limit,setLimit] = useState('')
 
   const navigate = useNavigate()
 
@@ -76,7 +78,8 @@ const SynXPlusReviewRequest = () => {
         }
         // Log the result from the server
         console.log('result', result.data);
-
+        setBalence(result.data.balance);
+        setLimit(result.data.limit)
         // Uncomment the following lines to set state with the received data
         setCompanyName(result.data.whatsap.name);
         setMessageTemplate(result.data.whatsap.message);
@@ -205,7 +208,7 @@ const SynXPlusReviewRequest = () => {
           <h2 className="text-xl font-bold mb-4 text-black">Request reviews via SMS</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p className="text-black">Invite Your Customers</p>
-            <p className="text-gray-700">Monthly limits: 0/10</p>
+            <p className="text-gray-700">Monthly limits: <span>{limit}</span>/<span>{balence}</span></p>
           </div>
           <p className="mb-2">
             Do you have a list of contacts?{" "}

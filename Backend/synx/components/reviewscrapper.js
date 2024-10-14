@@ -973,160 +973,95 @@ const goibibo = async (url) => {
   }
 };
 
-// const google = async (url) => {
-//   const browser = await puppeteer.launch({
-//     args: chromium.args,
-//     defaultViewport: chromium.defaultViewport,
-//     executablePath: await chromium.executablePath(),
-//     headless: chromium.headless,
-//     ignoreHTTPSErrors: true,
-//   });
-//   const page = await createPage(browser);
-//   console.log("live share",url)
-
-//   try {
-//     // await page.setViewport({ width: 1080, height: 1024 });
-//     page.setDefaultNavigationTimeout(60000);
-//     await page.goto(url, { waitUntil: "networkidle2" });
-
-//     await page.waitForSelector('button[aria-label*="Reviews"]');
-
-//     await page.evaluate(() => {
-//       const button = Array.from(
-//         document.querySelectorAll("button")
-//       ).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
-//       if (button) {
-//         button.click();
-//       }
-//     });
-//     await page.waitForNavigation();
-//     await page.waitForSelector('button[aria-label="Sort reviews"]');
-//     await page.click('button[aria-label="Sort reviews"]');
-//     await page.waitForSelector(
-//       'div[role="menuitemradio"][aria-checked="false"]'
-//     );
-
-//     await page.evaluate(() => {
-//       const newestElement = Array.from(
-//         document.querySelectorAll('div[role="menuitemradio"]')
-//       ).find((el) => el.innerText.includes("Newest"));
-//       if (newestElement) {
-//         newestElement.click();
-//       }
-//     });
-//     await page.waitForNavigation();
-//     await page.waitForSelector("div[data-review-id]");
-
-//     const reviews = await page.$$eval("div[data-review-id]", (reviewEls) => {
-//       return reviewEls.map((reviewEl) => {
-//         const platform = "google";
-//         // const reviewId = reviewEl.getAttribute('data-review-id');
-//         const image =
-//           reviewEl.querySelector("button.WEBjve img")?.src ||
-//           reviewEl.querySelector("img.NBa7we")?.src ||
-//           "";
-//         const name =
-//           reviewEl.querySelector("div.d4r55")?.innerText ||
-//           reviewEl.querySelector("div.d4r55")?.innerText ||
-//           "";
-//         const review =
-//           reviewEl.querySelector(".MyEned")?.innerText ||
-//           reviewEl.querySelector("span.wiI7pd")?.innerText ||
-//           "";
-//         const date =
-//           reviewEl.querySelector(".rsqaWe")?.innerText ||
-//           reviewEl.querySelector("span.xRkPPb")?.innerText ||
-//           "";
-//         const rating =
-//           reviewEl.querySelectorAll(".NhBTye.elGi1d").length ||
-//           reviewEl.querySelector("span.fzvQIb")?.innerText[0] ||
-//           "";
-
-//         return {
-//           platform,
-//           image,
-//           name,
-//           review,
-//           date,
-//           rating,
-//         };
-//       });
-//     });
-
-//     console.log
-
-//     return reviews;
-//   } catch (error) {
-//     console.error("Error fetching reviews:", error);
-//   } finally {
-//     await browser.close();
-//   } 
-// }; 
 const google = async (url) => {
   const browser = await puppeteer.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
-    executablePath: '/usr/bin/chromium-browser', // Replace with your Chromium path
-    headless: true,
+    executablePath: await chromium.executablePath(),
+    headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
-
   const page = await createPage(browser);
-  console.log("Visiting:", url);
+  console.log("live share",url)
 
   try {
+    // await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
     await page.waitForSelector('button[aria-label*="Reviews"]');
-    console.log("Found Reviews button!");
 
     await page.evaluate(() => {
-      const button = Array.from(document.querySelectorAll("button")).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
+      const button = Array.from(
+        document.querySelectorAll("button")
+      ).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
       if (button) {
         button.click();
-        console.log("Clicked Reviews button");
       }
     });
-
     await page.waitForNavigation();
     await page.waitForSelector('button[aria-label="Sort reviews"]');
     await page.click('button[aria-label="Sort reviews"]');
-    await page.waitForSelector('div[role="menuitemradio"][aria-checked="false"]');
+    await page.waitForSelector(
+      'div[role="menuitemradio"][aria-checked="false"]'
+    );
 
     await page.evaluate(() => {
-      const newestElement = Array.from(document.querySelectorAll('div[role="menuitemradio"]')).find((el) => el.innerText.includes("Newest"));
+      const newestElement = Array.from(
+        document.querySelectorAll('div[role="menuitemradio"]')
+      ).find((el) => el.innerText.includes("Newest"));
       if (newestElement) {
         newestElement.click();
-        console.log("Clicked on Newest sort option.");
       }
     });
-
     await page.waitForNavigation();
     await page.waitForSelector("div[data-review-id]");
 
     const reviews = await page.$$eval("div[data-review-id]", (reviewEls) => {
       return reviewEls.map((reviewEl) => {
         const platform = "google";
-        const image = reviewEl.querySelector("button.WEBjve img")?.src || "";
-        const name = reviewEl.querySelector("div.d4r55")?.innerText || "";
-        const review = reviewEl.querySelector(".MyEned")?.innerText || "";
-        const date = reviewEl.querySelector(".rsqaWe")?.innerText || "";
-        const rating = reviewEl.querySelectorAll(".NhBTye.elGi1d").length || "";
+        // const reviewId = reviewEl.getAttribute('data-review-id');
+        const image =
+          reviewEl.querySelector("button.WEBjve img")?.src ||
+          reviewEl.querySelector("img.NBa7we")?.src ||
+          "";
+        const name =
+          reviewEl.querySelector("div.d4r55")?.innerText ||
+          reviewEl.querySelector("div.d4r55")?.innerText ||
+          "";
+        const review =
+          reviewEl.querySelector(".MyEned")?.innerText ||
+          reviewEl.querySelector("span.wiI7pd")?.innerText ||
+          "";
+        const date =
+          reviewEl.querySelector(".rsqaWe")?.innerText ||
+          reviewEl.querySelector("span.xRkPPb")?.innerText ||
+          "";
+        const rating =
+          reviewEl.querySelectorAll(".NhBTye.elGi1d").length ||
+          reviewEl.querySelector("span.fzvQIb")?.innerText[0] ||
+          "";
 
-        return { platform, image, name, review, date, rating };
+        return {
+          platform,
+          image,
+          name,
+          review,
+          date,
+          rating,
+        };
       });
     });
+    
 
-    console.log("Fetched Reviews:", reviews);
     return reviews;
-
   } catch (error) {
     console.error("Error fetching reviews:", error);
   } finally {
     await browser.close();
-  }
-};
+  } 
+}; 
+
 module.exports = {
   airbnb,
   agoda,
