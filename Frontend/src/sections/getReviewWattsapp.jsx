@@ -208,7 +208,7 @@ const SynXPlusReviewRequest = () => {
           <h2 className="text-xl font-bold mb-4 text-black">Request reviews via SMS</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p className="text-black">Invite Your Customers</p>
-            <p className="text-gray-700">Monthly limits: <span>{limit}</span>/<span>{balence}</span></p>
+            <p className="text-gray-700">Monthly limits: <span>{balence}</span>/<span>{limit}</span></p>
           </div>
           <p className="mb-2">
             Do you have a list of contacts?{" "}
