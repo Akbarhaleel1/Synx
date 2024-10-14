@@ -991,8 +991,9 @@ const google = async (url) => {
 
     // await page.waitForSelector('button[aria-label*="Reviews"]');
 
-    await page.waitForSelector('button.hh2c6');
-const reviewButton = await page.$eval('button.hh2c6', el => el.textContent.includes('Reviews') ? el : null);
+    await page.waitForSelector('div.RWPxGd button:nth-child(2)');
+// const reviewButton = await page.$('div.RWPxGd button:nth-child(2)');
+// await reviewButton.click();
 
 
     await page.evaluate(() => {
