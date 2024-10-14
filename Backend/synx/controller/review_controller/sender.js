@@ -7,7 +7,7 @@ const Etemplate=require("../../models/template")
 const axios = require('axios');
 const whatsapTemplate=require("../../models/whatsappTemplate")
 const Subscription = require('../../models/subscription');
-const Analytics = require("../../models/analise");
+const analitics = require("../../models/analise");
 
 
 const plivoClient = new plivo.Client(process.env.PLIVO_AUTH_ID, process.env.PLIVO_AUTH_TOKEN);
@@ -76,10 +76,10 @@ const update = {
   },
 };
 
-const analytics = await Analitics.findOneAndUpdate(
+const analytics = await analitics.findOneAndUpdate(
   { user: linkData.user },
   update,
-  { new: true, upsert: true }  // 'new' to return the updated document, 'upsert' to create if not found
+  { new: true, upsert: true } 
 );
     
     count--;
