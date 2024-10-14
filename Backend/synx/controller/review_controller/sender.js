@@ -210,6 +210,18 @@ const email= async (req, res) => {
                 results.push({name, msg: "sent to your email",info:info.response});
             }
           });
+          const currentDate = new Date();
+const update = {
+  $push: {
+    linksentcount: { date: currentDate },
+  },
+};
+
+const analytics = await analitics.findOneAndUpdate(
+  { user: linkdata.user },
+  update,
+  { new: true, upsert: true } 
+);
         
       } catch (error) {
         console.log(error)
@@ -420,6 +432,18 @@ const phoneNumberId ="426089207257238" //process.env.WHATSAPP_PHONE_NUMBER_ID; /
       } catch (error) {
         results.push({ name, status: 'Failed', error: error.response ? error.response.data : error.message });
       }
+      const currentDate = new Date();
+const update = {
+  $push: {
+    linksentcount: { date: currentDate },
+  },
+};
+
+const analytics = await analitics.findOneAndUpdate(
+  { user: linkdata.user },
+  update,
+  { new: true, upsert: true } 
+);
       
     count--;
     const monthlycount = await Subscription.findOneAndUpdate(
