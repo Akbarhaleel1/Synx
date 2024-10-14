@@ -142,6 +142,9 @@ const AnalyticsDashboard = () => {
 
         const data = response.data.data;
 
+        console.log('response'.response)
+        console.log('data is'.data)
+
         const weekStart = getStartOfWeek();
         const monthStart = getStartOfMonth();
         const yearStart = getStartOfYear();
