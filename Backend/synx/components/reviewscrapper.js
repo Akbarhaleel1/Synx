@@ -919,7 +919,7 @@ const goibibo = async (url) => {
   const page = await createPage(browser);
 
   try {
-    await page.setViewport({ width: 1080, height: 1024 });
+    // await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -984,7 +984,7 @@ const google = async (url) => {
   const page = await createPage(browser);
 
   try {
-    await page.setViewport({ width: 1080, height: 1024 });
+    // await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
