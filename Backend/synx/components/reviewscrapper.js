@@ -990,6 +990,7 @@ const google = async (url) => {
     await page.goto(url, { waitUntil: "networkidle2" });
 
     // await page.waitForSelector('button[aria-label*="Reviews"]');
+
     await page.evaluate(() => {
       const buttons = Array.from(document.querySelectorAll('button'));
       return buttons.find(button => button.getAttribute('aria-label')?.includes('Reviews'));
