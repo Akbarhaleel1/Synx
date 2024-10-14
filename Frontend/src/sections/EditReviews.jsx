@@ -41,7 +41,7 @@ const EditReviews = () => {
         navigate('/PricingTable')
         return
       }
-      console.log('respoince',responce.data.message)
+      console.log('respoince',responce.data)
       const endPoint = responce.data.link.endpoint;      ;
       console.log('endPoint',endPoint)
       setLinkTitle(result.data.reviewLink.title)
