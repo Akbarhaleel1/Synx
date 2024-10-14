@@ -187,7 +187,7 @@ const AnalyticsDashboard = () => {
     };
 
     fetchData();
-  }, [selectedRange]);
+  }, []);
 
   const updateFunnelData = (data, range) => {
     const rangeStart = range === 'Weekly' ? getStartOfWeek() :
