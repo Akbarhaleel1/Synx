@@ -1,5 +1,5 @@
 const ReviewLink=require("../../models/reviewLink")
-const IntegratedSite = require("../../models/integration");
+const IntegratedSite = require("../../models/scrapper");
 const createOrUpdateReviewLink = async (req, res) => {
     const { user, data } = req.body;
    console.log('endpoint',data)

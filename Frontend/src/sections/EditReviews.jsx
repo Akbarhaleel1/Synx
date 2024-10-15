@@ -148,6 +148,7 @@ const EditReviews = () => {
             <div className="mb-6">
               <label className="block text-sm font-medium mb-2">....................................................................................................................................................................</label>
               <div className="flex items-center bg-gray-700 rounded">
+                <h1>Select One Platform for Star Filter</h1>
                 <select
                   value={initialPage}
                   onChange={(e) => setInitialPage(e.target.value)}
