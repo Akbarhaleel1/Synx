@@ -5,8 +5,7 @@ import axios from 'axios';
 const PositiveFeedBack = () => {
     useEffect(()=>{
         const fetchLink = () =>{
-            const getEndPoint = localStorage.getItem('endpoint');
-            const endpoint = JSON.parse(getEndPoint)
+            const endpoint = localStorage.getItem('endpoint');
             const result = axios.post('https://synxbackend.synxautomate.com/starFilterReviewLink',{endpoint});
             console.log('result is',result)
         }
