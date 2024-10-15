@@ -51,7 +51,8 @@ const userBase = new mongoose.Schema({
     type:String
   },
   newuser:{
-    type:Booleon
+    type:Boolean,
+    default:true
   }
 });
 const User = mongoose.model('User', userBase);

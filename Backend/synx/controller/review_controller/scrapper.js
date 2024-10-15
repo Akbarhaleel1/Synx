@@ -449,10 +449,10 @@ cron.schedule("*/30 * * * *", async () => {
   console.log("Running the review scraping cron job every 30 minutes.");
   await automate();
 });
-setInterval(async () => {
+cron.schedule("*/1 * * * *",)
   console.log("Running the google review fetch job every 30 seconds.");
   await googleautomate();
-}, 5 * 1000); 
+ 
 module.exports = {
   integrate,
   integratepage,
