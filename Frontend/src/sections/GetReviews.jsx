@@ -18,6 +18,7 @@ import CustomModal from "./components/customModal";
 import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { SuccessModal } from "./components/successModal";
 import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
+import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
 
 
 const ToggleSwitch = ({ checked, onChange }) => (
@@ -38,6 +39,7 @@ const GetReviews = () => {
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [balence, setBalence] = useState('')
   const [limit, setLimit] = useState('')
+  const [isModalOpenforMonthlyLimit, setIsModalOpenforMonthlyLimit] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,7 +89,8 @@ const GetReviews = () => {
       console.log('responsce is', response);
 
       if (response.data.msg == 'it seems more than monthly limit') {
-        alert('it seems more than monthly limit')
+        // alert('it seems more than monthly limit')
+        setIsModalOpenforMonthlyLimit(true)
         return
       }
 
@@ -413,7 +416,10 @@ const GetReviews = () => {
 
         <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)} message="Review request sent successfully via SMS!" />
       </div>
-
+      <MonthlyLimitModal
+        isOpen={isModalOpenforMonthlyLimit} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   );
 };

@@ -33,6 +33,7 @@ import { SuccessModal } from "./components/SweatAlert";
 import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { Plus } from "lucide-react";
 import {useNavigate} from 'react-router-dom'
+import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
 
 const SynXPlusReviewRequest = () => {
   useAuth();
@@ -49,7 +50,7 @@ const SynXPlusReviewRequest = () => {
   const [errorMessages, setErrorMessages] = useState([]);
   const [balence,setBalence] = useState('')
   const [limit,setLimit] = useState('')
-
+  const [isModalOpen, setIsModalOpen] = useState(true);
   const navigate = useNavigate()
 
 
@@ -141,7 +142,8 @@ const SynXPlusReviewRequest = () => {
     console.log('responsce is', response);
 
     if(response.data.message == "it seems more than monthly limit"){
-      alert('it seems more than monthly limit')
+      // alert('it seems more than monthly limit')
+      setIsModalOpen(true)
       return
     }
 
@@ -358,6 +360,11 @@ const SynXPlusReviewRequest = () => {
         isOpen={isErrorModalOpen}
         onClose={() => setIsErrorModalOpen(false)}
         errors={errorMessages}
+      />
+
+<MonthlyLimitModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
       />
 
     </div>
