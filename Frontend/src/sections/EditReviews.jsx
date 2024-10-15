@@ -147,7 +147,7 @@ const EditReviews = () => {
             </div>
             <div className="mb-6">
               <label className="block text-sm font-medium mb-2">....................................................................................................................................................................</label>
-              {/* <div className="flex items-center bg-gray-700 rounded">
+              <div className="flex items-center bg-gray-700 rounded">
                 <select
                   value={initialPage}
                   onChange={(e) => setInitialPage(e.target.value)}
@@ -163,7 +163,7 @@ const EditReviews = () => {
                 >
                   <i className="fas fa-pencil-alt text-gray-400"></i>
                 </button>
-              </div> */}
+              </div>
             </div>
             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
               <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
