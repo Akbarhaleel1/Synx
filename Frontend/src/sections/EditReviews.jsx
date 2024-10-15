@@ -168,7 +168,6 @@ const EditReviews = () => {
                 </button>
               </div> */}
               <div>
-      <button onClick={handleCreateReviewLink}>Create Review Link</button>
 
       <h1 className='font-bold'>Select One Platform for Star Filter</h1>
       <div className="flex items-center bg-gray-700 rounded">
