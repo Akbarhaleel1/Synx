@@ -1004,16 +1004,24 @@ const google = async (place_id) => {
       (a, b) => b.time - a.time
     );
 
-    return {
-      // name: placeDetails.name,
-      // rating: placeDetails.rating,
-      reviews: sortedReviews 
-    };
+    // Format the reviews according to your request
+    const formattedReviews = sortedReviews.map(review => ({
+      platform:"google",
+      name: review.author_name,
+      image: review.profile_photo_url,
+      rating: review.rating,
+      date: review.relative_time_description,
+      review: review.text
+    }));
+
+    return formattedReviews
+    
   } catch (error) {
     console.error("Error fetching reviews:", error.message);
     throw new Error("Failed to fetch place reviews");
   }
 };
+
 
 module.exports = {
   airbnb,
