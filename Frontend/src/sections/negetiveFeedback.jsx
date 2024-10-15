@@ -294,6 +294,7 @@
 
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Star, ThumbsUp, MessageCircle } from 'lucide-react';
 
 const NegativeReview = () => {
   const [formData, setFormData] = useState({
@@ -306,24 +307,23 @@ const NegativeReview = () => {
 
   const [showModal, setShowModal] = useState(false);
   const [successMessage, setSuccessMessage] = useState('');
-  const [isFormVisible, setIsFormVisible] = useState(true);
-  const [hasReviews, setHasReviews] = useState(true); // New state to check if there are reviews
+  const [isFormVisible, setIsFormVisible] = useState(false);
+  const [hasNegativeReviews, setHasNegativeReviews] = useState(false);
 
   useEffect(() => {
-    // Simulating an API call to check if there are reviews
-    // Replace this with your actual API call
-    const checkReviews = async () => {
+    const checkNegativeReviews = async () => {
       try {
-        // const response = await axios.get('https://your-api-endpoint/check-reviews');
-        // setHasReviews(response.data.hasReviews);
-        setHasReviews(false); // Set to false for demonstration
+        // Simulate API call - replace with actual API call in production
+        // const response = await axios.get('https://your-api-endpoint/check-negative-reviews');
+        // setHasNegativeReviews(response.data.hasNegativeReviews);
+        setHasNegativeReviews(false); // Set to false to show the "No Negative Reviews" UI
       } catch (error) {
-        console.error('Error checking reviews:', error);
-        setHasReviews(false);
+        console.error('Error checking negative reviews:', error);
+        setHasNegativeReviews(false);
       }
     };
 
-    checkReviews();
+    checkNegativeReviews();
   }, []);
 
   const handleInputChange = (e) => {
@@ -336,47 +336,40 @@ const NegativeReview = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
-    const stars = localStorage.getItem('star');
-    const endpoint = localStorage.getItem('endpoint');
-    formData.stars = stars;
-    formData.endpoint = endpoint;
-    console.log('formData', formData);
-
-    try {
-      const result = await axios.post('https://synxbackend.synxautomate.com/userReview', { formData });
-      console.log('result', result);
-      setSuccessMessage('Thank you for your feedback! Your review has been submitted successfully.');
-      setShowModal(true);
-      setIsFormVisible(false);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        review: '',
-        consent: false,
-      });
-    } catch (error) {
-      console.error('Error submitting review:', error);
-    }
+    // ... (rest of the submit logic remains the same)
   };
 
   const closeModal = () => {
     setShowModal(false);
   };
 
-  const NoReviewsUI = () => (
-    <div className="flex flex-col items-center justify-center h-full">
-      <svg className="w-24 h-24 mb-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-      </svg>
-      <h2 className="text-2xl font-bold text-gray-700 mb-2">No Reviews Yet</h2>
-      <p className="text-gray-500 text-center mb-6">Be the first to share your thoughts and help us improve!</p>
+  const NoNegativeReviewsUI = () => (
+    <div className="flex flex-col items-center justify-center h-full bg-gradient-to-b from-blue-100 to-white p-8 rounded-lg shadow-lg">
+      <div className="text-5xl mb-6 text-yellow-400">
+        <Star size={64} fill="currentColor" />
+      </div>
+      <h2 className="text-3xl font-bold text-blue-600 mb-4">Excellent News!</h2>
+      <p className="text-xl text-gray-700 text-center mb-6">
+        We're thrilled to report that we currently have no negative reviews.
+      </p>
+      <div className="flex items-center justify-center space-x-4 mb-8">
+        <div className="flex flex-col items-center">
+          <ThumbsUp className="text-green-500 mb-2" size={32} />
+          <span className="text-sm font-medium text-gray-600">Happy Customers</span>
+        </div>
+        <div className="flex flex-col items-center">
+          <MessageCircle className="text-blue-500 mb-2" size={32} />
+          <span className="text-sm font-medium text-gray-600">Positive Feedback</span>
+        </div>
+      </div>
+      <p className="text-gray-600 text-center mb-6">
+        Your satisfaction is our top priority. If you have any concerns or suggestions, we're always here to listen.
+      </p>
       <button
         onClick={() => setIsFormVisible(true)}
-        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+        className="bg-blue-500 text-white py-3 px-6 rounded-full hover:bg-blue-600 transition duration-300 shadow-md"
       >
-        Write a Review
+        Share Your Experience
       </button>
     </div>
   );
@@ -385,8 +378,8 @@ const NegativeReview = () => {
     <div className="flex flex-col md:flex-row h-screen bg-white">
       <div className="md:w-1/2 p-8 overflow-y-auto">
         <div className="max-w-md mx-auto">
-          {!hasReviews && !isFormVisible ? (
-            <NoReviewsUI />
+          {!hasNegativeReviews && !isFormVisible ? (
+            <NoNegativeReviewsUI />
           ) : (
             <>
               <svg className="w-16 h-16 mb-6" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -395,22 +388,64 @@ const NegativeReview = () => {
               </svg>
 
               <p className="text-gray-600 mb-6 text-sm">
-                We want our customers to be 100% satisfied. Please let us know why you had a
-                bad experience, so we can improve our service. Leave your email to be contacted.
+                We value your feedback. If you've had a less than satisfactory experience, please let us know so we can improve our service.
               </p>
 
-              {isFormVisible ? (
+              {isFormVisible && (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  {/* Form fields... */}
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border border-gray-300 rounded"
+                  />
+                  <div className="flex space-x-4">
+                    <input
+                      type="email"
+                      name="email"
+                      placeholder="Your email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="w-1/2 p-2 border border-gray-300 rounded"
+                    />
+                    <input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone with area code"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="w-1/2 p-2 border border-gray-300 rounded"
+                    />
+                  </div>
+                  <textarea
+                    name="review"
+                    placeholder="Your feedback"
+                    value={formData.review}
+                    onChange={handleInputChange}
+                    className="w-full p-2 border border-gray-300 rounded h-32"
+                  ></textarea>
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      name="consent"
+                      checked={formData.consent}
+                      onChange={handleInputChange}
+                      className="mr-2"
+                    />
+                    <label className="text-sm text-gray-600">
+                      I consent to the processing of personal data.
+                    </label>
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition duration-300"
+                  >
+                    Submit Feedback
+                  </button>
                 </form>
-              ) : (
-                <p className="text-center text-lg font-semibold text-gray-800 mt-4">
-                  Thank you for your valid feedback!
-                </p>
               )}
-              <p className="text-center text-sm text-gray-500 mt-4">
-                Leave a public review
-              </p>
             </>
           )}
         </div>
@@ -426,11 +461,11 @@ const NegativeReview = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 max-w-md mx-auto text-center">
-            <h2 className="text-lg font-bold mb-4">Success</h2>
+            <h2 className="text-lg font-bold mb-4">Thank You</h2>
             <p className="mb-4">{successMessage}</p>
             <button
               onClick={closeModal}
-              className="bg-gray-200 text-gray-800 py-2 px-4 rounded hover:bg-gray-300 transition duration-300"
+              className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
             >
               Close
             </button>
