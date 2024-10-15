@@ -22,37 +22,77 @@ const EditReviews = () => {
   };
 
   useEffect(() => {
-    console.log('useEffe4ct is wokring')
-    const fetchEndPoint = async () => {
-      console.log('fetchEndPoint is wokring')
-      const getUser = localStorage.getItem('user');
-      const user = JSON.parse(getUser);
-      console.log('user is wokring', user)
-      const getToken = localStorage.getItem('token')
-      const token = JSON.parse(getToken)
-
-      const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (responce.data.message === "Not Found") {
-        navigate('/PricingTable')
-        return
-      }
-      console.log('respoince', responce.data)
-      const endPoint = responce.data.link.endpoint;
-      const title = responce.data.link.title;
-      console.log('endPoint', endPoint)
-      console.log('title', title)
-      setLinkTitle(title)
-      setEndpoint(endPoint)
-      setIntegratedPage(responce.data.integratedpage);
+    const cachedEndpoint = localStorage.getItem('endpoint');
+    const cachedLinkTitle = localStorage.getItem('linkTitle');
+    if (cachedEndpoint && cachedLinkTitle) {
+      setEndpoint(cachedEndpoint);
+      setLinkTitle(cachedLinkTitle);
+    } else {
+      fetchEndPoint();
     }
-    fetchEndPoint()
-  }, [endpoint,linkTitle,integratedPage])
+  }, []);
+  
+  const fetchEndPoint = async () => {
+    const getUser = localStorage.getItem('user');
+    const user = JSON.parse(getUser);
+    const getToken = localStorage.getItem('token');
+    const token = JSON.parse(getToken);
+  
+    const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user }, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (responce.data.message === "Not Found") {
+      navigate('/PricingTable');
+      return;
+    }
+  
+    const endPoint = responce.data.link.endpoint;
+    const title = responce.data.link.title;
+  
+    // Cache the response
+    localStorage.setItem('endpoint', endPoint);
+    localStorage.setItem('linkTitle', title);
+  
+    setLinkTitle(title);
+    setEndpoint(endPoint);
+    setIntegratedPage(responce.data.integratedpage);
+  };
+
+  
+  // useEffect(() => {
+  //   console.log('useEffe4ct is wokring')
+  //   const fetchEndPoint = async () => {
+  //     console.log('fetchEndPoint is wokring')
+  //     const getUser = localStorage.getItem('user');
+  //     const user = JSON.parse(getUser);
+  //     console.log('user is wokring', user)
+  //     const getToken = localStorage.getItem('token')
+  //     const token = JSON.parse(getToken)
+
+  //     const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         },
+  //       }
+  //     );
+  //     if (responce.data.message === "Not Found") {
+  //       navigate('/PricingTable')
+  //       return
+  //     }
+  //     console.log('respoince', responce.data)
+  //     const endPoint = responce.data.link.endpoint;
+  //     const title = responce.data.link.title;
+  //     console.log('endPoint', endPoint)
+  //     console.log('title', title)
+  //     setLinkTitle(title)
+  //     setEndpoint(endPoint)
+  //     setIntegratedPage(responce.data.integratedpage);
+  //   }
+  //   fetchEndPoint()
+  // }, [])
 
   const confirmChanges = async () => {
     const data = {
