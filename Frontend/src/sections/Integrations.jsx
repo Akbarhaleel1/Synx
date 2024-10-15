@@ -154,8 +154,8 @@ const PlatformIcon = ({ name, color }) => {
   useAuth()
   const icons = {
     'booking.com': 'https://cdnl.iconscout.com/lottie/premium/thumb/google-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--social-media-company-pack-logos-animations-7825489.gif',
-    'airbnb': '/path/to/airbnb-icon.png',
-    'Google': '/path/to/google-icon.png',
+    'airbnb': 'https://cdnl.iconscout.com/lottie/premium/thumb/airbnb-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--apps-social-media-pack-logos-animations-4366891.gif',
+    'Google': 'https://cdnl.iconscout.com/lottie/premium/thumb/google-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--social-media-company-pack-logos-animations-7825489.gif',
     'agoda': '/path/to/agoda-icon.png',
     'trustpilot': '/path/to/trustpilot-icon.png',
     'tripadvisor': 'https://cdnl.iconscout.com/lottie/premium/thumb/tripadvisor-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--brand-social-media-identity-pack-logos-animations-8794850.gif',
@@ -164,7 +164,8 @@ const PlatformIcon = ({ name, color }) => {
   };
 
   return icons[name] ? (
-    <img src={icons[name]} alt={`${name} icon`} className="w-10 h-10" />
+    // <img src={icons[name]} alt={`${name} icon`} className="w-15 h-15" />
+    <img src={icons[name]} alt={`${name} icon`} className="w-[5rem] h-[5rem]" />
   ) : null;
 };
 
