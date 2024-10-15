@@ -82,6 +82,7 @@ Route.post("/checkuser",chargebee.checksubscription)
 
 Route.post("/sendTemplate",authMiddleware,getReview.saveOrUpdateWhatsappTemplate)
 Route.post("/whatsappage",authMiddleware,checkSubscription,getReview.wpage)
+Route.post("/starFilterReviewLink",feedback.starfilterpage)
 
 
 

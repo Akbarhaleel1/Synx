@@ -3,15 +3,23 @@ const IntegratedSite = require("../../models/scrapper");
 const createOrUpdateReviewLink = async (req, res) => {
     const { user, data } = req.body;
    console.log('endpoint',data)
+   const filter=await IntegratedSite.findOne({link:data.initialPage})
   
     try {
+      let filterpage;
+      if(filter.platform==="google"){
+        filterpage=`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${data.initialPage}`
+      }else{
+        filterpage=data.initialPage;
+      }
+
       
       const reviewLinkData = {
         user: user._id,
         link: `https://synx-frontend-hosting-9kae.vercel.app/HotelReview?endpoint=${data.endpoint}`,
         endpoint: data.endpoint,
         title: data.linkTitle,
-        starFilter: data.initialPage,
+        starFilter: filterpage,
       };
       console.log('reviewLinkData',reviewLinkData)
         const reviewLink = await ReviewLink.findOneAndUpdate(

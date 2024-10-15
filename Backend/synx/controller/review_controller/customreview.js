@@ -121,7 +121,7 @@ const feedback = async (req, res) => {
     return res.status(500).json({ message: "An error occurred while processing feedback." });
   }
 };
-const starfilterpage=async (req,res)=>{
+const starfilterpage= async (req,res)=>{
   const {endpoint}=req.body;
 
   try{

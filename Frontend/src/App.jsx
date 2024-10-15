@@ -25,6 +25,7 @@ import PricingTable from "./sections/auth/PricingPlans.jsx";
 import ResetPassword from "./sections/auth/ResetPassword.jsx";
 import ForgotPasswordOtp from "./sections/auth/ForgotPasswordOtp.jsx";
 import PlanSuccessPage from "./sections/auth/PaymentSuccess.jsx";
+import PositiveFeedBack from "./sections/components/PositiveFeedBack.jsx";
 
 const App = () => {
   const [isActive, setIsActive] = useState(false);
@@ -46,7 +47,7 @@ const App = () => {
           />
           <Route path="/EditReviews" element={<EditReviews />} />
           <Route path="/analytics" element={<AnalyticsDashboard />} />
-          <Route path="/integrations" element={<Integrations />} />
+          <Route path="/integrations" element={<Integrations/>} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<EnhancedLogin />} />
           <Route path="/forgorPassword" element={<ForgotPasswordPage />} />
@@ -59,6 +60,7 @@ const App = () => {
           <Route path="/ForgotPasswordOtp" element={<ForgotPasswordOtp/>} />
           <Route path="/ResetPassword" element={<ResetPassword/>} />
           <Route path="/PlanSuccessPage" element={<PlanSuccessPage/>} />
+          <Route path="/PositiveFeedBack" element={<PositiveFeedBack/>} />
         </Routes>
       </Router>
 

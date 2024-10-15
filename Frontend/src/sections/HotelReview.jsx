@@ -39,7 +39,9 @@ const HotelReview = () => {
     setRating(star);
     if (star <= 3) {
       navigate('/userReview');
-    };
+    }else{
+      navigate('/PositiveFeedBack')
+    }
     localStorage.setItem('star',star)
   
   }
