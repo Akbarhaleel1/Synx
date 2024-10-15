@@ -185,7 +185,7 @@ const integrate = async (req, res) => {
       //   return
       //  }
         // Successful Integration Response
-        res.status(200).json({ msg: "Integration successful.", data });
+        res.status(200).json({ msg: "Integration successful." });
         console.log("Integration completed successfully.");
 
     } catch (error) {
