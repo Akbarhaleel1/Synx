@@ -8,6 +8,7 @@ import CenteredSweetAlert from './components/TemplateUpdated';
 import EnhancedSubmitButton from './components/EnhancedSubmitButton';
 import { SuccessModal } from './components/successModal';
 import BeautifulErrorModal from './components/BeautifulErrorModal';
+import { Trash2 } from 'lucide-react';
 
 const ToggleSwitch = ({ checked, onChange }) => (
   <label className="toggle-switch">
