@@ -134,5 +134,5 @@ const starfilterpage=async (req,res)=>{
 }
 
 module.exports = {
-    reviewPage,feedback
+    reviewPage,feedback,starfilterpage
 };
