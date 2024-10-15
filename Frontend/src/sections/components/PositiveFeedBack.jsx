@@ -20,10 +20,7 @@ const PositiveFeedBack = () => {
         fetchLink()
     },[])
 
-    const handleNavigation = () =>{
-        console.log('data',data)
-        navigate(data)
-    }
+
   return (
     <div className="flex flex-col md:flex-row h-screen bg-white">
       <div className="md:w-1/2 p-8 overflow-y-auto">
@@ -40,7 +37,8 @@ const PositiveFeedBack = () => {
           <p className="text-center text-sm text-gray-500 mt-4">
             Leave a public review
           </p>
-          <button onClick={handleNavigation}>Leave a review</button>
+          <a href={data}></a>
+          <button>Leave a review</button>
         </div>
       </div>
       <div className="md:w-1/2 bg-gray-100 hidden md:block">
