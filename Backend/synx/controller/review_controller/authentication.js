@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
 
 const signup = async (req, res) => {
   console.log('req.body',req.body)
-  const { firstname, lastname,companyname, email, phonenumber, password } = req.body;
+  const { firstname, lastname, email, phonenumber, password } = req.body;
   try {
    
     let user = await User.findOne({ email });
