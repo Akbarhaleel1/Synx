@@ -399,6 +399,9 @@
 // const puppeteer = require('puppeteer');
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
+const puppeteerone = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+puppeteerone.use(StealthPlugin());
 
 function convertToNormalDateAndExtractRating(reviews) {
   return reviews.map((review) => {
@@ -974,7 +977,7 @@ const goibibo = async (url) => {
 };
 
 const google = async (url) => {
-  const browser = await puppeteer.launch({
+  const browser = await puppeteerone.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
@@ -985,7 +988,7 @@ const google = async (url) => {
   console.log("live share",url)
 
   try {
-    // await page.setViewport({ width: 1080, height: 1024 });
+    await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
@@ -1052,7 +1055,6 @@ const google = async (url) => {
         };
       });
     });
-    
 
     return reviews;
   } catch (error) {
