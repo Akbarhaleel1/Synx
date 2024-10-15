@@ -1,7 +1,8 @@
 import React from 'react';
 import { X } from 'lucide-react';
-
+import {useNavigate} from 'react-router-dom';
 const MonthlyLimitModal = ({ isOpen, onClose }) => {
+    const navigate = useNavigate()
   if (!isOpen) return null;
 
   return (
@@ -28,6 +29,7 @@ const MonthlyLimitModal = ({ isOpen, onClose }) => {
               onClick={() => {
                 // Add your upgrade logic here
                 console.log('Upgrade clicked');
+                navigate('/PricingTable')
                 onClose();
               }}
               className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
