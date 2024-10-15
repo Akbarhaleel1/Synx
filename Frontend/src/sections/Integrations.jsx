@@ -153,13 +153,13 @@ import { useNavigate } from 'react-router-dom';
 const PlatformIcon = ({ name, color }) => {
   useAuth()
   const icons = {
-    'booking.com': 'https://cdnl.iconscout.com/lottie/premium/thumb/google-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--social-media-company-pack-logos-animations-7825489.gif',
+    'booking.com': 'https://cdnl.iconscout.com/lottie/premium/thumb/bookingcom-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--booking-hotel-host-real-state-rent-social-media-logos-pack-animations-7945746.gif',
     'airbnb': 'https://cdnl.iconscout.com/lottie/premium/thumb/airbnb-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--apps-social-media-pack-logos-animations-4366891.gif',
-    'Google': 'https://cdnl.iconscout.com/lottie/premium/thumb/google-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--social-media-company-pack-logos-animations-7825489.gif',
-    'agoda': '/path/to/agoda-icon.png',
+    'google': 'https://cdnl.iconscout.com/lottie/premium/thumb/google-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--social-media-company-pack-logos-animations-7825489.gif',
+    'agoda': 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjlobGRvbm1reTd5YmQ4NXc4OXY5MnV4aTg0d2tnMjdmbXY3MW1rdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/2MZJ5wvSB8b5aKJD4a/giphy.gif',
     'trustpilot': '/path/to/trustpilot-icon.png',
     'tripadvisor': 'https://cdnl.iconscout.com/lottie/premium/thumb/tripadvisor-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--brand-social-media-identity-pack-logos-animations-8794850.gif',
-    'makeMyTrip': '/path/to/makemytrip-icon.png',
+    'makeMyTrip': 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzM5cmRuYWRpMW14aGg2NHBzNzdqajZqZjE3eWthcXZ0cjM3MWczaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LNjsnKKe83ZiriWcAs/giphy.gif',
     'goibibo': '/path/to/goibibo-icon.png',
   };
 
