@@ -62,7 +62,7 @@ const Reviews = () => {
       reviewPlatform.includes(query)
     );
 
-    // Apply filter based on selected criteria
+   
     switch (selectedFilter) {
       case "Types":
         return matchesSearchQuery; // No additional filtering for "Types"
@@ -76,6 +76,49 @@ const Reviews = () => {
         return matchesSearchQuery;
     }
   });
+
+  // const ReviewCard = ({ review }) => (
+  //   <div className="bg-gray-900 rounded-xl p-4 mb-4">
+  //     <div className="flex items-center mb-2">
+  //       {review.image && (
+  //         <img
+  //           src={review.image}
+  //           alt="User"
+  //           className="w-12 h-12 rounded-full mr-4"
+  //         />
+  //       )}
+  //       <div>
+  //         <h2 className="text-white font-light">{review.name}</h2>
+  //         <p className="text-sm text-gray-400">{review.platform}</p>
+  //         <p className="text-xs text-gray-400">{review.date}</p>
+  //       </div>
+  //     </div>
+  //     <div className="flex mb-2">
+  //       {[1, 2, 3, 4, 5].map((star, index) => (
+  //         <span
+  //           key={index}
+  //           className={`text-xl transition-colors duration-200 ${
+  //             index < review.rating ? "text-yellow-500" : "text-gray-300"
+  //           }`}
+  //         >
+  //           ★
+  //         </span>
+  //       ))}
+  //     </div>
+  //     <p className="text-white text-sm font-light mb-4">{review.review}</p>
+  //     {review.link && (
+  //       <a
+  //         href={review.link}
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
+  //       >
+  //         View on {review.platform}
+  //       </a>
+  //     )}
+  //   </div>
+  // );
+
 
   const ReviewCard = ({ review }) => (
     <div className="bg-gray-900 rounded-xl p-4 mb-4">
@@ -106,19 +149,31 @@ const Reviews = () => {
         ))}
       </div>
       <p className="text-white text-sm font-light mb-4">{review.review}</p>
-      {review.link && review.platform !== "google" (
-        <a
-          href={review.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
-        >
-          View on {review.platform}
-        </a>
+      {review.link && (
+        review.platform === "google" ? (
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=[YOUR_PLACE_ID]`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
+          >
+            View on Google Maps
+          </a>
+        ) : (
+          <a
+            href={review.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
+          >
+            View on {review.platform}
+          </a>
+        )
       )}
     </div>
   );
-
+  
+  
   return (
     <section className="relative bg-[#f2f2f2] min-h-screen">
       <Nav />
