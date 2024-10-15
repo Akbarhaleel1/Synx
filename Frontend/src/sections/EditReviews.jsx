@@ -60,6 +60,7 @@ const EditReviews = () => {
       linkTitle,
       initialPage
     };
+    console.log('data is', data)
 
     try {
       const user = JSON.parse(localStorage.getItem('user')); 
@@ -149,24 +150,7 @@ const EditReviews = () => {
             </div>
             <div className="mb-6">
               <label className="block text-sm font-medium mb-2">....................................................................................................................................................................</label>
-                {/* <h1 className='font-bold'>Select One Platform for Star Filter</h1>
-              <div className="flex items-center bg-gray-700 rounded">
-                <select
-                  value={initialPage}
-                  onChange={(e) => setInitialPage(e.target.value)}
-                  className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
-                >
-                  <option value="enabled">Start filter enabled</option>
-                  <option value="disabled">Start filter disabled</option>
-                </select>
-                <button
-                  type="button"
-                  className="p-2 hover:bg-gray-600 rounded"
-                  aria-label="Edit"
-                >
-                  <i className="fas fa-pencil-alt text-gray-400"></i>
-                </button>
-              </div> */}
+
               <div>
 
       <h1 className='font-bold'>Select One Platform for Star Filter</h1>
