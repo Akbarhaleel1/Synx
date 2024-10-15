@@ -75,7 +75,7 @@ const Reviews = () => {
       default:
         return matchesSearchQuery;
     }
-  });
+  }).sort((a,b)=>b-a);
 
   // const ReviewCard = ({ review }) => (
   //   <div className="bg-gray-900 rounded-xl p-4 mb-4">

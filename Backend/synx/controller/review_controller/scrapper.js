@@ -452,7 +452,7 @@ cron.schedule("*/30 * * * *", async () => {
 setInterval(async () => {
   console.log("Running the google review fetch job every 30 seconds.");
   await googleautomate();
-}, 30 * 1000); 
+}, 5 * 1000); 
 module.exports = {
   integrate,
   integratepage,
