@@ -977,7 +977,6 @@ const goibibo = async (url) => {
 };
 
 const google = async (url) => {
-  
   const browser = await puppeteerone.launch({
     args: chromium.args,
     defaultViewport: chromium.defaultViewport,
@@ -987,14 +986,13 @@ const google = async (url) => {
   });
   const page = await createPage(browser);
   console.log("live share",url)
-  await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36');
-  console.log('git pull is working')
+
   try {
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36');
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
-   const pageGoto = await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
+    await page.goto(url, { waitUntil: "networkidle2" });
 
-   console.log('pageGoto',pageGoto)
     await page.waitForSelector('button[aria-label*="Reviews"]',{ timeout: 60000 });
 
     await page.evaluate(() => {
