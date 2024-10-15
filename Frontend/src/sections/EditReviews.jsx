@@ -147,31 +147,51 @@ const EditReviews = () => {
                 </button>
               </div>
             </div>
-            < className="mb-6">
+            <div className="mb-6">
               <label className="block text-sm font-medium mb-2">....................................................................................................................................................................</label>
-              <button onClick={handleCreateReviewLink}>Create Review Link</button>
+                {/* <h1 className='font-bold'>Select One Platform for Star Filter</h1>
+              <div className="flex items-center bg-gray-700 rounded">
+                <select
+                  value={initialPage}
+                  onChange={(e) => setInitialPage(e.target.value)}
+                  className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
+                >
+                  <option value="enabled">Start filter enabled</option>
+                  <option value="disabled">Start filter disabled</option>
+                </select>
+                <button
+                  type="button"
+                  className="p-2 hover:bg-gray-600 rounded"
+                  aria-label="Edit"
+                >
+                  <i className="fas fa-pencil-alt text-gray-400"></i>
+                </button>
+              </div> */}
+              <div>
+      <button onClick={handleCreateReviewLink}>Create Review Link</button>
 
-<h1 className='font-bold'>Select One Platform for Star Filter</h1>
-<div className="flex items-center bg-gray-700 rounded">
-  <select
-    value={initialPage}
-    onChange={(e) => setInitialPage(e.target.value)}
-    className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
-  >
-    {integratedPage.map((page) => (
-      <option key={page._id} value={page.link}>
-        {page.platform}
-      </option>
-    ))}
-  </select>
-  <button
-    type="button"
-    className="p-2 hover:bg-gray-600 rounded"
-    aria-label="Edit"
-  >
-    <i className="fas fa-pencil-alt text-gray-400"></i>
-  </button>
-
+      <h1 className='font-bold'>Select One Platform for Star Filter</h1>
+      <div className="flex items-center bg-gray-700 rounded">
+        <select
+          value={initialPage}
+          onChange={(e) => setInitialPage(e.target.value)}
+          className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
+        >
+          {integratedPage.map((page) => (
+            <option key={page._id} value={page.link}>
+              {page.platform}
+            </option>
+          ))}
+        </select>
+        <button
+          type="button"
+          className="p-2 hover:bg-gray-600 rounded"
+          aria-label="Edit"
+        >
+          <i className="fas fa-pencil-alt text-gray-400"></i>
+        </button>
+      </div>
+    </div>
             </div>
             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
               <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
