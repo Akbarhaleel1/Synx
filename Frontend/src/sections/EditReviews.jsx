@@ -19,6 +19,7 @@ const EditReviews = () => {
       _id: "",
     }
   ]);
+  const [selectedPage, setSelectedPage] = useState(integratedPage);
   useAuth();
   const navigate = useNavigate(); 
 

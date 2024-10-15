@@ -126,7 +126,7 @@ const starfilterpage=async (req,res)=>{
 
   try{
     const filter=await ReviewLink.findOne({endpoint:endpoint})
-    return res.status(200).json({message:"successfully find the starfilter",filterlink:filter.})
+    return res.status(200).json({message:"successfully find the starfilter",filterlink:filter.starFilter})
 
   }catch(err){
 
