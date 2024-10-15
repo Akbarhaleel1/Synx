@@ -49,6 +49,9 @@ const userBase = new mongoose.Schema({
   },
   companyname:{
     type:String
+  },
+  newuser:{
+    type:Booleon
   }
 });
 const User = mongoose.model('User', userBase);
