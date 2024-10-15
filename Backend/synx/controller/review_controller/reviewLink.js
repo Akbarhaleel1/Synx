@@ -1,5 +1,5 @@
 const ReviewLink=require("../../models/reviewLink")
-
+const IntegratedSite = require("../../models/integration");
 const createOrUpdateReviewLink = async (req, res) => {
     const { user, data } = req.body;
    console.log('endpoint',data)
@@ -36,8 +36,9 @@ const reviewlink= async(req,res)=>{
     const {user}=req.body
     console.log(user)
     console.log("reviewlinkkkkkkkkkkkkkkkkkkkkkkk",req.body)
+    const integratedpage=await IntegratedSite.findOne({user:user._id})
     const link= await ReviewLink.findOne({user:user._id})
-    return res.status(200).json({ message: "Review link created successfully",link });
+    return res.status(200).json({ message: "Review link created successfully",link ,integratedpage});
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
