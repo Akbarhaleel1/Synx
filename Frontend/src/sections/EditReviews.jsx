@@ -21,80 +21,38 @@ const EditReviews = () => {
     setShowConfirmModal(true);
   };
 
-  // useEffect(() => {
-  //   const fetchEndPoint = async () => {
-  //     console.log('fetchEndPoint is wokring')
-  //     const getUser = localStorage.getItem('user');
-  //     const user = JSON.parse(getUser);
-  //     console.log('user is wokring', user)
-  //     const getToken = localStorage.getItem('token')
-  //     const token = JSON.parse(getToken)
-
-  //     const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //         },
-  //       }
-  //     );
-  //     if (responce.data.message === "Not Found") {
-  //       navigate('/PricingTable')
-  //       return
-  //     }
-  //     console.log('respoince', responce.data)
-  //     const endPoint = responce.data.link.endpoint;
-  //     const title = responce.data.link.title;
-  //     console.log('endPoint', endPoint)
-  //     console.log('title', title)
-  //     setLinkTitle(title)
-  //     setEndpoint(endPoint)
-  //     setIntegratedPage(responce.data.integratedpage);
-  //   }
-  //   fetchEndPoint()
-  // }, [])
-
-
   useEffect(() => {
+    console.log('useEffe4ct is wokring')
     const fetchEndPoint = async () => {
-      console.log('fetchEndPoint is working');
-      
+      console.log('fetchEndPoint is wokring')
       const getUser = localStorage.getItem('user');
       const user = JSON.parse(getUser);
-      console.log('user is working', user);
-  
-      const getToken = localStorage.getItem('token');
-      const token = JSON.parse(getToken);
-  
-      try {
-        const response = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user }, {
+      console.log('user is wokring', user)
+      const getToken = localStorage.getItem('token')
+      const token = JSON.parse(getToken)
+
+      const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        });
-  
-        if (response.data.message === "Not Found") {
-          navigate('/PricingTable');
-          return;
         }
-  
-        console.log('response', response.data);
-        const endPoint = response.data.link.endpoint;
-        const title = response.data.link.title;
-        console.log('endPoint', endPoint);
-        console.log('title', title);
-  
-        setLinkTitle(title);
-        setEndpoint(endPoint);
-        setIntegratedPage(response.data.integratedpage);
-      } catch (error) {
-        console.error('Error fetching endpoint:', error);
+      );
+      if (responce.data.message === "Not Found") {
+        navigate('/PricingTable')
+        return
       }
-    };
-  
-    fetchEndPoint();
-  }, []); // Empty dependency array ensures this effect only runs on mount
-  
-
+      console.log('respoince', responce.data)
+      const endPoint = responce.data.link.endpoint;
+      const title = responce.data.link.title;
+      console.log('endPoint', endPoint)
+      console.log('title', title)
+      setLinkTitle(title)
+      setEndpoint(endPoint)
+      setIntegratedPage(responce.data.integratedpage);
+    }
+    fetchEndPoint()
+  }, [])
 
   const confirmChanges = async () => {
     const data = {

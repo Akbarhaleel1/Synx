@@ -9,6 +9,7 @@ const EnhancedSignup = () => {
     email: '',
     phonenumber: '',
     password: '',
+    companyname:''
   });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
@@ -165,6 +166,19 @@ const EnhancedSignup = () => {
                 className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.password ? 'border-red-500' : ''}`}
                 placeholder="********"
                 value={formData.password}
+                onChange={handleChange}
+              />
+              {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
+            </div>
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">Password</label>
+              <input
+                type="text"
+                name="companyname"
+                id="companyname"
+                className={`mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm ${errors.password ? 'border-red-500' : ''}`}
+                placeholder="********"
+                value={formData.companyname}
                 onChange={handleChange}
               />
               {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
