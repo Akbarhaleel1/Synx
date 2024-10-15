@@ -399,6 +399,8 @@
 // const puppeteer = require('puppeteer');
 const puppeteer = require("puppeteer-core");
 const chromium = require("@sparticuz/chromium");
+const axios = require("axios");
+const GOOGLE_API_KEY = 'AIzaSyAcn2vA9OW0Kv1dmDhnQrnAdsH4xr65_80';
 
 function convertToNormalDateAndExtractRating(reviews) {
   return reviews.map((review) => {
@@ -973,94 +975,45 @@ const goibibo = async (url) => {
   }
 };
 
-const google = async (url) => {
-  const browser = await puppeteer.launch({
-    args: chromium.args,
-    defaultViewport: chromium.defaultViewport,
-    executablePath: await chromium.executablePath(),
-    headless: chromium.headless,
-    ignoreHTTPSErrors: true,
-  });
-  const page = await createPage(browser);
-  console.log("live share",url)
+const google = async (place_id) => {
+  if (!place_id) {
+    throw new Error("place_id is required");
+  }
 
   try {
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36');
-    await page.setViewport({ width: 1080, height: 1024 });
-    page.setDefaultNavigationTimeout(60000);
-    await page.goto(url, { waitUntil: "networkidle2" });
-
-  await page.waitForSelector('button[aria-label*="Reviews"]',{ timeout: 60000 });
-
-    await page.evaluate(() => {
-      const button = Array.from(
-        document.querySelectorAll("button")
-      ).find((el) => el.getAttribute("aria-label")?.includes("Reviews"));
-      if (button) {
-        button.click();
+    const response = await axios.get(
+      `https://maps.googleapis.com/maps/api/place/details/json`,
+      {
+        params: {
+          place_id: place_id,
+          key: GOOGLE_API_KEY,
+          fields: "name,rating,reviews",
+          reviews_sort: 'newest'
+        }
       }
-    });
-    await page.waitForNavigation();
-    await page.waitForSelector('button[aria-label="Sort reviews"]');
-    await page.click('button[aria-label="Sort reviews"]');
-    await page.waitForSelector(
-      'div[role="menuitemradio"][aria-checked="false"]'
     );
 
-    await page.evaluate(() => {
-      const newestElement = Array.from(
-        document.querySelectorAll('div[role="menuitemradio"]')
-      ).find((el) => el.innerText.includes("Newest"));
-      if (newestElement) {
-        newestElement.click();
-      }
-    });
-    await page.waitForNavigation();
-    await page.waitForSelector("div[data-review-id]");
+    const placeDetails = response.data.result;
 
-    const reviews = await page.$$eval("div[data-review-id]", (reviewEls) => {
-      return reviewEls.map((reviewEl) => {
-        const platform = "google";
-        // const reviewId = reviewEl.getAttribute('data-review-id');
-        const image =
-          reviewEl.querySelector("button.WEBjve img")?.src ||
-          reviewEl.querySelector("img.NBa7we")?.src ||
-          "";
-        const name =
-          reviewEl.querySelector("div.d4r55")?.innerText ||
-          reviewEl.querySelector("div.d4r55")?.innerText ||
-          "";
-        const review =
-          reviewEl.querySelector(".MyEned")?.innerText ||
-          reviewEl.querySelector("span.wiI7pd")?.innerText ||
-          "";
-        const date =
-          reviewEl.querySelector(".rsqaWe")?.innerText ||
-          reviewEl.querySelector("span.xRkPPb")?.innerText ||
-          "";
-        const rating =
-          reviewEl.querySelectorAll(".NhBTye.elGi1d").length ||
-          reviewEl.querySelector("span.fzvQIb")?.innerText[0] ||
-          "";
+    if (!placeDetails) {
+      throw new Error("Place not found");
+    }
 
-        return {
-          platform,
-          image,
-          name,
-          review,
-          date,
-          rating,
-        };
-      });
-    });
+    // Sort reviews by the time field (most recent first)
+    const sortedReviews = (placeDetails.reviews || []).sort(
+      (a, b) => b.time - a.time
+    );
 
-    return reviews;
+    return {
+      // name: placeDetails.name,
+      // rating: placeDetails.rating,
+      reviews: sortedReviews 
+    };
   } catch (error) {
-    console.error("Error fetching reviews:", error);
-  } finally {
-    await browser.close();
-  } 
-}; 
+    console.error("Error fetching reviews:", error.message);
+    throw new Error("Failed to fetch place reviews");
+  }
+};
 
 module.exports = {
   airbnb,
