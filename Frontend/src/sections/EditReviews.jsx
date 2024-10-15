@@ -22,14 +22,7 @@ const EditReviews = () => {
   };
 
   useEffect(() => {
-    const cachedEndpoint = localStorage.getItem('endpoint');
-    const cachedLinkTitle = localStorage.getItem('linkTitle');
-    if (cachedEndpoint && cachedLinkTitle) {
-      setEndpoint(cachedEndpoint);
-      setLinkTitle(cachedLinkTitle);
-    } else {
       fetchEndPoint();
-    }
   }, [endpoint]);
   
   const fetchEndPoint = async () => {
