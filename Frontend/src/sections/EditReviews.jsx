@@ -178,10 +178,11 @@ const EditReviews = () => {
     <select
       value={initialPage}
       onChange={(e) => {
+        console.log('eee',e.target.value)
         const selectedPlatform = integratedPage.find(page => page.link === e.target.value);
         console.log('selectedPlatform is',selectedPlatform.link)
         setInitialPage(selectedPlatform.link); // Set the selected link
-        // Handle any additional logic you want here if needed
+
       }}
       className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
     >
