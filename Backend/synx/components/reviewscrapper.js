@@ -991,6 +991,8 @@ const google = async (url) => {
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
+    
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36');
 
     await page.waitForSelector('button[aria-label*="Reviews"]',{ timeout: 60000 });
 
