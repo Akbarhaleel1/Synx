@@ -992,9 +992,9 @@ const google = async (url) => {
   try {
     await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
-    await page.goto(url, { waitUntil: "networkidle2" });
+   const pageGoto = await page.goto(url, { waitUntil: 'networkidle2', timeout: 60000 });
 
-
+   console.log('pageGoto',pageGoto)
     await page.waitForSelector('button[aria-label*="Reviews"]',{ timeout: 60000 });
 
     await page.evaluate(() => {
