@@ -121,6 +121,17 @@ const feedback = async (req, res) => {
     return res.status(500).json({ message: "An error occurred while processing feedback." });
   }
 };
+const starfilterpage=async (req,res)=>{
+  const {endpoint}=req.body;
+
+  try{
+    const filter=await ReviewLink.findOne({endpoint:endpoint})
+    return res.status(200).json({message:"successfully find the starfilter",filterlink:filter.})
+
+  }catch(err){
+
+  }
+}
 
 module.exports = {
     reviewPage,feedback
