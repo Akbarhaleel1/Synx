@@ -52,7 +52,7 @@ const EditReviews = () => {
       setIntegratedPage(responce.data.integratedpage);
     }
     fetchEndPoint()
-  }, [endpoint])
+  }, [endpoint,linkTitle,integratedPage])
 
   const confirmChanges = async () => {
     const data = {
