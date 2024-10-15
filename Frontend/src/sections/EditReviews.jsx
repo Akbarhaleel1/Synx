@@ -11,15 +11,7 @@ const EditReviews = () => {
   const [initialPage, setInitialPage] = useState('enabled');
   const [starRating, setStarRating] = useState(0);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
-  const [integratedPage, setIntegratedPage] = useState([
-    {
-      link: "",
-      platform: "",
-      user: "",
-      _id: "",
-    }
-  ]);
-  const [selectedPage, setSelectedPage] = useState(integratedPage);
+
   useAuth();
   const navigate = useNavigate(); 
 
@@ -56,22 +48,9 @@ const EditReviews = () => {
       console.log('title',title)
       setLinkTitle(title)
       setEndpoint(endPoint)
-
-
-        setIntegratedPage(prevState => [
-          ...prevState,
-          {
-            link: responce.data.integratedpage.link,
-            platform: responce.data.integratedpage.platform,
-            user: responce.data.integratedpage.user,
-            _id: responce.data.integratedpage.user._id,
-          }
-        ]);
     }
     fetchEndPoint()
   },[])
-
-  
 
   const confirmChanges = async () => {
     const data = {
@@ -168,41 +147,24 @@ const EditReviews = () => {
             </div>
             <div className="mb-6">
               <label className="block text-sm font-medium mb-2">....................................................................................................................................................................</label>
-              <div>
-      <h1 className='font-bold'>Select One Platform for Star Filter</h1>
-      <div className="flex items-center bg-gray-700 rounded">
-        <select
-          onChange={(e) => {
-            const selectedLink = e.target.value;
-            const selectedData = integratedPage.find(page => page.link === selectedLink);
-            setSelectedPage(selectedData); // Update selectedPage based on the selected option
-          }}
-          className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
-        >
-          {integratedPage.map((page) => (
-            <option key={page._id} value={page.link}>
-              {page.platform}
-            </option>
-          ))}
-        </select>
-        <button
-          type="button"
-          className="p-2 hover:bg-gray-600 rounded"
-          aria-label="Edit"
-        >
-          <i className="fas fa-pencil-alt text-gray-400"></i>
-        </button>
-      </div>
-
-      {/* Display selected data dynamically */}
-      <div className="mt-4 text-white">
-        <h2 className="font-bold">Selected Platform Details:</h2>
-        <p><strong>Platform:</strong> {selectedPage.platform}</p>
-        <p><strong>Link:</strong> {selectedPage.link}</p>
-        <p><strong>User:</strong> {selectedPage.user}</p>
-        <p><strong>ID:</strong> {selectedPage._id}</p>
-      </div>
-    </div>
+                <h1 className='font-bold'>Select One Platform for Star Filter</h1>
+              <div className="flex items-center bg-gray-700 rounded">
+                <select
+                  value={initialPage}
+                  onChange={(e) => setInitialPage(e.target.value)}
+                  className="bg-black flex-1 py-2 px-4 outline-none text-white placeholder-gray-400"
+                >
+                  <option value="enabled">Start filter enabled</option>
+                  <option value="disabled">Start filter disabled</option>
+                </select>
+                <button
+                  type="button"
+                  className="p-2 hover:bg-gray-600 rounded"
+                  aria-label="Edit"
+                >
+                  <i className="fas fa-pencil-alt text-gray-400"></i>
+                </button>
+              </div>
             </div>
             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
               <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
