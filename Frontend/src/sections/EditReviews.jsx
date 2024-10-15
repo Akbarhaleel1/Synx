@@ -30,7 +30,7 @@ const EditReviews = () => {
     } else {
       fetchEndPoint();
     }
-  }, []);
+  }, [endpoint]);
   
   const fetchEndPoint = async () => {
     const getUser = localStorage.getItem('user');
