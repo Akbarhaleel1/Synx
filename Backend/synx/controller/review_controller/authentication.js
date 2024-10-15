@@ -52,7 +52,7 @@ const signup = async (req, res) => {
       password: hashedPassword,
       otp: otp,
       customerId:customer.id,
-      companyname:companyname
+      // companyname:companyname
     });
 
     console.log('userData',userData)
