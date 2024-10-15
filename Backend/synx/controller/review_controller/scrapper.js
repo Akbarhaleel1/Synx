@@ -396,9 +396,62 @@ const automate = async () => {
   }
 };
 
+const googleautomate = async () => {
+  try {
+    const scrappers = await Scrapper.find();
+
+    for (let scrapper of scrappers) {
+      let reviews;
+
+      switch (scrapper.platform) {
+       case "google":
+            reviews = await review.google(scrapper.link);
+            break;
+        default:
+          console.log("Unsupported platform", scrapper.platform);
+          continue;
+      }
+
+      console.log("Scraped reviews for platform:", scrapper.platform);
+
+      const reviewEntries = reviews.map((reviewData) => ({
+        user: scrapper.user,
+        platform: reviewData.platform,
+        image: reviewData.image,
+        date: reviewData.date,
+        name: reviewData.name,
+        title: reviewData.title,
+        review: reviewData.review,
+        rating: reviewData.rating,
+        link: scrapper.link,
+      }));
+
+      for (let entry of reviewEntries) {
+        await ScrapData.updateOne(
+          {
+            user: entry.user,
+            platform: entry.platform,
+            name: entry.name,
+            link: entry.link,
+          },
+          { $set: entry },
+          { upsert: true }
+        );
+      }
+      console.log("Reviews saved or updated successfully.");
+    }
+  } catch (error) {
+    console.error("Error in cron job:", error);
+  }
+};
+
 cron.schedule("*/30 * * * *", async () => {
   console.log("Running the review scraping cron job every 30 minutes.");
   await automate();
+});
+cron.schedule("*/1 * * * *", async () => {
+  console.log("Running the google review cron job every 1 minutes.");
+  await googleautomate();
 });
 module.exports = {
   integrate,
