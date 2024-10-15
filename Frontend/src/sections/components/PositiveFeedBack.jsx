@@ -10,7 +10,7 @@ const PositiveFeedBack = () => {
             console.log('result is',result)
         }
         fetchLink()
-    })
+    },[])
 
   return (
     <div className="flex flex-col md:flex-row h-screen bg-white">
