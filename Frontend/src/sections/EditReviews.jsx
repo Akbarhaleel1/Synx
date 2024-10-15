@@ -8,7 +8,7 @@ import Nav from "../components/Nav";
 const EditReviews = () => {
   const [endpoint, setEndpoint] = useState('');
   const [linkTitle, setLinkTitle] = useState('Do you want to leave us a review?');
-  const [initialPage, setInitialPage] = useState('enabled');
+  const [initialPage, setInitialPage] = useState('');
   const [starRating, setStarRating] = useState(0);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [integratedPage, setIntegratedPage] = useState([]);
@@ -179,6 +179,7 @@ const EditReviews = () => {
       value={initialPage}
       onChange={(e) => {
         const selectedPlatform = integratedPage.find(page => page.link === e.target.value);
+        console.log('selectedPlatform is',selectedPlatform.link)
         setInitialPage(selectedPlatform.link); // Set the selected link
         // Handle any additional logic you want here if needed
       }}
