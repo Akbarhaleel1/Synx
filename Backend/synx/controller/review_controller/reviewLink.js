@@ -36,9 +36,9 @@ const reviewlink= async(req,res)=>{
     const {user}=req.body
     console.log(user)
     console.log("reviewlinkkkkkkkkkkkkkkkkkkkkkkk",req.body)
-    const integratedpage=await IntegratedSite.findOne({user:user._id})
+    const integratedpage=await IntegratedSite.find({user:user._id})
     const link= await ReviewLink.findOne({user:user._id})
-    return res.status(200).json({ message: "Review link created successfully",link ,integratedpage});
+    return res.status(200).json({ message: "Review link created successfully",link ,integratedpage:integratedpage});
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }
