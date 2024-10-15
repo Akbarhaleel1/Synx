@@ -10,6 +10,9 @@ const PositiveFeedBack = () => {
         const fetchLink = () =>{
             const endpoint = localStorage.getItem('endpoint');
             const result = axios.post('https://synxbackend.synxautomate.com/starFilterReviewLink',{endpoint});
+            result.then((data)=>{
+                console.log('data',data)
+            })
             console.log('result is',result)
             setData(result.data.reviewLink.starFilter)
         }
