@@ -15,7 +15,7 @@ const PositiveFeedBack = () => {
                 console.log('data',data)
             })
             console.log('result is',result)
-            setData(result.data.reviewLink.starFilter)
+            setData(result.data.filterlink.starFilter)
         }
         fetchLink()
     },[])
