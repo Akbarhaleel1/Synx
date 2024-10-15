@@ -19,7 +19,6 @@ import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { SuccessModal } from "./components/successModal";
 import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
 import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 
 const ToggleSwitch = ({ checked, onChange }) => (
@@ -29,19 +28,11 @@ const ToggleSwitch = ({ checked, onChange }) => (
   </label>
 );
 
-const countryCodes = [
-  { code: '+1', country: 'USA' },
-  { code: '+44', country: 'UK' },
-  { code: '+91', country: 'India' },
-  { code: '+86', country: 'China' },
-  { code: '+81', country: 'Japan' },
-];
-
 const GetReviews = () => {
   const [companyName, setCompanyName] = useState("");
   const [message, setMessage] = useState("");
   const [link, setLink] = useState("");
-  // const [inputs, setInputs] = useState([{ name: "", contact: "" }]);
+  const [inputs, setInputs] = useState([{ name: "", contact: "" }]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
@@ -49,27 +40,14 @@ const GetReviews = () => {
   const [balence, setBalence] = useState('')
   const [limit, setLimit] = useState('')
   const [isModalOpenforMonthlyLimit, setIsModalOpenforMonthlyLimit] = useState(false);
-  const [inputs, setInputs] = useState([
-    { name: '', countryCode: '', contact: '' }
-  ]);
+
   const navigate = useNavigate();
 
 
-  // const handleAddLine = () => {
-  //   setInputs([...inputs, { name: "", contact: "" }]);
-  // };
   const handleAddLine = () => {
-    setInputs([...inputs, { name: '', countryCode: '', contact: '' }]);
+    setInputs([...inputs, { name: "", contact: "" }]);
   };
 
-  
-  const handleCountryCodeChange = (index, value) => {
-    const newInputs = [...inputs];
-    newInputs[index].countryCode = value;
-    setInputs(newInputs);
-  };
-
-  
   useAuth()
 
   const handleInputChange = (index, event) => {
@@ -277,52 +255,7 @@ const GetReviews = () => {
             <p>Invite Your Customers</p>
             <p className="text-gray-700">Monthly limits: <span>{balence}</span>/<span>{limit}</span></p>
           </div>
-
           {inputs.map((input, index) => (
-        <div
-          key={index}
-          className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
-        >
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            placeholder="Name"
-            className="bg-gray-800 p-2 rounded-lg w-full lg:w-4/12 text-white"
-            onChange={(e) => handleInputChange(index, e)}
-          />
-          <Select
-            value={input.countryCode}
-            onValueChange={(value) => handleCountryCodeChange(index, value)}
-          >
-            <SelectTrigger className="w-full lg:w-2/12">
-              <SelectValue placeholder="Code" />
-            </SelectTrigger>
-            <SelectContent>
-              {countryCodes.map((country) => (
-                <SelectItem key={country.code} value={country.code}>
-                  {country.code} ({country.country})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-          <input
-            type="text"
-            name="contact"
-            value={input.contact}
-            placeholder="Contact Number"
-            className="bg-gray-800 p-2 rounded-lg w-full lg:w-4/12 text-white"
-            onChange={(e) => handleInputChange(index, e)}
-          />
-          <button
-            onClick={() => handleDeleteLine(index)}
-            className="p-2 rounded-lg bg-red-500 hover:bg-red-600 transition duration-150 ease-in-out"
-          >
-            <Trash2 size={20} />
-          </button>
-        </div>
-      ))}
-          {/* {inputs.map((input, index) => (
             <div
               key={index}
               className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
@@ -351,7 +284,7 @@ const GetReviews = () => {
 
               </button>
             </div>
-          ))} */}
+          ))}
           <div className="flex flex-col sm:flex-row gap-4 w-full max-w-2xl mx-auto">
             <button
               onClick={handleAddLine}
