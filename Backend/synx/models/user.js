@@ -46,8 +46,10 @@ const userBase = new mongoose.Schema({
   customerId:{
     type:String,
     required:true
+  },
+  companyname:{
+    type:String
   }
-  
 });
 const User = mongoose.model('User', userBase);
 
