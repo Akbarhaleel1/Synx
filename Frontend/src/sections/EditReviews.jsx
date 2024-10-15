@@ -1,8 +1,107 @@
 
-import useAuth from './customHooks/useAuth';
+// import useAuth from './customHooks/useAuth';
+// import { useNavigate } from 'react-router-dom';
+// import { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import Nav from "../components/Nav";
+
+// const EditReviews = () => {
+//   const [endpoint, setEndpoint] = useState('');
+//   const [linkTitle, setLinkTitle] = useState('Do you want to leave us a review?');
+//   const [initialPage, setInitialPage] = useState('');
+//   const [starRating, setStarRating] = useState(0);
+//   const [showConfirmModal, setShowConfirmModal] = useState(false);
+//   const [integratedPage, setIntegratedPage] = useState([]);
+
+//   useAuth();
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setShowConfirmModal(true);
+//   };
+
+//   useEffect(() => {
+
+//     const fetchEndPoint = async () => {
+//       console.log('fetchEndPoint is wokring')
+//       const getUser = localStorage.getItem('user');
+//       const user = JSON.parse(getUser);
+//       console.log('user is wokring', user)
+//       const getToken = localStorage.getItem('token')
+//       const token = JSON.parse(getToken)
+
+//       const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
+//         {
+//           headers: {
+//             Authorization: `Bearer ${token}`,
+//           },
+//         }
+//       );
+//       if (responce.data.message === "Not Found") {
+//         navigate('/PricingTable')
+//         return
+//       }
+//       console.log('respoince', responce.data)
+//       const endPoint = responce.data.link.endpoint;
+//       const title = responce.data.link.title;
+//       console.log('endPoint', endPoint)
+//       console.log('title', title)
+//       setLinkTitle(title)
+//       setEndpoint(endPoint)
+//       setIntegratedPage(responce.data.integratedpage);
+//     }
+//     fetchEndPoint()
+//   }, [])
+
+//   const confirmChanges = async () => {
+//     const data = {
+//       endpoint,
+//       linkTitle,
+//       initialPage
+//     };
+//     console.log('data is', data)
+
+//     try {
+//       const user = JSON.parse(localStorage.getItem('user'));
+//       const parsedToken = localStorage.getItem('token');
+//       const token = JSON.parse(parsedToken)
+
+//       const response = await axios.post('https://synxbackend.synxautomate.com/editReview', { data, user }, {
+//         headers: {
+//           Authorization: `Bearer ${token}`,
+//         }
+//       });
+
+//       if (response.status === 200) {
+//         console.log('Data successfully sent to the backend', response.data.endpoint);
+//         setEndpoint(response.data.endpoint)
+//       } else {
+//         console.error('Error sending data to the backend');
+//       }
+//     } catch (error) {
+//       console.error('Error:', error);
+//     }
+//     setShowConfirmModal(false);
+//   };
+
+//   const handleVisitLink = () => {
+//     navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}`);
+//   };
+
+//   const handleStarClick = (rating) => {
+//     setStarRating(rating);
+//     if (rating <= 3) {
+//       navigate('/userReview');
+//     } else {
+//       alert('Thank you for your positive feedback!');
+//     }
+//   };
+
+import React, { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import axios from 'axios';
+import useAuth from './customHooks/useAuth';
 import Nav from "../components/Nav";
 
 const EditReviews = () => {
@@ -16,58 +115,47 @@ const EditReviews = () => {
   useAuth();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const fetchEndPoint = useCallback(async () => {
+    try {
+      const getUser = localStorage.getItem('user');
+      const user = JSON.parse(getUser);
+      const getToken = localStorage.getItem('token');
+      const token = JSON.parse(getToken);
+
+      const response = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user }, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.data.message === "Not Found") {
+        navigate('/PricingTable');
+        return;
+      }
+
+      const { link, integratedpage } = response.data;
+      setLinkTitle(link.title);
+      setEndpoint(link.endpoint);
+      setIntegratedPage(integratedpage);
+    } catch (error) {
+      console.error('Error fetching endpoint:', error);
+    }
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchEndPoint();
+  }, [fetchEndPoint]);
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     setShowConfirmModal(true);
   };
 
-
-
-  const fetchEndPoint = async () => {
-    console.log('fetchEndPoint is wokring')
-    const getUser = localStorage.getItem('user');
-    const user = JSON.parse(getUser);
-    console.log('user is wokring', user)
-    const getToken = localStorage.getItem('token')
-    const token = JSON.parse(getToken)
-
-    const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    if (responce.data.message === "Not Found") {
-      navigate('/PricingTable')
-      return
-    }
-    console.log('respoince', responce.data)
-    const endPoint = responce.data.link.endpoint;
-    const title = responce.data.link.title;
-    console.log('endPoint', endPoint)
-    console.log('title', title)
-    setLinkTitle(title)
-    setEndpoint(endPoint)
-    setIntegratedPage(responce.data.integratedpage);
-  }
-
-  useEffect(() => {
-    fetchEndPoint()
-  }, [endpoint,linkTitle])
-
   const confirmChanges = async () => {
-    const data = {
-      endpoint,
-      linkTitle,
-      initialPage
-    };
-    console.log('data is', data)
-
     try {
       const user = JSON.parse(localStorage.getItem('user'));
-      const parsedToken = localStorage.getItem('token');
-      const token = JSON.parse(parsedToken)
+      const token = JSON.parse(localStorage.getItem('token'));
+      const data = { endpoint, linkTitle, initialPage };
 
       const response = await axios.post('https://synxbackend.synxautomate.com/editReview', { data, user }, {
         headers: {
@@ -76,10 +164,7 @@ const EditReviews = () => {
       });
 
       if (response.status === 200) {
-        console.log('Data successfully sent to the backend', response.data.endpoint);
-        setEndpoint(response.data.endpoint)
-      } else {
-        console.error('Error sending data to the backend');
+        setEndpoint(response.data.endpoint);
       }
     } catch (error) {
       console.error('Error:', error);
@@ -99,6 +184,7 @@ const EditReviews = () => {
       alert('Thank you for your positive feedback!');
     }
   };
+
 
   return (
     <div className="flex flex-col lg:flex-row bg-[rgb(241,241,241)] min-h-screen text-white">
