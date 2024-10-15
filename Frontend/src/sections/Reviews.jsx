@@ -106,7 +106,7 @@ const Reviews = () => {
         ))}
       </div>
       <p className="text-white text-sm font-light mb-4">{review.review}</p>
-      {review.link && (
+      {review.link && review.link=='google' && (
         <a
           href={review.link}
           target="_blank"
