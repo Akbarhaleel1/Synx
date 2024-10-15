@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Nav from '../components/Nav';
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 import useAuth from './customHooks/useAuth';
 import CenteredSweetAlert from './components/TemplateUpdated';
@@ -37,19 +37,19 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken);
       console.log('1')
-      const result = await axios.post('https://synxbackend.synxautomate.com/ePageLoad', { user },{
-        headers:{
+      const result = await axios.post('https://synxbackend.synxautomate.com/ePageLoad', { user }, {
+        headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
       console.log('result', result.data)
 
-      if(result.data.message === "Not Found"){
+      if (result.data.message === "Not Found") {
         navigate('/PricingTable')
         return
       }
-   
+
       setCompanyName(result.data.email.name)
       setEmailContent(result.data.email.message)
       setLink(result.data.link)
@@ -140,6 +140,11 @@ const GetReviewsEmail = () => {
   console.log('emailContent', emailContent);
   console.log('inputs', inputs);
 
+  const handleDeleteLine = (index) => {
+    const newInputs = inputs.filter((_, i) => i !== index);
+    setInputs(newInputs);
+  };
+
 
   return (
     <div className="flex min-h-screen bg-[rgb(241,241,241)] ">
@@ -172,15 +177,13 @@ const GetReviewsEmail = () => {
           </a>
         </div>
         {/* Request Reviews via SMS */}
-        <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
+
+        {/* <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
           <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p>Invite Your Customers</p>
             <p className="text-gray-400">Monthly limits: Unlimited</p>
           </div>
-
-
-          {/* Render input fields dynamically */}
           {inputs.map((input, index) => (
             <div
               key={index}
@@ -204,13 +207,6 @@ const GetReviewsEmail = () => {
               />
             </div>
           ))}
-{/* 
-          <div className="flex items-center mb-4">
-            <input type="checkbox" id="consent" className="mr-2 text-white" />
-            <label htmlFor="consent">
-              I have consent to send messages to this contact
-            </label>
-          </div> */}
           <div className="flex flex-col lg:flex-row justify-between">
             <button
               onClick={handleAddLine}
@@ -218,13 +214,55 @@ const GetReviewsEmail = () => {
             >
               + Add Line
             </button>
-            {/* <button onClick={handleSubmit} className="bg-black text-white px-4 py-2 rounded-lg">
-              Request a Review
-            </button> */}
-           <EnhancedSubmitButton onSubmit={handleSubmit} />
-
+            <EnhancedSubmitButton onSubmit={handleSubmit} />
           </div>
+        </div> */}
+
+<div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
+      <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
+      <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
+        <p>Invite Your Customers</p>
+        <p className="text-gray-400">Monthly limits: Unlimited</p>
+      </div>
+      {inputs.map((input, index) => (
+        <div
+          key={index}
+          className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
+        >
+          <input
+            type="text"
+            name="name"
+            value={input.name}
+            placeholder="Name"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <input
+            type="email"
+            name="contact"
+            value={input.contact}
+            placeholder="Email"
+            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
+            onChange={(e) => handleInputChange(index, e)}
+          />
+          <button
+            onClick={() => handleDeleteLine(index)}
+            className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-colors duration-200"
+          >
+            <Trash2 size={20} />
+          </button>
         </div>
+      ))}
+      <div className="flex flex-col lg:flex-row justify-between">
+        <button
+          onClick={handleAddLine}
+          className="border border-white px-4 py-2 rounded-lg mb-4 lg:mb-0"
+        >
+          + Add Line
+        </button>
+        <EnhancedSubmitButton onSubmit={handleSubmit} />
+      </div>
+    </div>
 
         {/* Edit Template */}
         <div className="bg-white p-6 rounded-lg mb-6">
@@ -296,19 +334,19 @@ const GetReviewsEmail = () => {
               >
                 Update Template
               </button>
-              {showAlert&&(
-                <CenteredSweetAlert  title="Success!" message={'Template Updated Successfully!'}  onClose={()=>setShowAlert(false)}/>
+              {showAlert && (
+                <CenteredSweetAlert title="Success!" message={'Template Updated Successfully!'} onClose={() => setShowAlert(false)} />
               )}
             </div>
           </div>
         </div>
       </main>
-      <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)}  message="Review request sent successfully via Email!"/>
+      <SuccessModal isOpen={isSuccessModalOpen} onClose={() => setSuccessModalOpen(false)} message="Review request sent successfully via Email!" />
       <BeautifulErrorModal
-          isOpen={isErrorModalOpen}
-          onClose={() => setIsErrorModalOpen(false)}
-          errors={errorMessages}
-        />
+        isOpen={isErrorModalOpen}
+        onClose={() => setIsErrorModalOpen(false)}
+        errors={errorMessages}
+      />
     </div>
   );
 };
