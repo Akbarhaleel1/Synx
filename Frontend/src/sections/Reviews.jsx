@@ -152,7 +152,7 @@ const Reviews = () => {
       {review.link && (
         review.platform === "google" ? (
           <a
-            href={`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=[YOUR_PLACE_ID]`}
+            href={`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${review.link}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
