@@ -41,6 +41,7 @@ const GetReviews = () => {
   const [balence, setBalence] = useState('')
   const [limit, setLimit] = useState('')
   const [isModalOpenforMonthlyLimit, setIsModalOpenforMonthlyLimit] = useState(false);
+  const [showWarningEndPoint, setShowWarningEndPoint] = useState(false);
 
   const navigate = useNavigate();
 
@@ -78,7 +79,9 @@ const GetReviews = () => {
         return;
       }
       const endpoint = localStorage.getItem('endpoint')
-    
+      if(!endpoint){
+        setShowWarningEndPoint(true)
+      }
 
       let user = localStorage.getItem('user')
       const getToken = localStorage.getItem('token');
@@ -376,7 +379,7 @@ const GetReviews = () => {
         isOpen={isModalOpenforMonthlyLimit} 
         onClose={() => setIsModalOpen(false)} 
       />
-            {!endpoint && <WarningMessage/>}
+          {showWarning && <WarningMessage/>}
     </div>
   );
 };
