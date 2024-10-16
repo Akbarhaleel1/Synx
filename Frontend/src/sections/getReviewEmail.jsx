@@ -64,9 +64,6 @@ const GetReviewsEmail = () => {
       setIsErrorModalOpen(true)
       return;
     }
-    console.log('companyName', companyName);
-    console.log('emailContent', emailContent);
-    console.log('inputs', inputs);
 
     try {
       // Send data to the backend
@@ -120,6 +117,13 @@ const GetReviewsEmail = () => {
           return;
         }
       }
+
+      if (!companyName || !emailContent) {
+        // alert('Please fill out both fields.');
+        setIsErrorModalOpen(true)
+        return;
+      }
+  
 
       console.log('input', inputs)
       let user = localStorage.getItem('user');
