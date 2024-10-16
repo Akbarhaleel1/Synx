@@ -51,20 +51,20 @@ const Nav = () => {
 
   return (
     <header>
-            <style>
+        <style>
         {`
-          @keyframes fadeInSlide {
-            0% {
-              opacity: 0;
-              transform: translateY(-20px);
-            }
-            100% {
+          @keyframes gentlePulse {
+            0%, 100% {
               opacity: 1;
-              transform: translateY(0);
+              transform: scale(1);
+            }
+            50% {
+              opacity: 0.9;
+              transform: scale(1.02);
             }
           }
-          .animate-fadeInSlide {
-            animation: fadeInSlide 0.5s ease-out forwards;
+          .animate-gentlePulse {
+            animation: gentlePulse 3s ease-in-out infinite;
           }
         `}
       </style>
@@ -72,11 +72,10 @@ const Nav = () => {
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
         <h1 
             style={{ color: 'rgb(174, 233, 137)' }} 
-            className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-fadeInSlide"
+            className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-gentlePulse"
           >
             {companyName}
-          </h1>
-            <div className='space-y-4 mb-12'>
+          </h1>        <div className='space-y-4 mb-12'>
           {navItems.map((item, index) => (
             <NavItem key={index} item={item} />
           ))}
