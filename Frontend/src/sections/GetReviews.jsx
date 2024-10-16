@@ -20,6 +20,7 @@ import { SuccessModal } from "./components/successModal";
 import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
 import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
 import WarningMessage from "./components/ui/WarningMessage";
+import WarningModal from "./components/ui/WarningMessage";
 
 
 const ToggleSwitch = ({ checked, onChange }) => (
@@ -80,7 +81,8 @@ const GetReviews = () => {
       const endpoint = localStorage.getItem('endpoint')
       console.log('enpiontssssssssssssss',endpoint)
       if(!endpoint){
-        setShowWarning(true);
+        console.log('Navigating to add link page');
+        setShowWarning(false);
         return
       }
 
@@ -178,16 +180,6 @@ const GetReviews = () => {
   const handleDeleteLine = (index) => {
     const newInputs = inputs.filter((_, i) => i !== index);
     setInputs(newInputs);
-  };
-
-  const handleCancel = () => {
-    setShowWarning(false);
-  };
-
-  const handleAddLink = () => {
-    // Focus on the review link input
-    document.getElementById('reviewLink').focus();
-    setShowWarning(false);
   };
 
 
@@ -392,8 +384,10 @@ const GetReviews = () => {
         isOpen={isModalOpenforMonthlyLimit} 
         onClose={() => setIsModalOpen(false)} 
       />
-             {showWarning && <WarningMessage onCancel={handleCancel} onAddLink={handleAddLink} />}
-             
+            <WarningModal
+        isOpen={showWarning}
+        onClose={() => setShowWarning(false)}
+      />
     </div>
   );
 };

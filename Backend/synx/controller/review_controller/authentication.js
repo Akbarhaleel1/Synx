@@ -509,6 +509,35 @@ const resetPassword = async (req, res) => {
   
 };
 
+// cronjob.......................
+
+cron.schedule('0 0 * * *', async () => {
+  try {
+    
+    const users = await User.find({ newuser: true });
+
+    for (const user of users) {
+     
+      const subscription = await Subscription.findOne({ userId: user._id });
+
+      if (subscription) {
+        
+        if (new Date() > subscription.endDate) {
+          
+          user.newuser = false;
+          await user.save();
+
+          console.log(`User ${user.email}'s subscription has expired. Updated newuser to false.`);
+        }
+      }
+    }
+  } catch (err) {
+    console.error('Error in cron job:', err);
+  }
+});
+
+// end..........................................
+
 
 module.exports = {
   signup,

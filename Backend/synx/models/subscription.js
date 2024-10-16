@@ -43,14 +43,14 @@ const subscriptionSchema = new mongoose.Schema({
     required: true,
     default: function () {
       switch (this.subscriptionType) {
-        case 'free':
-          return 50;
+        case 'FREE':
+          return 500;
         case 'SILVER':
-          return 20;
+          return 100;
         case 'GOLD':
-          return 30;
+          return 250;
         case 'DIAMOND':
-            return 50;
+            return 500;
         default:
           return 1;
       }
@@ -61,14 +61,14 @@ const subscriptionSchema = new mongoose.Schema({
     required: true,
     default: function () {
       switch (this.subscriptionType) {
-        case 'free':
-          return 30;
-        case 'SILVER':
-          return 50;
-        case 'GOLD':
+        case 'FREE':
           return 500;
+        case 'SILVER':
+          return 100;
+        case 'GOLD':
+          return 250;
         case 'DIAMOND':
-            return 1000;
+            return 500;
         default:
           return 50;
       }
