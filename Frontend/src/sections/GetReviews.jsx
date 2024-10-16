@@ -41,7 +41,7 @@ const GetReviews = () => {
   const [balence, setBalence] = useState('')
   const [limit, setLimit] = useState('')
   const [isModalOpenforMonthlyLimit, setIsModalOpenforMonthlyLimit] = useState(false);
-  const [showWarningEndPoint, setShowWarningEndPoint] = useState(false);
+  const [showWarningEndPoint, setShowWarningEndPoint] = useState(true);
 
   const navigate = useNavigate();
 
