@@ -1,37 +1,38 @@
+
 import { useEffect, useState } from 'react';
 import logo from '../assets/images/logo.png';
-import reviewLogo from '../assets/images/reviewLogo.png';
 import menuBar from '../assets/images/menuBar.png';
 import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [companyName, setCompanyName] = useState('')
+  const [companyName, setCompanyName] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    console.log('user is', user.companyname)
-    setCompanyName(user.companyname)
-  }, [])
+    console.log('user is', user.companyname);
+    setCompanyName(user.companyname);
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const navItems = [
-    { name: 'Reviews', href: '/reviews' },
-    { name: 'Get Reviews', href: '/GetReviews' },
-    { name: 'Review Link', href: '/EditReviews' },
-    { name: 'Analytics', href: '/analytics' },
-    { name: 'Automate with AI', href: '/reviews' },
-    { name: 'Integrations', href: '/integrations' },
+    { name: 'Reviews', href: '/reviews', icon: 'https://img.icons8.com/?size=100&id=WLXjp8v1lQpQ&format=png&color=FFFFFF' },
+    { name: 'Get Reviews', href: '/GetReviews', icon: 'https://img.icons8.com/?size=100&id=12631&format=png&color=FFFFFF' },
+    { name: 'Review Link', href: '/EditReviews', icon: 'https://img.icons8.com/?size=100&id=7867&format=png&color=FFFFFF' },
+    { name: 'Analytics', href: '/analytics', icon: 'https://img.icons8.com/?size=100&id=wdfmkgweCGDk&format=png&color=FFFFFF' },
+    { name: 'Utility', href: '/UtilityPage', icon: 'https://img.icons8.com/ios/50/FFFFFF/ai.png' },
+    { name: 'Automate with AI', href: '/AiFeature', icon: 'https://img.icons8.com/?size=100&id=gYcGVfx0I1jc&format=png&color=FFFFFF' },
+    { name: 'Integrations', href: '/integrations', icon: 'https://img.icons8.com/?size=100&id=sLJTHeCEleTd&format=png&color=FFFFFF' },
   ];
 
   const bottomItems = [
-    { name: 'Negative Reviews', href: '/negetiveReview' },
-    { name: 'Logout', href: '/login' },
+    { name: 'Negative Reviews', href: '/negetiveReview', icon: 'https://img.icons8.com/?size=100&id=77574&format=png&color=FFFFFF' },
+    { name: 'Logout', href: '/login', icon: 'https://img.icons8.com/?size=100&id=8119&format=png&color=FFFFFF' },
   ];
 
   const handleLogout = () => {
@@ -44,7 +45,7 @@ const Nav = () => {
       onClick={() => navigate(item.href)}
       className='flex items-center space-x-2 hover:bg-gray-700 p-2 rounded-md cursor-pointer'
     >
-      <img src={reviewLogo} alt={item.name} width={22} className='w-5 h-5' />
+      <img src={item.icon} alt={item.name} width={22} className='w-5 h-5' />
       <p className='text-white text-sm'>{item.name}</p>
     </div>
   );
@@ -82,11 +83,12 @@ const Nav = () => {
       <nav className="fixed h-screen w-64 p-6 bg-black hidden lg:block">
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
         <h1
-          style={{ color: 'rgb(174, 233, 137)' }}
-          className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
+         
+          className=" text-white text-2xl font-extralight ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
         >
           {companyName}
-        </h1>       <div className='space-y-4 mb-12'>
+        </h1>
+        <div className='space-y-4 mb-12'>
           {navItems.map((item, index) => (
             <NavItem key={index} item={item} />
           ))}

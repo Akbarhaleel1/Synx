@@ -52,7 +52,7 @@ const subscriptionSchema = new mongoose.Schema({
         case 'DIAMOND':
             return 500;
         default:
-          return 1;
+          return 500;
       }
     }
   },
@@ -70,7 +70,7 @@ const subscriptionSchema = new mongoose.Schema({
         case 'DIAMOND':
             return 500;
         default:
-          return 50;
+          return 500;
       }
     }
   },

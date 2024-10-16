@@ -7,11 +7,13 @@ const createOrUpdateReviewLink = async (req, res) => {
   
     try {
       let filterpage;
+      if(filter){
       if(filter.platform==="google"){
         filterpage=`https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${data.initialPage}`
       }else{
         filterpage=data.initialPage;
       }
+    }
 
       
       const reviewLinkData = {

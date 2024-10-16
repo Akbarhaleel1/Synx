@@ -26,6 +26,8 @@ import ResetPassword from "./sections/auth/ResetPassword.jsx";
 import ForgotPasswordOtp from "./sections/auth/ForgotPasswordOtp.jsx";
 import PlanSuccessPage from "./sections/auth/PaymentSuccess.jsx";
 import PositiveFeedBack from "./sections/components/PositiveFeedBack.jsx";
+import UtilityPage from "./sections/components/UtilityPage.jsx";
+import BeautifulAIFeaturePageWithLock from "./sections/components/AIFeaturePage.jsx";
 
 const App = () => {
   const [isActive, setIsActive] = useState(false);
@@ -61,6 +63,8 @@ const App = () => {
           <Route path="/ResetPassword" element={<ResetPassword/>} />
           <Route path="/PlanSuccessPage" element={<PlanSuccessPage/>} />
           <Route path="/PositiveFeedBack" element={<PositiveFeedBack/>} />
+          <Route path="/UtilityPage" element={<UtilityPage/>} />
+          <Route path="/AiFeature" element={<BeautifulAIFeaturePageWithLock/>} />
         </Routes>
       </Router>
 

@@ -250,7 +250,7 @@ const GetReviews = () => {
                 type="text"
                 name="contact"
                 value={input.contact}
-                placeholder="Contact Number"
+                placeholder="Contact Number (include country code)"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
               />
