@@ -9,7 +9,7 @@ const subscriptionSchema = new mongoose.Schema({
   },
   subscriptionType: {
     type: String,
-    enum: ["SILVER", "GOLD", "DIAMOND"],
+    enum: ["FREE","SILVER", "GOLD", "DIAMOND"],
     required: true
   },
   startDate: {
@@ -23,15 +23,15 @@ const subscriptionSchema = new mongoose.Schema({
   },
   razorpayPaymentId: {
     type: String,
-    required: true
+    
   },
   razorpaySubscriptionId: {
     type: String,
-    required: true
+    
   },
   signature: {
     type: String,
-    required: true
+    
   },
   status: {
     type: String,
