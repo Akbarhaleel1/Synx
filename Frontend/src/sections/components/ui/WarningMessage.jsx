@@ -24,7 +24,7 @@ const WarningModal = ({ isOpen, onClose }) => {
               Cancel
             </button>
             <button
-              onClick={onAddLink}
+       
               className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors"
             >
               Go to the add link page
