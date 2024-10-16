@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react'; 
-import logo from '../assets/images/logo.png'; 
-import reviewLogo from '../assets/images/reviewLogo.png'; 
-import menuBar from '../assets/images/menuBar.png'; 
-import { useNavigate } from 'react-router-dom'; 
+import { useEffect, useState } from 'react';
+import logo from '../assets/images/logo.png';
+import reviewLogo from '../assets/images/reviewLogo.png';
+import menuBar from '../assets/images/menuBar.png';
+import { useNavigate } from 'react-router-dom';
 
-const Nav = () => { 
-  const [isMenuOpen, setIsMenuOpen] = useState(false); 
-  const [companyName,setCompanyName] = useState('')
+const Nav = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [companyName, setCompanyName] = useState('')
   const navigate = useNavigate();
 
-  useEffect(()=>{
+  useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    console.log('user is',user.companyname)
+    console.log('user is', user.companyname)
     setCompanyName(user.companyname)
-  },[])
+  }, [])
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -51,31 +51,41 @@ const Nav = () => {
 
   return (
     <header>
-        <style>
+      <style>
         {`
-          @keyframes gentlePulse {
+          @keyframes colorShift {
             0%, 100% {
-              opacity: 1;
-              transform: scale(1);
+              color: rgb(174, 233, 137);
+              text-shadow: 0 0 5px rgba(174, 233, 137, 0.5);
             }
             50% {
-              opacity: 0.9;
-              transform: scale(1.02);
+              color: rgb(137, 220, 235);
+              text-shadow: 0 0 10px rgba(137, 220, 235, 0.7);
             }
           }
-          .animate-gentlePulse {
-            animation: gentlePulse 3s ease-in-out infinite;
+          .animate-colorShift {
+            animation: colorShift 4s ease-in-out infinite;
+          }
+          @keyframes float {
+            0%, 100% {
+              transform: translateY(0px);
+            }
+            50% {
+              transform: translateY(-10px);
+            }
+          }
+          .animate-float {
+            animation: float 6s ease-in-out infinite;
           }
         `}
       </style>
       <nav className="fixed h-screen w-64 p-6 bg-black hidden lg:block">
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
-        <h1 
-            style={{ color: 'rgb(174, 233, 137)' }} 
-            className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-gentlePulse"
-          >
-            {companyName}
-          </h1>        <div className='space-y-4 mb-12'>
+        <h1
+          className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
+        >
+          {companyName}
+        </h1>       <div className='space-y-4 mb-12'>
           {navItems.map((item, index) => (
             <NavItem key={index} item={item} />
           ))}
