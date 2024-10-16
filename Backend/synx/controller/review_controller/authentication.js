@@ -186,6 +186,27 @@ const validateOtp = async (req, res) => {
         console.log('userserwesr')
          user.isVerified = true
         await user.save();
+        const startDate = new Date();
+
+    
+        const endDate = new Date();
+        endDate.setMonth(startDate.getMonth() + 1);
+  
+       
+        const subscriptionData = {
+          userId: user._id,
+          subscriptionType: "FREE",
+          startDate: startDate,
+          endDate: endDate,
+          status: 'active',
+        };
+        
+        // Use findOneAndUpdate to either update or create a subscription
+        const subscription = await Subscription.findOneAndUpdate(
+          { userId: user._id }, // Match by userId
+          subscriptionData, // Data to update or create
+          { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
+        );
         res.status(200).json({ msg: "Signup successful. Please login." });
       } else {
         res.status(400).json({ msg: "Invalid or expired OTP." });

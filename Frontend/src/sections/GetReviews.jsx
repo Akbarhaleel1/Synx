@@ -81,6 +81,7 @@ const GetReviews = () => {
       console.log('enpiontssssssssssssss',endpoint)
       if(!endpoint){
         setShowWarning(true);
+        return
       }
 
       let user = localStorage.getItem('user')
@@ -193,7 +194,6 @@ const GetReviews = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       <Nav />
-      {showWarning && <WarningMessage/>}
       {/* Main Content */}
       <div className="flex-1 bg-[rgb(241,241,241)]  p-4 lg:p-8 overflow-auto lg:ml-64">
         {" "}
@@ -393,6 +393,7 @@ const GetReviews = () => {
         onClose={() => setIsModalOpen(false)} 
       />
              {showWarning && <WarningMessage onCancel={handleCancel} onAddLink={handleAddLink} />}
+             
     </div>
   );
 };
