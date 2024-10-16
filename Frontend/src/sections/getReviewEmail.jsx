@@ -64,6 +64,9 @@ const GetReviewsEmail = () => {
       setIsErrorModalOpen(true)
       return;
     }
+    console.log('companyName', companyName);
+    console.log('emailContent', emailContent);
+    console.log('inputs', inputs);
 
     try {
       // Send data to the backend
@@ -137,9 +140,7 @@ const GetReviewsEmail = () => {
     }
   };
 
-  console.log('companyName', companyName);
-  console.log('emailContent', emailContent);
-  console.log('inputs', inputs);
+
 
   const handleDeleteLine = (index) => {
     const newInputs = inputs.filter((_, i) => i !== index);
