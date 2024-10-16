@@ -66,11 +66,11 @@ const emailpage=async(req,res)=>{
     
     let limit;
     if(subscribeData.subscriptionType=="SILVER"){
-      limit=20
-    }else if(subscribeData.subscriptionType=="GOLD"){
-      limit=50
-    }else if(subscribeData.subscriptionType=="DIAMOND"){
       limit=100
+    }else if(subscribeData.subscriptionType=="GOLD"){
+      limit=250
+    }else if(subscribeData.subscriptionType=="DIAMOND"||subscribeData.subscriptionType=="FREE"){
+      limit=500
     }
     console.log('3')
 
@@ -173,11 +173,11 @@ const wpage=async(req,res)=>{
     const subscribeData=await Subscription.findOne({userId:userData._id})
     let limit;
     if(subscribeData.subscriptionType=="SILVER"){
-      limit=20
-    }else if(subscribeData.subscriptionType=="GOLD"){
-      limit=50
-    }else if(subscribeData.subscriptionType=="DIAMOND"){
       limit=100
+    }else if(subscribeData.subscriptionType=="GOLD"){
+      limit=250
+    }else if(subscribeData.subscriptionType=="DIAMOND"||subscribeData.subscriptionType=="FREE"){
+      limit=500
     }
     console.log('whatsapp',whatsaptemp);
     console.log('linkdata',linkdata);
