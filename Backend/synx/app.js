@@ -29,7 +29,7 @@ app.use(passport.session());
 //   allowedHeaders: ['Authorization', 'Content-Type'] 
 // }));
 
-const allowedOrigins = [process.env.DOMAIN,'https://synx-review.synxautomate.com/signup'];
+const allowedOrigins = [process.env.DOMAIN,'https://synx-review.synxautomate.com'];
 
 console.log(allowedOrigins)
 
