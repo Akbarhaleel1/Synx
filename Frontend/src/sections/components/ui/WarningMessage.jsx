@@ -1,7 +1,14 @@
 import React from 'react';
+import {useNavigate} from 'react-router-dom'
 
 const WarningModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
+
+  const navigate = useNavigate();
+
+  const handleNavigate = () =>{
+    navigate('/EditReviews')
+  }
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
@@ -24,7 +31,7 @@ const WarningModal = ({ isOpen, onClose }) => {
               Cancel
             </button>
             <button
-       
+            onClick={handleNavigate}
               className="px-4 py-2 bg-amber-500 text-white rounded-md hover:bg-amber-600 transition-colors"
             >
               Go to the add link page

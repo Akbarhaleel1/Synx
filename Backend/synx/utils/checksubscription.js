@@ -9,6 +9,7 @@ const razorpay = new Razorpay({
 
 const checkSubscription = async (req, res, next) => {
   try {
+    
     let user;
     const userId = req.body.user;
     let check = typeof(userId);
@@ -18,6 +19,9 @@ const checkSubscription = async (req, res, next) => {
       user = userId
     }
     console.log("userqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", user);
+    if(user.newuser===true){
+      next();
+    }else {
     const subscription = await Subscription.findOne({ userId: user._id });
 
     if (!subscription) {
@@ -63,6 +67,7 @@ const checkSubscription = async (req, res, next) => {
     }
 
     next();
+  }
   } catch (error) {
     console.error("Error checking subscription:", error);
     res.status(500).json({
