@@ -82,6 +82,7 @@ const Nav = () => {
       <nav className="fixed h-screen w-64 p-6 bg-black hidden lg:block">
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
         <h1
+          style={{ color: 'rgb(174, 233, 137)' }}
           className="text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
         >
           {companyName}
