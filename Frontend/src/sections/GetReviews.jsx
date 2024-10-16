@@ -82,7 +82,7 @@ const GetReviews = () => {
       console.log('enpiontssssssssssssss',endpoint)
       if(!endpoint){
         console.log('Navigating to add link page');
-        setShowWarning(false);
+        setShowWarning(true);
         return
       }
 
