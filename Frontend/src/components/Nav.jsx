@@ -51,10 +51,9 @@ const Nav = () => {
 
   return (
     <header>
-      {/* Desktop Navigation */}
       <nav className="fixed h-screen w-64 p-6 bg-black hidden lg:block">
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
-        <h1 className="text-white text-2xl font-bold italic">{companyName}</h1>
+        <h1 className="text-[rgb(174 233 137)] text-2xl font-bold italic ml-[50px] mt-[40px] mb-[26px]">{companyName}</h1>
         <div className='space-y-4 mb-12'>
           {navItems.map((item, index) => (
             <NavItem key={index} item={item} />
@@ -68,8 +67,6 @@ const Nav = () => {
           ))}
         </div>
       </nav>
-
-      {/* Mobile Navigation */}
       <div className="lg:hidden">
         <button
           className='fixed top-2 right-4 z-50 p-2'
