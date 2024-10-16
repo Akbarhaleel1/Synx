@@ -34,6 +34,7 @@ import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { Plus } from "lucide-react";
 import {useNavigate} from 'react-router-dom'
 import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
+import WarningModal from "./components/ui/WarningMessage";
 
 const SynXPlusReviewRequest = () => {
   useAuth();
@@ -51,6 +52,8 @@ const SynXPlusReviewRequest = () => {
   const [balence,setBalence] = useState('')
   const [limit,setLimit] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+
   const navigate = useNavigate()
 
 
@@ -65,7 +68,7 @@ const SynXPlusReviewRequest = () => {
 
       try {
         // Make a POST request to the backend
-        const result = await axios.post("https://synxbackend.synxautomate.com/whatsappage", {
+        const result = await axios.post("http://localhost:3000/whatsappage", {
           user, // Sending user data as the request body
         }, {
           headers: {
@@ -73,8 +76,8 @@ const SynXPlusReviewRequest = () => {
           },
         });
 
-        if(result.data.message === "Not Found"){
-          navigate('/PricingTable')
+        if(result.data.trailover){
+          navigate('/PricingTable');
           return
         }
         // Log the result from the server
@@ -132,8 +135,16 @@ const SynXPlusReviewRequest = () => {
       return
     }
 
+    const endpoint = localStorage.getItem('endpoint')
+    console.log('enpiontssssssssssssss',endpoint)
+    if(!endpoint){
+      console.log('Navigating to add link page');
+      setShowWarning(true);
+      return
+    }
+
     // Send the data to the backend
-    const response = await axios.post('https://synxbackend.synxautomate.com/sendWhatsapp', { user: user, contacts }, {
+    const response = await axios.post('http://localhost:3000/sendWhatsapp', { user: user, contacts }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -164,7 +175,7 @@ const SynXPlusReviewRequest = () => {
     const token = JSON.parse(getToken)
     console.log('user', user, 'companyName', companyName, 'messageTemplate', messageTemplate)
     // Send the data to the backend
-    const response = await axios.post('https://synxbackend.synxautomate.com/sendTemplate', { user: user, companyName, messageTemplate }, {
+    const response = await axios.post('http://localhost:3000/sendTemplate', { user: user, companyName, messageTemplate }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -172,6 +183,20 @@ const SynXPlusReviewRequest = () => {
     console.log('responsce is', response);
     setShowAlert(true)
     // alert(`Preview:\n${messageTemplate.replace("[Company Name]", companyName)}`);
+  };
+
+  
+  const GetReviews = () => {
+    navigate('/GetReviews')
+  };
+  const getReviewsEmail = () => {
+    navigate('/GetReviews/email')
+  };
+  const getReviewWattsapp = () => {
+    navigate('/GetReviews/whatsapp')
+  };
+  const handleQr = () => {
+    navigate('/QrCode')
   };
 
   return (
@@ -183,27 +208,25 @@ const SynXPlusReviewRequest = () => {
       <div className="flex-1 bg-[rgb(241,241,241)] p-4 lg:p-6 overflow-y-auto lg:ml-64">
         {/* Tabs */}
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
-          <a href="/GetReviews">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              PHONE
-            </button>
-          </a>
-          <a href="/GetReviews/email">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              EMAIL
-            </button>
-          </a>
-          <a href="/GetReviews/whatsapp">
-            <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
-              Whatsapp
-            </button>
-          </a>
-          <a href="/QrCode">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              QR Code
-            </button>
-          </a>
-        </div>
+     
+     <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+       PHONE
+     </button>
+
+
+     <button onClick={getReviewsEmail} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+       EMAIL
+     </button>
+
+
+     <button onClick={getReviewWattsapp} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
+       Whatsapp
+     </button>
+
+     <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+       QR Code
+     </button>
+ </div>
 
         {/* Request Reviews via SMS */}
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-4 lg:mb-8">
@@ -366,7 +389,10 @@ const SynXPlusReviewRequest = () => {
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
       />
-
+           <WarningModal
+        isOpen={showWarning}
+        onClose={() => setShowWarning(false)}
+      />
     </div>
   );
 };

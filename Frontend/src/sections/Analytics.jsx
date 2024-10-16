@@ -132,7 +132,7 @@ const AnalyticsDashboard = () => {
         }
         console.log('1')
 
-        const response = await axios.post('https://synxbackend.synxautomate.com/analytics', { user }, {
+        const response = await axios.post('http://localhost:3000/analytics', { user }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -141,8 +141,8 @@ const AnalyticsDashboard = () => {
 
         console.log('response',response)
 
-        if(response.data.message === "Not Found"){
-          navigate('/PricingTable')
+        if(response.data.trailover){
+          navigate('/PricingTable');
           return
         }
         console.log('3')

@@ -44,7 +44,7 @@ const EnhancedSignup = () => {
       try {
         console.log('handle submity is workign')
         console.log('formData',formData)
-       const result = await axios.post('https://synxbackend.synxautomate.com/signup',formData)
+       const result = await axios.post('http://localhost:3000/signup',formData)
         // await new Promise(resolve => setTimeout(resolve, 1000));
         console.log('result s',result)
         if(result){

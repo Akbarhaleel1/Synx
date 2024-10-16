@@ -2,12 +2,14 @@ import { useState, useEffect, useRef } from 'react';
 import Nav from "../components/Nav";
 import axios from 'axios';
 import useAuth from './customHooks/useAuth';
+import {useNavigate} from 'react-router-dom'
 
 
 const ReviewLinkAndQRCode = () => {
   const [copied, setCopied] = useState(false);
   const [data, setData] = useState({});
   const downloadLinkRef = useRef(null);
+  const navigate = useNavigate()
 
   useAuth()
 
@@ -37,14 +39,33 @@ const ReviewLinkAndQRCode = () => {
       // const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
-      const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
+      const result = await axios.post('http://localhost:3000/generateqr', { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
       console.log('result is ', result);
+      if(result.data.trailover){
+        navigate('/PricingTable');
+        return
+      }
       setData(result.data);
     };
     fetchUser();
   }, []);
+
+
+  const GetReviews = () => {
+    navigate('/GetReviews')
+  };
+  const getReviewsEmail = () => {
+    navigate('/GetReviews/email')
+  };
+  const getReviewWattsapp = () => {
+    navigate('/GetReviews/whatsapp')
+  };
+  const handleQr = () => {
+    navigate('/QrCode')
+  };
+
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-50">
@@ -52,26 +73,26 @@ const ReviewLinkAndQRCode = () => {
       <div className="flex-1 flex flex-col md:pl-64">
         <div className="p-4 sm:p-6 lg:p-8">
           <div className="mb-8 flex flex-wrap gap-2 justify-center md:justify-start">
-            <a href="/GetReviews">
-              <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
+        
+              <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
                 PHONE
               </button>
-            </a>
-            <a href="/GetReviews/email">
-              <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
+        
+         
+              <button onClick={getReviewsEmail} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
                 EMAIL
               </button>
-            </a>
-            <a href="/GetReviews/whatsapp">
-              <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
+       
+      
+              <button onClick={getReviewWattsapp} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold">
                 Whatsapp
               </button>
-            </a>
-            <a href="/QrCode">
-              <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold">
+    
+ 
+              <button onClick={handleQr} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold">
                 QR Code
               </button>
-            </a>
+  
           </div>
 
           <div className="max-w-lg mx-auto">

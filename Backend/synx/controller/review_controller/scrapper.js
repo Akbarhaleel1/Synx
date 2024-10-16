@@ -398,7 +398,7 @@ const automate = async () => {
 
 const googleautomate = async () => {
   try {
-    const scrappers = await Scrapper.find();
+    const scrappers = await Scrapper.find({platform:"google"});
 
     for (let scrapper of scrappers) {
       let reviews;
@@ -449,7 +449,7 @@ cron.schedule("*/30 * * * *", async () => {
   console.log("Running the review scraping cron job every 30 minutes.");
   await automate();
 });
-cron.schedule("*/1 * * * *", async ()=>{
+cron.schedule("*/5 * * * *", async ()=>{
 
   console.log("Running the google review fetch job every 30 seconds.");
   await googleautomate();

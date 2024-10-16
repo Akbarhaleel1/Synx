@@ -35,7 +35,7 @@ const EnhancedLogin = () => {
     console.log('eve', env)
     if (validateForm()) {
       try {
-        const result = await axios.post('https://synxbackend.synxautomate.com/login', formData)
+        const result = await axios.post('http://localhost:3000/login', formData)
         if (result) {
           console.log('token', result.data.token);
           console.log('refreshToken', result.data.refreshToken);

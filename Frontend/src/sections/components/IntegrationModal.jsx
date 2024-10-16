@@ -36,7 +36,7 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
   
       // API request with Authorization header
       const response = await axios.post(
-        'https://synxbackend.synxautomate.com/integrations',
+        'http://localhost:3000/integrations',
         {
           platform: platform.name,
           pageLink,
@@ -57,10 +57,13 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
   
     } catch (err) {
       const message = err.response?.data?.message || 'Failed to integrate. Please try again.';
-      setError(message); // Display error message
-      console.error('Error:', err);
+      setError(message);
+      setTimeout(()=>{
+        setError('');
+      },1500)
+    
     } finally {
-      setLoading(false); // Stop loading spinner after request completion
+      setLoading(false);
     }
   };
 

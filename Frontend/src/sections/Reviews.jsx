@@ -31,9 +31,14 @@ const Reviews = () => {
       // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
-      const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
+      const result = await axios.post("http://localhost:3000/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
+      console.log('result.message',result.data.message)
+      if(result.data.trailover){
+        navigate('/PricingTable');
+        return
+      }
       console.log("result",result.data);
       if(result.data.message === "Not Found"){
         navigate('/PricingTable')
@@ -44,12 +49,6 @@ const Reviews = () => {
     fetchReviews();
   }, []);
 
-
-  // if(!reviews){
-  //   // console.log('review',)
-  //   navigate('/PricingTable')
-  // }
-  
   const filteredReviews = reviews.filter((review) => {
     const reviewText = review.review?.toLowerCase() || "";
     const reviewerName = review.name?.toLowerCase() || "";
@@ -76,48 +75,6 @@ const Reviews = () => {
         return matchesSearchQuery;
     }
   }).reverse();
-
-  // const ReviewCard = ({ review }) => (
-  //   <div className="bg-gray-900 rounded-xl p-4 mb-4">
-  //     <div className="flex items-center mb-2">
-  //       {review.image && (
-  //         <img
-  //           src={review.image}
-  //           alt="User"
-  //           className="w-12 h-12 rounded-full mr-4"
-  //         />
-  //       )}
-  //       <div>
-  //         <h2 className="text-white font-light">{review.name}</h2>
-  //         <p className="text-sm text-gray-400">{review.platform}</p>
-  //         <p className="text-xs text-gray-400">{review.date}</p>
-  //       </div>
-  //     </div>
-  //     <div className="flex mb-2">
-  //       {[1, 2, 3, 4, 5].map((star, index) => (
-  //         <span
-  //           key={index}
-  //           className={`text-xl transition-colors duration-200 ${
-  //             index < review.rating ? "text-yellow-500" : "text-gray-300"
-  //           }`}
-  //         >
-  //           ★
-  //         </span>
-  //       ))}
-  //     </div>
-  //     <p className="text-white text-sm font-light mb-4">{review.review}</p>
-  //     {review.link && (
-  //       <a
-  //         href={review.link}
-  //         target="_blank"
-  //         rel="noopener noreferrer"
-  //         className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
-  //       >
-  //         View on {review.platform}
-  //       </a>
-  //     )}
-  //   </div>
-  // );
 
 
   const ReviewCard = ({ review }) => (

@@ -1,4 +1,5 @@
 const Subscription = require("../models/subscription");
+const userData = require("../models/user");
 const Razorpay = require("razorpay");
 
 // Initialize Razorpay instance with your API credentials
@@ -9,65 +10,74 @@ const razorpay = new Razorpay({
 
 const checkSubscription = async (req, res, next) => {
   try {
-    
     let user;
     const userId = req.body.user;
-    let check = typeof(userId);
-    if(check == 'string'){
-       user = JSON.parse(userId);
-    }else{
-      user = userId
-    }
-    console.log("userqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq", user);
-    if(user.newuser===true){
-      next();
-    }else {
-    const subscription = await Subscription.findOne({ userId: user._id });
 
+    // Ensure userId is parsed properly
+    if (typeof userId === 'string') {
+      user = JSON.parse(userId);
+    } else {
+      user = userId;
+    }
+
+    console.log("User:", user);
+    let userdetail=await userData.findOne({email:user.email})
+console.log("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",userdetail)
+
+    if (userdetail.newuser == true) {
+      next();  
+      console.log('111111111111111111111111111111111111111111111111111111111111111111');
+      return;
+    }
+
+    console.log('22222222222222222222222')
+
+    // Check if user has an active subscription
+    const subscription = await Subscription.findOne({ userId: user._id });
     if (!subscription) {
       return res.status(200).json({
-        message: "Not Found",
+        message: "Subscription not found",
         status: false,
+        trailover:true
       });
     }
-
-    // Fetch subscription details from Razorpay using the Razorpay subscription ID
-    const razorpaySubscriptionId = subscription.razorpaySubscriptionId; // Assuming you have stored this in the DB
-    const razorpaySubscription = await razorpay.subscriptions.fetch(
-      razorpaySubscriptionId
-    );
+console.log("333333333333333")
+      if(subscription.subscriptionType==="FREE"){
+        return res.status(200).json({
+          message: "trail period over",
+          status: false,
+          trailover:true
+        });
+      }
+    // Fetch subscription from Razorpay using the stored subscription ID
+    const razorpaySubscriptionId = subscription.razorpaySubscriptionId;
+    const razorpaySubscription = await razorpay.subscriptions.fetch(razorpaySubscriptionId);
 
     if (!razorpaySubscription) {
       return res.status(200).json({
-        message: "Not Found",
+        message: "Razorpay subscription not found",
         status: false,
+        trailover:true
       });
     }
-
-    // Compare the status of Razorpay subscription with the local subscription
+console.log("444444444444")
     const currentDate = new Date();
+
+    // Check if the subscription has been canceled or expired
     if (
       razorpaySubscription.status === "cancelled" ||
-      currentDate > new Date(razorpaySubscription.end_at * 1000)
-    ) {
-      return res.status(200).json({
-        message: "Not Found",
-        status: false,
-      });
-    }
-
-    if (
+      currentDate > new Date(razorpaySubscription.end_at * 1000) ||  // Razorpay's end_at is in seconds
       subscription.status === "expired" ||
       currentDate > subscription.endDate
     ) {
       return res.status(200).json({
-        message: "Not Found",
+        message: "Subscription expired or canceled",
         status: false,
+        trailover:true
       });
     }
 
-    next();
-  }
+    next();  // Allow the user to proceed if subscription is valid
   } catch (error) {
     console.error("Error checking subscription:", error);
     res.status(500).json({

@@ -43,7 +43,7 @@ Route.get(
 );
 
 
-Route.post("/generateqr", authMiddleware, getReview.generateqr);
+Route.post("/generateqr", authMiddleware,checkSubscription, getReview.generateqr);
 // verify payment
 
 Route.post("/reviews", authMiddleware, checkSubscription, showReview.showReview);
@@ -67,10 +67,10 @@ Route.post("/forgetOtp",authentication.validateOtpforgotten);
 Route.post("/reset-password", authentication.resetPassword);
 
 // custom reviewpage route
-Route.post("/showcustomreviews", authMiddleware, customreview.getUserReviews);
+Route.post("/showcustomreviews", authMiddleware,checkSubscription, customreview.getUserReviews);
 Route.post("/editLinkEndpoint", authMiddleware,checkSubscription, reviewLink.reviewlink);
 Route.post("/userReview", feedback.reviewPage);
-Route.post("/analytics", authMiddleware, Analytics.getAnalytics);
+Route.post("/analytics", authMiddleware,checkSubscription, Analytics.getAnalytics);
 Route.post("/feedBack", feedback.feedback);
 // Route.get('/chargebee/plans',chargebee.Chargebee)
 // Route.post('/chargebee/subscriptions',chargebee.createChangebee)

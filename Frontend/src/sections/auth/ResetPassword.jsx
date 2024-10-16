@@ -31,7 +31,7 @@ const ResetPassword = () => {
     // Here you would typically call an API to handle the password reset
     console.log('Password reset submitted');
     const email = localStorage.getItem('forgotEmail')
-    const result = await axios.post('https://synxbackend.synxautomate.com/reset-password',{email,password})
+    const result = await axios.post('http://localhost:3000/reset-password',{email,password})
     console.log('result',result);
  
     setIsSubmitted(true);

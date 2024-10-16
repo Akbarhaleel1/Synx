@@ -31,15 +31,15 @@ const EditReviews = () => {
       const getToken = localStorage.getItem('token')
       const token = JSON.parse(getToken)
 
-      const responce = await axios.post('https://synxbackend.synxautomate.com/editLinkEndpoint', { user },
+      const responce = await axios.post('http://localhost:3000/editLinkEndpoint', { user },
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      if (responce.data.message === "Not Found") {
-        navigate('/PricingTable')
+      if(responce.data.trailover){
+        navigate('/PricingTable');
         return
       }
       console.log('respoince', responce.data)
@@ -68,7 +68,7 @@ const EditReviews = () => {
       const parsedToken = localStorage.getItem('token');
       const token = JSON.parse(parsedToken)
 
-      const response = await axios.post('https://synxbackend.synxautomate.com/editReview', { data, user }, {
+      const response = await axios.post('http://localhost:3000/editReview', { data, user }, {
         headers: {
           Authorization: `Bearer ${token}`,
         }

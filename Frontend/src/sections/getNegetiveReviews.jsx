@@ -32,7 +32,7 @@ const NegativeReviewsPage = () => {
 
         // Perform the API call
         const result = await axios.post(
-          'https://synxbackend.synxautomate.com/showcustomreviews',
+          'http://localhost:3000/showcustomreviews',
           { user },
           {
             headers: {
@@ -40,7 +40,10 @@ const NegativeReviewsPage = () => {
             },
           }
         );
-
+        if(result.data.trailover){
+          navigate('/PricingTable');
+          return
+        }
         // Log the result for debugging
         console.log('API result:', result.data);
 

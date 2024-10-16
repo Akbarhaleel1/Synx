@@ -9,6 +9,7 @@ import EnhancedSubmitButton from './components/EnhancedSubmitButton';
 import { SuccessModal } from './components/successModal';
 import BeautifulErrorModal from './components/BeautifulErrorModal';
 import { Trash2 } from 'lucide-react';
+import WarningModal from './components/ui/WarningMessage';
 
 const ToggleSwitch = ({ checked, onChange }) => (
   <label className="toggle-switch">
@@ -26,6 +27,7 @@ const GetReviewsEmail = () => {
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
+  const [showWarning, setShowWarning] = useState(false);
 
   const navigate = useNavigate()
 
@@ -38,16 +40,15 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken);
       console.log('1')
-      const result = await axios.post('https://synxbackend.synxautomate.com/ePageLoad', { user }, {
+      const result = await axios.post('http://localhost:3000/ePageLoad', { user }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
 
       console.log('result', result.data)
-
-      if (result.data.message === "Not Found") {
-        navigate('/PricingTable')
+      if(result.data.trailover){
+        navigate('/PricingTable');
         return
       }
 
@@ -71,7 +72,7 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
 
-      const response = await axios.post('https://synxbackend.synxautomate.com/ePage', {
+      const response = await axios.post('http://localhost:3000/ePage', {
         user,
         companyName,
         emailContent,
@@ -123,14 +124,21 @@ const GetReviewsEmail = () => {
         setIsErrorModalOpen(true)
         return;
       }
-  
+      const endpoint = localStorage.getItem('endpoint')
+      console.log('enpiontssssssssssssss', endpoint)
+      if (!endpoint) {
+        console.log('Navigating to add link page');
+        setShowWarning(true);
+        return
+      }
+
 
       console.log('input', inputs)
       let user = localStorage.getItem('user');
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('https://synxbackend.synxautomate.com/sendEmailReviews', { user: user, email: inputs }, {
+      const response = await axios.post('http://localhost:3000/sendEmailReviews', { user: user, email: inputs }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -151,6 +159,21 @@ const GetReviewsEmail = () => {
     setInputs(newInputs);
   };
 
+  const GetReviews = () => {
+    navigate('/GetReviews')
+  };
+  const getReviewsEmail = () => {
+    navigate('/GetReviews/email')
+  };
+  const getReviewWattsapp = () => {
+    navigate('/GetReviews/whatsapp')
+  };
+  const handleQr = () => {
+    navigate('/QrCode')
+  };
+
+
+
 
   return (
     <div className="flex min-h-screen bg-[rgb(241,241,241)] ">
@@ -161,30 +184,27 @@ const GetReviewsEmail = () => {
       <main className="flex-1 p-4 sm:p-8 ml-0 sm:ml-64">
         {/* Top Buttons */}
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
-          <a href="/GetReviews">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+     
+            <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               PHONE
             </button>
-          </a>
-          <a href="/GetReviews/email">
-            <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
+
+    
+            <button onClick={getReviewsEmail} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
               EMAIL
             </button>
-          </a>
-          <a href="/GetReviews/whatsapp">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+    
+      
+            <button onClick={getReviewWattsapp} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               Whatsapp
             </button>
-          </a>
-          <a href="/QrCode">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+  
+            <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               QR Code
             </button>
-          </a>
         </div>
-        {/* Request Reviews via SMS */}
-
-        {/* <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
+    
+        <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
           <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
             <p>Invite Your Customers</p>
@@ -193,14 +213,14 @@ const GetReviewsEmail = () => {
           {inputs.map((input, index) => (
             <div
               key={index}
-              className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4"
+              className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
             >
               <input
                 type="text"
                 name="name"
                 value={input.name}
                 placeholder="Name"
-                className="bg-gray-800 p-2 rounded-lg w-full lg:w-1/2 text-white"
+                className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
               />
               <input
@@ -208,9 +228,15 @@ const GetReviewsEmail = () => {
                 name="contact"
                 value={input.contact}
                 placeholder="Email"
-                className="bg-gray-800 p-2 rounded-lg w-full lg:w-1/2 text-white"
+                className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
               />
+              <button
+                onClick={() => handleDeleteLine(index)}
+                className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-colors duration-200"
+              >
+                <Trash2 size={20} />
+              </button>
             </div>
           ))}
           <div className="flex flex-col lg:flex-row justify-between">
@@ -222,53 +248,7 @@ const GetReviewsEmail = () => {
             </button>
             <EnhancedSubmitButton onSubmit={handleSubmit} />
           </div>
-        </div> */}
-
-<div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
-      <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
-      <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
-        <p>Invite Your Customers</p>
-        <p className="text-gray-400">Monthly limits: Unlimited</p>
-      </div>
-      {inputs.map((input, index) => (
-        <div
-          key={index}
-          className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
-        >
-          <input
-            type="text"
-            name="name"
-            value={input.name}
-            placeholder="Name"
-            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
-            onChange={(e) => handleInputChange(index, e)}
-          />
-          <input
-            type="email"
-            name="contact"
-            value={input.contact}
-            placeholder="Email"
-            className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
-            onChange={(e) => handleInputChange(index, e)}
-          />
-          <button
-            onClick={() => handleDeleteLine(index)}
-            className="p-2 rounded-lg text-red-500 hover:bg-red-100 transition-colors duration-200"
-          >
-            <Trash2 size={20} />
-          </button>
         </div>
-      ))}
-      <div className="flex flex-col lg:flex-row justify-between">
-        <button
-          onClick={handleAddLine}
-          className="border border-white px-4 py-2 rounded-lg mb-4 lg:mb-0"
-        >
-          + Add Line
-        </button>
-        <EnhancedSubmitButton onSubmit={handleSubmit} />
-      </div>
-    </div>
 
         {/* Edit Template */}
         <div className="bg-white p-6 rounded-lg mb-6">
@@ -352,6 +332,10 @@ const GetReviewsEmail = () => {
         isOpen={isErrorModalOpen}
         onClose={() => setIsErrorModalOpen(false)}
         errors={errorMessages}
+      />
+      <WarningModal
+        isOpen={showWarning}
+        onClose={() => setShowWarning(false)}
       />
     </div>
   );

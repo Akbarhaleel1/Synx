@@ -90,19 +90,18 @@ const GetReviews = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('https://synxbackend.synxautomate.com/sendReviews', { user: user, contacts: inputs }, {
+      const response = await axios.post('http://localhost:3000/sendReviews', { user: user, contacts: inputs }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('responsce is', response);
+    
 
       if (response.data.msg == 'it seems more than monthly limit') {
         // alert('it seems more than monthly limit')
         setIsModalOpenforMonthlyLimit(true)
         return
       }
-
       setSuccessModalOpen(true);
 
     } catch (error) {
@@ -120,7 +119,7 @@ const GetReviews = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       try {
-        const result = await axios.post("https://synxbackend.synxautomate.com/emailPage", {
+        const result = await axios.post("http://localhost:3000/emailPage", {
           user,
         }, {
           headers: {
@@ -128,7 +127,10 @@ const GetReviews = () => {
           },
         });
         console.log("result", result);
-
+        if(result.data.trailover){
+          navigate('/PricingTable');
+          return
+        }
         if (result.data.message === "Not Found") {
           navigate('/PricingTable')
           return
@@ -156,7 +158,7 @@ const GetReviews = () => {
       const token = JSON.parse(getToken)
       const updateTemplate = async () => {
         try {
-          await axios.post("https://synxbackend.synxautomate.com/saveEmailTemplate", {
+          await axios.post("http://localhost:3000/saveEmailTemplate", {
             message,
             companyName,
             user,
@@ -183,6 +185,20 @@ const GetReviews = () => {
   };
 
 
+  const GetReviews = () => {
+    navigate('/GetReviews')
+  };
+  const getReviewsEmail = () => {
+    navigate('/GetReviews/email')
+  };
+  const getReviewWattsapp = () => {
+    navigate('/GetReviews/whatsapp')
+  };
+  const handleQr = () => {
+    navigate('/QrCode')
+  };
+
+
   return (
     <div className="flex flex-col lg:flex-row">
       <Nav />
@@ -191,26 +207,24 @@ const GetReviews = () => {
         {" "}
 
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
-          <a href="/GetReviews">
-            <button className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
+     
+            <button onClick={GetReviews} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
               PHONE
             </button>
-          </a>
-          <a href="/GetReviews/email">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+
+    
+            <button onClick={getReviewsEmail} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               EMAIL
             </button>
-          </a>
-          <a href="/GetReviews/whatsapp">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+    
+      
+            <button onClick={getReviewWattsapp} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               Whatsapp
             </button>
-          </a>
-          <a href="/QrCode">
-            <button className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+  
+            <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
               QR Code
             </button>
-          </a>
         </div>
 
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">

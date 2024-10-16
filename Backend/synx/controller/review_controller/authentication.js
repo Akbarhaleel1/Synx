@@ -8,6 +8,7 @@ const { generateToken, verifyRefreshToken, generateRefreshToken } = require("../
 const otpStore = {}; 
 const Razorpay = require('razorpay');
 const Subscription = require('../../models/subscription');
+const cron=require("node-cron")
 
 const razorpay = new Razorpay({
   key_id: 'rzp_test_6aYUU1Lcsfqbw3', // Replace with your Razorpay Key ID
@@ -29,23 +30,27 @@ const transporter = nodemailer.createTransport({
 const signup = async (req, res) => {
   console.log('req.body',req.body)
   const { firstname, lastname, email,companyname, phonenumber, password } = req.body;
+  console.log('1')
   try {
    
     let user = await User.findOne({ email });
+    console.log('2')
     if (user) {
       console.log('user is already exit mahn')
       return res.status(401).json({ msg: "User already exists. Please login." });
     }else{
+      console.log('3')
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const { otp, creationTime } = generateOtp();
-    
+    console.log('4')
     const customer = await razorpay.customers.create({
-      name: `${firstname} ${lastname}`, // Customer's name
-      email: email, // Customer's email
-      contact: phonenumber, // Customer's contact number
+      name: `${firstname} ${lastname}`, 
+      email: email,
+      contact: phonenumber, 
     });
+    console.log('5')
     const userData = new User({
       name: `${firstname} ${lastname}`,
       email: email,
@@ -200,6 +205,7 @@ const validateOtp = async (req, res) => {
           endDate: endDate,
           status: 'active',
         };
+
         
         // Use findOneAndUpdate to either update or create a subscription
         const subscription = await Subscription.findOneAndUpdate(
@@ -207,6 +213,7 @@ const validateOtp = async (req, res) => {
           subscriptionData, // Data to update or create
           { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
         );
+        console.log('subscription',subscription)
         res.status(200).json({ msg: "Signup successful. Please login." });
       } else {
         res.status(400).json({ msg: "Invalid or expired OTP." });
@@ -547,6 +554,6 @@ module.exports = {
   resendOtp,
   forgotPassword,
   resetPassword,
-  googleCallback,
+  googleCallback, 
   validateOtpforgotten 
 };

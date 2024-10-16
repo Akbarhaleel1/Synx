@@ -6,33 +6,33 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const PricingCard = ({ title, price, popular, features, onSuccess }) => {
-  const [verifyUser,setVerifyUser] = useState(true)
-  const newUser = `w-full bg-purple-600 text-white py-2 rounded-md mb-4 font-bold hover:opacity-90 transition-opacity duration-300`;
+  // const [verifyUser,setVerifyUser] = useState(true)
+  // const newUser = `w-full bg-purple-600 text-white py-2 rounded-md mb-4 font-bold hover:opacity-90 transition-opacity duration-300`;
   const existingUser = `w-full bg-black text-white py-2 rounded-md mb-4 font-bold hover:opacity-90 transition-opacity duration-300`;
   const navigate = useNavigate()
   const handleSuccess =async (paymentData) => {
     console.log('titlesssssssssss', title);
     let getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser)
-    const result = await axios.post('https://synxbackend.synxautomate.com/successpage',{user,paymentData,title});
+    const result = await axios.post('http://localhost:3000/successpage',{user,paymentData,title});
     console.log('result',result)
     navigate('/PlanSuccessPage')
     onSuccess(paymentData, title);
   };
 
-  useEffect(()=>{
-    const fetchUser = async() =>{
-      let getUser = localStorage.getItem('user');
-      const user = JSON.parse(getUser)
-      const checkUser = await axios.post('https://synxbackend.synxautomate.com/checkuser',{user})
+  // useEffect(()=>{
+  //   const fetchUser = async() =>{
+  //     let getUser = localStorage.getItem('user');
+  //     const user = JSON.parse(getUser)
+  //     const checkUser = await axios.post('http://localhost:3000/checkuser',{user})
       
-      console.log('checkUser',checkUser.data.message)
-      if(checkUser.data.message=='User found'){
-        setVerifyUser(false)
-      }
-    }
-    fetchUser()
-  },[])
+  //     console.log('checkUser',checkUser.data.message)
+  //     if(checkUser.data.message=='User found'){
+  //       setVerifyUser(false)
+  //     }
+  //   }
+  //   fetchUser()
+  // },[])
 
   return (
     <div className={`bg-white p-6 rounded-lg shadow-md ${popular ? 'border-2 border-purple-500' : ''}`}>
@@ -46,15 +46,15 @@ const PricingCard = ({ title, price, popular, features, onSuccess }) => {
         <span className="text-3xl font-bold">₹{price}</span>
         <span className="text-gray-500 ml-1">per month</span>
       </div>
-      {/* <RazorpayButton 
+      <RazorpayButton 
         amount={price} 
         onSuccess={handleSuccess}
-        className={buttonClass}
+        className={existingUser}
         titleId={title}
       >
         Choose Plan
-      </RazorpayButton> */}
-      {verifyUser ? (
+      </RazorpayButton>
+      {/* {verifyUser ? (
         <RazorpayButton 
           amount={0}
           onSuccess={handleSuccess}
@@ -71,8 +71,8 @@ const PricingCard = ({ title, price, popular, features, onSuccess }) => {
           titleId={title}
         >
           Choose Plan
-        </RazorpayButton>
-      )}
+        </RazorpayButton> */}
+      {/* )} */}
       <h3 className="font-semibold mb-2">What's included</h3>
       <ul className="space-y-2">
         {features.map((feature, index) => (
@@ -94,7 +94,7 @@ const PricingPage = () => {
     console.log('title', title);
     let getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    const result = await axios.post('https://synxbackend.synxautomate.com/successpage', { user, paymentData, title });
+    const result = await axios.post('http://localhost:3000/successpage', { user, paymentData, title });
     console.log('result', result);
     setModalOpen(true); 
     navigate('/PlanSuccessPage');

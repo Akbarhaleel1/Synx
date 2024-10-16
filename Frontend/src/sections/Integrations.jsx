@@ -183,7 +183,7 @@ const Modal = ({ isOpen, onClose, platform, }) => {
 
   const onDelete = async () => {
     console.log('this is what is send', platform)
-    const result = await axios.post('https://synxbackend.synxautomate.com/deleteLink', { user, platform: platform.name }, {
+    const result = await axios.post('http://localhost:3000/deleteLink', { user, platform: platform.name }, {
       headers: {
         Authorization: `Bearer ${token}`,
       }
@@ -279,13 +279,13 @@ const Integrations = () => {
       const token = JSON.parse(getToken)
       try {
         // const result = await axios.post('https://synxbackend.synxautomate.com/integratepage', { user }, {
-        const result = await axios.post('https://synxbackend.synxautomate.com/integratepage', { user }, {
+        const result = await axios.post('http://localhost:3000/integratepage', { user }, {
           headers: {
             Authorization: `Bearer ${token}`,
           }
         });
 
-        if(result.data.message === "Not Found"){
+        if(result.data.trailover){
           navigate('/PricingTable');
           return
         }
