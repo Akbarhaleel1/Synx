@@ -44,6 +44,7 @@ const EditReviews = () => {
       }
       console.log('respoince', responce.data)
       const endPoint = responce.data.link.endpoint;
+      localStorage.setItem('endpoint',endPoint)
       const title = responce.data.link.title;
       console.log('endPoint', endPoint)
       console.log('title', title)
