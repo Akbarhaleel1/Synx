@@ -41,8 +41,7 @@ const GetReviews = () => {
   const [balence, setBalence] = useState('')
   const [limit, setLimit] = useState('')
   const [isModalOpenforMonthlyLimit, setIsModalOpenforMonthlyLimit] = useState(false);
-  const [showWarningEndPoint, setShowWarningEndPoint] = useState(true);
-
+  const [showWarning, setShowWarning] = useState(false);
   const navigate = useNavigate();
 
 
@@ -81,7 +80,7 @@ const GetReviews = () => {
       const endpoint = localStorage.getItem('endpoint')
       console.log('enpiontssssssssssssss',endpoint)
       if(!endpoint){
-        setShowWarningEndPoint(true)
+        setShowWarning(true);
       }
 
       let user = localStorage.getItem('user')
@@ -109,6 +108,8 @@ const GetReviews = () => {
       alert('Failed to send review requests. Please try again.');
     }
   };
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -177,6 +178,17 @@ const GetReviews = () => {
     const newInputs = inputs.filter((_, i) => i !== index);
     setInputs(newInputs);
   };
+
+  const handleCancel = () => {
+    setShowWarning(false);
+  };
+
+  const handleAddLink = () => {
+    // Focus on the review link input
+    document.getElementById('reviewLink').focus();
+    setShowWarning(false);
+  };
+
 
   return (
     <div className="flex flex-col lg:flex-row">
@@ -380,7 +392,7 @@ const GetReviews = () => {
         isOpen={isModalOpenforMonthlyLimit} 
         onClose={() => setIsModalOpen(false)} 
       />
-         
+             {showWarning && <WarningMessage onCancel={handleCancel} onAddLink={handleAddLink} />}
     </div>
   );
 };
