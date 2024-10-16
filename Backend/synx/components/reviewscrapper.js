@@ -921,50 +921,64 @@ const goibibo = async (url) => {
   const page = await createPage(browser);
 
   try {
-    // await page.setViewport({ width: 1080, height: 1024 });
+    await page.setViewport({ width: 1080, height: 1024 });
     page.setDefaultNavigationTimeout(60000);
     await page.goto(url, { waitUntil: "networkidle2" });
 
-    await page.waitForSelector('div[data-testid="SortByTitle"]');
-    await page.click('div[data-testid="SortByTitle"]');
+    // await page.waitForSelector('div[data-testid="SortByTitle"]');
+    // await page.click('div[data-testid="SortByTitle"]');
 
-    // Wait for the dropdown options to be visiblea
-    await page.waitForSelector('div[data-testid="SortByOptions"]');
+    // // Wait for the dropdown options to be visiblea
+    // await page.waitForSelector('div[data-testid="SortByOptions"]');
 
  
-    const mostRecentOption = await page.$(
-      'input[type="radio"][name="Most Recent First"]'
-    );
-    if (mostRecentOption) {
-      await mostRecentOption.click(); 
-      console.log('Selected "Most Recent First" option.');
-    } else {
-      console.log('"Most Recent First" option not found.');
-    }
+    // const mostRecentOption = await page.$(
+    //   'input[type="radio"][name="Most Recent First"]'
+    // );
+    // if (mostRecentOption) {
+    //   await mostRecentOption.click(); 
+    //   console.log('Selected "Most Recent First" option.');
+    // } else {
+    //   console.log('"Most Recent First" option not found.');
+    // }
 
+    // await page.waitForSelector('div[itemprop="reviews"]');
+
+    // const reviews = await page.evaluate(() => {
+    //   return Array.from(
+    //     document.querySelectorAll('div[itemprop="reviews"]')
+    //   ).map((element) => ({
+    //     platform: "gobigo",
+    //     image: element.querySelector("img")?.src || null,
+    //     date: element.querySelector("div span")?.textContent.trim() || null,
+    //     name:
+    //       element.querySelector('span[itemprop="name"]')?.textContent.trim() ||
+    //       null,
+    //     title:
+    //       element
+    //         .querySelector('div[data-test-target="review-title"] span')
+    //         ?.textContent.trim() || null,
+    //     review:
+    //       element.querySelector("span span span")?.textContent.trim() || null,
+    //     rating:
+    //       element.querySelector('span[itemprop="ratingValue"]')?.textContent ||
+    //       null,
+    //   }));
+    // });
     await page.waitForSelector('div[itemprop="reviews"]');
-
-    const reviews = await page.evaluate(() => {
-      return Array.from(
-        document.querySelectorAll('div[itemprop="reviews"]')
-      ).map((element) => ({
-        platform: "gobigo",
-        image: element.querySelector("img")?.src || null,
-        date: element.querySelector("div span")?.textContent.trim() || null,
-        name:
-          element.querySelector('span[itemprop="name"]')?.textContent.trim() ||
-          null,
-        title:
-          element
-            .querySelector('div[data-test-target="review-title"] span')
-            ?.textContent.trim() || null,
-        review:
-          element.querySelector("span span span")?.textContent.trim() || null,
-        rating:
-          element.querySelector('span[itemprop="ratingValue"]')?.textContent ||
-          null,
-      }));
-    });
+  
+        
+        const reviews = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('div[itemprop="reviews"]')).map(element => ({
+            platform:"gobigo",
+            image: element.querySelector('img')?.src || null,
+            date: element.querySelector('div span')?.textContent.trim() || null,
+            name: element.querySelector('span[itemprop="name"]')?.textContent.trim() || null,
+            title: element.querySelector('div[data-test-target="review-title"] span')?.textContent.trim() || null,
+            review: element.querySelector('span span span')?.textContent.trim() || null,
+            rating: element.querySelector('span[itemprop="ratingValue"]')?.textContent || null,
+          }));
+        });
 
     console.log(reviews);
     return reviews;
