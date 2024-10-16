@@ -39,7 +39,7 @@ const ReviewLinkAndQRCode = () => {
       // const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
-      const result = await axios.post('http://localhost:3000/generateqr', { user },{headers: {
+      const result = await axios.post('https://synxbackend.synxautomate.com/generateqr', { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
       console.log('result is ', result);

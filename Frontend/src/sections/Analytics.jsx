@@ -132,7 +132,7 @@ const AnalyticsDashboard = () => {
         }
         console.log('1')
 
-        const response = await axios.post('http://localhost:3000/analytics', { user }, {
+        const response = await axios.post('https://synxbackend.synxautomate.com/analytics', { user }, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

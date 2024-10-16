@@ -323,7 +323,7 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
       }
 
       const response = await axios.post(
-        'http://localhost:3000/integrations',
+        'https://synxbackend.synxautomate.com/integrations',
         {
           platform: platform.name,
           pageLink,

@@ -41,7 +41,7 @@ const ForgotPasswordOtp = () => {
     const getEmail = localStorage.getItem('forgotEmail');
     console.log('getEmail', getEmail);
     // const userEmail = getEmail ? JSON.parse(getEmail) : null;
-    const result = await axios.post('http://localhost:3000/forgetOtp',{otp,email:getEmail})
+    const result = await axios.post('https://synxbackend.synxautomate.com/forgetOtp',{otp,email:getEmail})
     console.log('result',result)
     if(result){
       setTimeout(()=>{

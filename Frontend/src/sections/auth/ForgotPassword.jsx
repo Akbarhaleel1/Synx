@@ -14,7 +14,7 @@ const ForgotPasswordPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     // const result = axios.post('https://synxbackend.synxautomate.com/forgot-password',{email})
-    const result = axios.post('http://localhost:3000/forgot-password',{email})
+    const result = axios.post('https://synxbackend.synxautomate.com/forgot-password',{email})
     localStorage.setItem('forgotEmail', email)
     setTimeout(() => {
       console.log('Password reset requested for:', email);

@@ -40,7 +40,7 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken);
       console.log('1')
-      const result = await axios.post('http://localhost:3000/ePageLoad', { user }, {
+      const result = await axios.post('https://synxbackend.synxautomate.com/ePageLoad', { user }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -72,7 +72,7 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
 
-      const response = await axios.post('http://localhost:3000/ePage', {
+      const response = await axios.post('https://synxbackend.synxautomate.com/ePage', {
         user,
         companyName,
         emailContent,
@@ -138,7 +138,7 @@ const GetReviewsEmail = () => {
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       // Send the data to the backend
-      const response = await axios.post('http://localhost:3000/sendEmailReviews', { user: user, email: inputs }, {
+      const response = await axios.post('https://synxbackend.synxautomate.com/sendEmailReviews', { user: user, email: inputs }, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

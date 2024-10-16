@@ -51,7 +51,7 @@ const RazorpayButton = ({ titleId, onSuccess, className, children }) => {
       const user = JSON.parse(getUser);
       console.log('planid is',planId)
       // Create the subscription on the server
-      const { data } = await axios.post('http://localhost:3000/payments', { planId, user });
+      const { data } = await axios.post('https://synxbackend.synxautomate.com/payments', { planId, user });
 
       if (!data.subscription) {
         alert('Unable to create subscription. Please try again.');

@@ -28,7 +28,7 @@ const HotelReview = () => {
       localStorage.setItem('endpoint',endpoint)
       localStorage.setItem('qrPoint',qrPoint)
       // const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', {endpoint, qrPoint });
-      const result = await axios.post('http://localhost:3000/feedBack', {endpoint, qrPoint });
+      const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', {endpoint, qrPoint });
       console.log('result',result)
       setMessage(result.data.reviewLink.title)
     }

@@ -68,7 +68,7 @@ const SynXPlusReviewRequest = () => {
 
       try {
         // Make a POST request to the backend
-        const result = await axios.post("http://localhost:3000/whatsappage", {
+        const result = await axios.post("https://synxbackend.synxautomate.com/whatsappage", {
           user, // Sending user data as the request body
         }, {
           headers: {
@@ -144,7 +144,7 @@ const SynXPlusReviewRequest = () => {
     }
 
     // Send the data to the backend
-    const response = await axios.post('http://localhost:3000/sendWhatsapp', { user: user, contacts }, {
+    const response = await axios.post('https://synxbackend.synxautomate.com/sendWhatsapp', { user: user, contacts }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -175,7 +175,7 @@ const SynXPlusReviewRequest = () => {
     const token = JSON.parse(getToken)
     console.log('user', user, 'companyName', companyName, 'messageTemplate', messageTemplate)
     // Send the data to the backend
-    const response = await axios.post('http://localhost:3000/sendTemplate', { user: user, companyName, messageTemplate }, {
+    const response = await axios.post('https://synxbackend.synxautomate.com/sendTemplate', { user: user, companyName, messageTemplate }, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

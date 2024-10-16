@@ -31,7 +31,7 @@ const Reviews = () => {
       // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
-      const result = await axios.post("http://localhost:3000/reviews", { user },{headers: {
+      const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
       console.log('result.message',result.data.message)

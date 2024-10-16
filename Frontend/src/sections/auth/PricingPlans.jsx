@@ -14,7 +14,7 @@ const PricingCard = ({ title, price, popular, features, onSuccess }) => {
     console.log('titlesssssssssss', title);
     let getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser)
-    const result = await axios.post('http://localhost:3000/successpage',{user,paymentData,title});
+    const result = await axios.post('https://synxbackend.synxautomate.com/successpage',{user,paymentData,title});
     console.log('result',result)
     navigate('/PlanSuccessPage')
     onSuccess(paymentData, title);
@@ -94,7 +94,7 @@ const PricingPage = () => {
     console.log('title', title);
     let getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    const result = await axios.post('http://localhost:3000/successpage', { user, paymentData, title });
+    const result = await axios.post('https://synxbackend.synxautomate.com/successpage', { user, paymentData, title });
     console.log('result', result);
     setModalOpen(true); 
     navigate('/PlanSuccessPage');
