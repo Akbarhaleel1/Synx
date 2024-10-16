@@ -79,6 +79,7 @@ const GetReviews = () => {
         return;
       }
       const endpoint = localStorage.getItem('endpoint')
+      console.log('enpiontssssssssssssss',endpoint)
       if(!endpoint){
         setShowWarningEndPoint(true)
       }
