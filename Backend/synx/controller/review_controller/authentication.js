@@ -7,6 +7,7 @@ const crypto = require("crypto");
 const { generateToken, verifyRefreshToken, generateRefreshToken } = require("../../utils/authUtils");
 const otpStore = {}; 
 const Razorpay = require('razorpay');
+const Subscription = require('../../models/subscription');
 
 const razorpay = new Razorpay({
   key_id: 'rzp_test_6aYUU1Lcsfqbw3', // Replace with your Razorpay Key ID
@@ -53,6 +54,7 @@ const signup = async (req, res) => {
       otp: otp,
       customerId:customer.id,
       companyname:companyname
+      
     });
 
     console.log('userData',userData)

@@ -181,18 +181,23 @@ const handlePaymentSuccess = async (req, res) => {
       endDate.setMonth(startDate.getMonth() + 1);
 
      
-      const subscription = new Subscription({
-        userId:user._id,
-        subscriptionType:title,
-        startDate,
-        endDate,
-        razorpayPaymentId:paymentData.razorpay_payment_id,
-        razorpaySubscriptionId:paymentData.razorpay_subscription_id,
-        signature:paymentData.razorpay_signature,
-        status: 'active'
-      });
-
-      await subscription.save();
+      const subscriptionData = {
+        userId: user._id,
+        subscriptionType: title,
+        startDate: startDate,
+        endDate: endDate,
+        razorpayPaymentId: paymentData.razorpay_payment_id,
+        razorpaySubscriptionId: paymentData.razorpay_subscription_id,
+        signature: paymentData.razorpay_signature,
+        status: 'active',
+      };
+      
+      // Use findOneAndUpdate to either update or create a subscription
+      const subscription = await Subscription.findOneAndUpdate(
+        { userId: user._id }, // Match by userId
+        subscriptionData, // Data to update or create
+        { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
+      );
 
       return res.status(200).json({
         message: 'Subscription created successfully',

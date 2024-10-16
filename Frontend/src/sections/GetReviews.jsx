@@ -193,7 +193,7 @@ const GetReviews = () => {
   return (
     <div className="flex flex-col lg:flex-row">
       <Nav />
-      {showWarningEndPoint && <WarningMessage/>}
+      {showWarning && <WarningMessage/>}
       {/* Main Content */}
       <div className="flex-1 bg-[rgb(241,241,241)]  p-4 lg:p-8 overflow-auto lg:ml-64">
         {" "}
