@@ -249,7 +249,7 @@ const HospitalityReview = () => {
               <img 
                 src="https://cdnl.iconscout.com/lottie/premium/thumb/home-animated-icon-download-in-lottie-json-gif-static-svg-file-formats--house-building-property-estate-circle-glass-morphism-pack-design-development-icons-5804353.gif" 
                 alt="Rating animation" 
-                className="ml-[54px] w-32 h-32 object-cover"
+                className="ml-[52px] w-32 h-32 object-cover"
               />
                 <div className="text-center mb-8">
           <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
