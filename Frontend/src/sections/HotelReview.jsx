@@ -218,6 +218,7 @@ const HospitalityReview = () => {
       localStorage.setItem('qrPoint', qrPoint);
       try {
         const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', { endpoint, qrPoint });
+        console.log('result isssss', result)
         setMessage(result.data.reviewLink.title);
       } catch (error) {
         console.error('Error fetching data:', error);
