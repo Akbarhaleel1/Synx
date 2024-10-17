@@ -238,7 +238,7 @@ const GetReviews = () => {
               key={index}
               className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
             >
-              <i className="fas fa-building text-gray-600"></i>
+              <i className="fas fa-building text-gray-600">dfdfewrewr</i>
               <input
                 type="text"
                 name="name"
@@ -248,7 +248,7 @@ const GetReviews = () => {
                 onChange={(e) => handleInputChange(index, e)}
                 required
               />
-              <i className="fas fa-building text-gray-600"></i>
+              <i className="fas fa-building text-gray-600">sadferwe4rer</i>
 
               <input
                 type="number"
