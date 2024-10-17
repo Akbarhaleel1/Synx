@@ -84,7 +84,7 @@ const Nav = () => {
         <img src={logo} alt="headerLogo" className='w-24 mb-12' />
         <h1
          
-          className=" text-white text-2xl font-extralight ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
+          className="text-white text-3xl font-extralight ml-[50px] mt-[40px] mb-[26px] animate-colorShift animate-float"
         >
           {companyName}
         </h1>
