@@ -2,6 +2,7 @@ const CustomReview = require("../../models/customreview");
 const ReviewLink = require("../../models/reviewLink");
 const Analytics = require("../../models/analise");
 const IntegratedSite = require("../../models/scrapper");
+const User=require("../../models/user")
 
 const reviewPage = async (req, res) => {
   try {
@@ -127,10 +128,11 @@ const starfilterpage= async (req,res)=>{
 
   try{
     const filter=await ReviewLink.findOne({endpoint:endpoint})
-    const reviewbutton=await IntegratedSite.find({user:filter.user})
+    const reviewbutton=await IntegratedSite.find({user:filter.user});
+    const user=await User.findOne({_id:filter.user})
     console.log('filter', filter)
     console.log('reviewbutton', reviewbutton)
-    return res.status(200).json({message:"successfully find the starfilter",filterlink:reviewbutton})
+    return res.status(200).json({message:"successfully find the starfilter",filterlink:reviewbutton,companyName:user.companyname})
 
   }catch(err){
     return res.status(400).json({message:"have error"})
