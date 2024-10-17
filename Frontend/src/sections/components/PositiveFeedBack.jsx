@@ -92,7 +92,7 @@ const PositiveFeedBack = () => {
             try {
                 const result = await axios.post('https://synxbackend.synxautomate.com/starFilterReviewLink', { endpoint });
                 setData(result.data.filterlink);
-                console.log('Fetched data:', result.data);
+                console.log('Fetched data:', result.data.companyName);
                 setCompanyName(result.data.companyName)
             } catch (error) {
                 console.error('Error fetching data:', error);
@@ -117,7 +117,7 @@ const PositiveFeedBack = () => {
       <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 opacity-20 transform skew-y-3"></div>
     </div>
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
-                        We Value Your Feedback
+                        We Value Your Feedback{companyName}
                     </h2>
                     <p className="text-gray-600 mb-6 text-sm text-center">
                         Your reviews help us grow and better serve customers like you.
