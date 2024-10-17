@@ -277,7 +277,7 @@ const HospitalityReview = () => {
           </div>
           <div className="md:w-1/2 bg-blue-600 flex items-center justify-center p-8">
             <img
-              src="https://cdnl.iconscout.com/lottie/premium/thumb/customer-feedback-3956779-3297581.gif"
+              src="https://cdnl.iconscout.com/lottie/premium/preview/people-rating-stars-animation-download-in-lottie-json-gif-static-svg-file-formats--like-logo-customer-feedback-product-review-satisfaction-pack-store-animations-7454815.png"
               alt="Customer feedback animation"
               className="w-full max-w-sm"
             />

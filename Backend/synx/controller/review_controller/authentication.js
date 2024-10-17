@@ -11,8 +11,8 @@ const Subscription = require('../../models/subscription');
 const cron=require("node-cron")
 
 const razorpay = new Razorpay({
-  key_id: 'rzp_test_6aYUU1Lcsfqbw3', // Replace with your Razorpay Key ID
-  key_secret: '0UqZWocm1vbMbUnIMruWmgaQ', // Replace with your Razorpay Secret
+  key_id: process.env.RAZORPAY_KEY, // Replace with your Razorpay Key ID
+  key_secret: process.env.RAZORPAY_SECRET, // Replace with your Razorpay Secret
 });
 
 
