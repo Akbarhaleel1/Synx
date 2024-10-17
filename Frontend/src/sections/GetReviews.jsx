@@ -238,6 +238,7 @@ const GetReviews = () => {
               key={index}
               className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
             >
+              <i className="fas fa-building text-gray-600"></i>
               <input
                 type="text"
                 name="name"
@@ -245,14 +246,18 @@ const GetReviews = () => {
                 placeholder="Name"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
+                required
               />
+              <i className="fas fa-building text-gray-600"></i>
+
               <input
-                type="text"
+                type="number"
                 name="contact"
                 value={input.contact}
                 placeholder="Contact Number (include country code)"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
+                required
               />
               <button
                 onClick={() => handleDeleteLine(index)}

@@ -251,14 +251,16 @@ const SynXPlusReviewRequest = () => {
                 value={contact.name}
                 onChange={(event) => handleContactChange(index, event)}
                 className="bg-gray-800 p-2 rounded-lg flex-1"
+                required
               />
               <input
-                type="text"
+                type="number"
                 name="number"
                 placeholder="Contact Number"
                 value={contact.number}
                 onChange={(event) => handleContactChange(index, event)}
                 className="bg-gray-800 p-2 rounded-lg flex-1"
+                required
               />
               <button onClick={() => handleRemoveContact(index)} className="text-red-500">
                 <FaTrash /> {/* Remove icon */}

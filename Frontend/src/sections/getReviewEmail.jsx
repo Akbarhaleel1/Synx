@@ -47,7 +47,7 @@ const GetReviewsEmail = () => {
       });
 
       console.log('result', result.data)
-      if(result.data.trailover){
+      if (result.data.trailover) {
         navigate('/PricingTable');
         return
       }
@@ -117,6 +117,13 @@ const GetReviewsEmail = () => {
           setIsErrorModalOpen(true)
           return;
         }
+
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(input.contact)) {
+          setIsErrorModalOpen(true); 
+          return;
+        }
       }
 
       if (!companyName || !emailContent) {
@@ -184,26 +191,26 @@ const GetReviewsEmail = () => {
       <main className="flex-1 p-4 sm:p-8 ml-0 sm:ml-64">
         {/* Top Buttons */}
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
-     
-            <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              PHONE
-            </button>
 
-    
-            <button onClick={getReviewsEmail} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
-              EMAIL
-            </button>
-    
-      
-            <button onClick={getReviewWattsapp} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              Whatsapp
-            </button>
-  
-            <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-              QR Code
-            </button>
+          <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            PHONE
+          </button>
+
+
+          <button onClick={getReviewsEmail} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
+            EMAIL
+          </button>
+
+
+          <button onClick={getReviewWattsapp} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            Whatsapp
+          </button>
+
+          <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            QR Code
+          </button>
         </div>
-    
+
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-8">
           <h2 className="text-xl font-bold mb-4">Request reviews via Email</h2>
           <div className="flex flex-col lg:flex-row justify-between items-center mb-4">
@@ -222,6 +229,7 @@ const GetReviewsEmail = () => {
                 placeholder="Name"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
+                required
               />
               <input
                 type="email"
@@ -230,6 +238,7 @@ const GetReviewsEmail = () => {
                 placeholder="Email"
                 className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
                 onChange={(e) => handleInputChange(index, e)}
+                required
               />
               <button
                 onClick={() => handleDeleteLine(index)}
