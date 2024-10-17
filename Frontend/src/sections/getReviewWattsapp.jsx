@@ -127,6 +127,7 @@ const SynXPlusReviewRequest = () => {
         return;
       }
     }
+    setBalence(balence-inputs.length)
 
     console.log('companyName', companyName)
     console.log('messageTemplate', messageTemplate)

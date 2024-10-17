@@ -33,7 +33,7 @@ const signup = async (req, res) => {
   console.log('1')
   try {
    
-    let user = await User.findOne({ email:email,isVerified:false });
+    let user = await User.findOne({ email:email, isVerified:true });
     console.log('2')
     if (user) {
       console.log('user is already exit mahn')
