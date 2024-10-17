@@ -249,6 +249,12 @@ const HospitalityReview = () => {
                 alt="Rating animation" 
                 className="w-32 h-32 object-cover"
               />
+                <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+            {companyName}
+          </h1>
+          <p className="text-lg text-gray-600 mt-2">We Value Your Feedback</p>
+        </div>
             </div>
             {isLoading ? (
               <div className="flex items-center justify-center">
