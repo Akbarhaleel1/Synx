@@ -33,7 +33,7 @@ const signup = async (req, res) => {
   console.log('1')
   try {
    
-    let user = await User.findOne({ email });
+    let user = await User.findOne({ email:email,isVerified:false });
     console.log('2')
     if (user) {
       console.log('user is already exit mahn')
@@ -45,26 +45,21 @@ const signup = async (req, res) => {
 
     const { otp, creationTime } = generateOtp();
     console.log('4')
-    const customer = await razorpay.customers.create({
-      name: `${firstname} ${lastname}`, 
-      email: email,
-      contact: phonenumber, 
-    });
+   
     console.log('5')
-    const userData = new User({
-      name: `${firstname} ${lastname}`,
-      email: email,
-      mobile: phonenumber,
-      password: hashedPassword,
-      otp: otp,
-      customerId:customer.id,
-      companyname:companyname
-      
-    });
-
-    console.log('userData',userData)
-
-    await userData.save();
+    await User.updateOne(
+      { email: email, isVerified: false },  // Query for users with the given email and not verified
+      {
+        $set: {
+          name: `${firstname} ${lastname}`,
+          mobile: phonenumber,
+          password: hashedPassword,
+          otp: otp,
+          companyname: companyname
+        }
+      },
+      { upsert: true }  // If no matching document, insert a new one
+    );
 
     const currentDate = new Date().toLocaleDateString("en-US", {
       day: "2-digit",
@@ -189,7 +184,15 @@ const validateOtp = async (req, res) => {
       const userotp= parseInt(otp.join(''))
       if (user.otp === userotp) { 
         console.log('userserwesr')
-         user.isVerified = true
+
+        const customer = await razorpay.customers.create({
+          name: user.name, 
+          email: user.email,
+          contact: user.mobile, 
+        });
+
+         user.isVerified = true;
+         user.customerId=customer.id;
         await user.save();
         const startDate = new Date();
 
@@ -213,6 +216,7 @@ const validateOtp = async (req, res) => {
           subscriptionData, // Data to update or create
           { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
         );
+
         console.log('subscription',subscription)
         res.status(200).json({ msg: "Signup successful. Please login." });
       } else {
