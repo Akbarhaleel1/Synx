@@ -487,13 +487,13 @@ const googleCallback = async (req, res) => {
             const userData = encodeURIComponent(JSON.stringify(req.user));
             const tokenData = encodeURIComponent(token);
             const refreshToken = encodeURIComponent(refresh_token);
-            res.redirect(`http://localhost:5173/login?user=${userData}&token=${tokenData}&refreshToken=${refreshToken}`);
+            res.redirect(`https://synx-review.synxautomate.com/login?user=${userData}&token=${tokenData}&refreshToken=${refreshToken}`);
         } else {
-            res.redirect("http://localhost:5173/login");
+            res.redirect("https://synx-review.synxautomate.com/login");
         }
     } catch (error) {
         console.error("Error during Google callback:", error);
-        res.redirect("http://localhost:5173/error");
+        res.redirect("https://synx-review.synxautomate.com/error");
     }
 };
 
