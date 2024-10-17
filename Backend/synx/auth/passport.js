@@ -79,8 +79,7 @@ const passportConfig = () => {
                             status: 'active',
                           };
                   
-                          
-                          
+                
                           const subscription = await Subscription.findOneAndUpdate(
                             { userId: userData._id }, 
                             subscriptionData, 
