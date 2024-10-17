@@ -229,11 +229,6 @@ const NegativeReview = () => {
       newErrors.review = 'Review is required';
     }
 
-    // Consent validation
-    if (!formData.consent) {
-      newErrors.consent = 'You must consent to the processing of personal data';
-    }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -344,9 +339,6 @@ const NegativeReview = () => {
                   onChange={handleInputChange}
                   className={`mr-2 ${errors.consent ? 'border-red-500' : ''}`}
                 />
-                <label className="text-sm text-gray-600">
-                  I consent to the processing of personal data.
-                </label>
               </div>
               {errors.consent && <p className="text-red-500 text-xs mt-1">{errors.consent}</p>}
               {errors.submit && <p className="text-red-500 text-xs mt-1">{errors.submit}</p>}
