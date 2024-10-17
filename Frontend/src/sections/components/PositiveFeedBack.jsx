@@ -83,7 +83,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PositiveFeedBack = () => {
     const [data, setData] = useState([]);
-    const [companyName, setCompanyName] = ('')
+    const [companyName, setCompanyName] = useState('')
     const navigate = useNavigate();
 
     useEffect(() => {
