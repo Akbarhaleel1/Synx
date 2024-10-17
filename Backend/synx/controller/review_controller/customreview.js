@@ -130,9 +130,11 @@ const starfilterpage= async (req,res)=>{
     const filter=await ReviewLink.findOne({endpoint:endpoint})
     const reviewbutton=await IntegratedSite.find({user:filter.user});
     const user=await User.findOne({_id:filter.user})
+    let companyName=user.companyname || ""
+    
     console.log('filter', filter)
     console.log('reviewbutton', reviewbutton)
-    return res.status(200).json({message:"successfully find the starfilter",filterlink:reviewbutton,companyName:user.companyname})
+    return res.status(200).json({message:"successfully find the starfilter",filterlink:reviewbutton,companyName:companyName})
 
   }catch(err){
     return res.status(400).json({message:"have error"})
