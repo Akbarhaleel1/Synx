@@ -73,7 +73,7 @@ const GetReviews = () => {
       }
 
       console.log('input', inputs)
-
+      setBalence(balence-inputs.length-1)
       if (!companyName || !message) {
         setIsModalOpen(true);
         return;
@@ -103,7 +103,7 @@ const GetReviews = () => {
         return
       }
       setSuccessModalOpen(true);
-
+  
     } catch (error) {
       // Handle error response
       console.error('Error sending review requests:', error);
