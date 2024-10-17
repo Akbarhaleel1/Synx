@@ -83,6 +83,7 @@ import { useNavigate } from 'react-router-dom';
 
 const PositiveFeedBack = () => {
     const [data, setData] = useState([]);
+    const [companyName, setCompanyName] = ('')
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -91,7 +92,8 @@ const PositiveFeedBack = () => {
             try {
                 const result = await axios.post('https://synxbackend.synxautomate.com/starFilterReviewLink', { endpoint });
                 setData(result.data.filterlink);
-                console.log('Fetched data:', result.data.filterlink);
+                console.log('Fetched data:', result.data);
+                setCompanyName(result.data.companyName)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -108,6 +110,12 @@ const PositiveFeedBack = () => {
                         <path d="M10 40 Q50 10 90 40" fill="black" />
                     </svg>
 
+                    <div className="relative overflow-hidden py-6 px-4">
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-center relative z-10 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600">
+        {companyName}
+      </h1>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-200 to-purple-200 opacity-20 transform skew-y-3"></div>
+    </div>
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
                         We Value Your Feedback
                     </h2>
@@ -123,7 +131,7 @@ const PositiveFeedBack = () => {
                     <div className="flex flex-col space-y-4 mt-6">
                         {data.map((item) => (
                             <a 
-                                href={item.platform === 'google' ? `https://www.google.com/maps/place/?q=place_id:${item.link}` : item.link} 
+                                href={item.platform === 'google' ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${item.link}` : item.link} 
                                 key={item._id} 
                                 target="_blank" 
                                 rel="noopener noreferrer"
