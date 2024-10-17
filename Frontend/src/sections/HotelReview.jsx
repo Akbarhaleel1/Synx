@@ -200,6 +200,7 @@ const HospitalityReview = () => {
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [hoverRating, setHoverRating] = useState(0);
+  const [companyName, setCompanyName] = useState('');
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -219,6 +220,7 @@ const HospitalityReview = () => {
       try {
         const result = await axios.post('https://synxbackend.synxautomate.com/feedBack', { endpoint, qrPoint });
         console.log('result isssss', result)
+        setCompanyName(result.data.companyName)
         setMessage(result.data.reviewLink.title);
       } catch (error) {
         console.error('Error fetching data:', error);
