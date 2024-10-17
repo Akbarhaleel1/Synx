@@ -191,11 +191,11 @@
 
 
 import React, { useEffect, useState } from 'react';
-import { Star, Send, Loader } from 'lucide-react';
+import { Star, Loader } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const HotelReview = () => {
+const HospitalityReview = () => {
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(true);
@@ -221,7 +221,7 @@ const HotelReview = () => {
         setMessage(result.data.reviewLink.title);
       } catch (error) {
         console.error('Error fetching data:', error);
-        setMessage('We value your exceptional experience!');
+        setMessage('We value your feedback!');
       } finally {
         setIsLoading(false);
       }
@@ -238,58 +238,49 @@ const HotelReview = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-violet-600 flex items-center justify-center p-4">
-      <div className="bg-white bg-opacity-10 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden max-w-5xl w-full transform transition-all duration-500 ease-in-out hover:scale-105">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+      <div className="bg-white rounded-lg shadow-xl overflow-hidden max-w-4xl w-full">
         <div className="flex flex-col md:flex-row">
-          <div className="md:w-1/2 p-12 flex flex-col justify-center items-center relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-gold-200 via-gold-300 to-gold-100 opacity-20 animate-pulse"></div>
-            <div className="relative z-10">
-              <div className="mb-8 transform transition-all duration-500 ease-in-out hover:scale-110">
-                <svg className="w-24 h-24 text-gold-400" viewBox="0 0 100 100" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M20 30 H80 V90 H20 Z" />
-                  <path d="M10 30 Q50 10 90 30" />
-                  <path d="M40 90 V70 H60 V90" strokeWidth="4" stroke="white" fill="none" />
-                </svg>
-              </div>
-              {isLoading ? (
-                <div className="flex items-center justify-center">
-                  <Loader className="w-8 h-8 text-gold-400 animate-spin" />
-                </div>
-              ) : (
-                <h2 className="text-4xl font-bold text-center text-white mb-10 transition-all duration-300 ease-in-out">{message}</h2>
-              )}
-              <div className="flex justify-center space-x-4 mb-8">
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <Star
-                    key={star}
-                    className={`w-14 h-14 cursor-pointer transition-all duration-300 ease-in-out transform ${
-                      star <= (hoverRating || rating) 
-                        ? 'text-gold-400 fill-current scale-110' 
-                        : 'text-gray-400 hover:scale-105'
-                    }`}
-                    onClick={() => submitStar(star)}
-                    onMouseEnter={() => setHoverRating(star)}
-                    onMouseLeave={() => setHoverRating(0)}
-                  />
-                ))}
-              </div>
-              <p className="text-center text-gold-200 italic text-lg">
-                {rating ? `You've selected ${rating} star${rating !== 1 ? 's' : ''}` : 'Rate your luxurious experience'}
-              </p>
+          <div className="md:w-1/2 p-8 flex flex-col justify-center items-center">
+            <div className="mb-6">
+              <img 
+                src="https://cdnl.iconscout.com/lottie/premium/thumb/user-rating-4537395-3763776.gif" 
+                alt="Rating animation" 
+                className="w-32 h-32 object-cover"
+              />
             </div>
+            {isLoading ? (
+              <div className="flex items-center justify-center">
+                <Loader className="w-8 h-8 text-blue-600 animate-spin" />
+              </div>
+            ) : (
+              <h2 className="text-2xl font-semibold text-center text-gray-800 mb-6">{message}</h2>
+            )}
+            <div className="flex justify-center space-x-2 mb-6">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star
+                  key={star}
+                  className={`w-10 h-10 cursor-pointer transition-all duration-200 ease-in-out ${
+                    star <= (hoverRating || rating) 
+                      ? 'text-yellow-400 fill-current' 
+                      : 'text-gray-300 hover:text-yellow-200'
+                  }`}
+                  onClick={() => submitStar(star)}
+                  onMouseEnter={() => setHoverRating(star)}
+                  onMouseLeave={() => setHoverRating(0)}
+                />
+              ))}
+            </div>
+            <p className="text-center text-gray-600 text-sm">
+              {rating ? `You've selected ${rating} star${rating !== 1 ? 's' : ''}` : 'Tap a star to rate your experience'}
+            </p>
           </div>
-          <div className="md:w-1/2 relative overflow-hidden">
+          <div className="md:w-1/2 bg-blue-600 flex items-center justify-center p-8">
             <img
-              src="https://wallpaperaccess.com/full/2484157.jpg"
-              alt="Luxurious hotel room"
-              className="w-full h-full object-cover transition-all duration-700 ease-in-out transform hover:scale-110"
+              src="https://cdnl.iconscout.com/lottie/premium/thumb/customer-feedback-3956779-3297581.gif"
+              alt="Customer feedback animation"
+              className="w-full max-w-sm"
             />
-            <div className="absolute inset-0 bg-black bg-opacity-30 transition-all duration-300 ease-in-out hover:bg-opacity-0"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-6 bg-gradient-to-t from-black to-transparent">
-              <p className="text-white text-xl font-light italic">
-                "Luxury is in each detail."
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -297,4 +288,4 @@ const HotelReview = () => {
   );
 };
 
-export default HotelReview;
+export default HospitalityReview;
