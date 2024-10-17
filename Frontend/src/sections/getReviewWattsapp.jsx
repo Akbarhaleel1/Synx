@@ -254,18 +254,10 @@ const SynXPlusReviewRequest = () => {
                 className="bg-gray-800 p-2 rounded-lg flex-1"
                 required
               />
-              {/* <input
-                type="number"
-                name="number"
-                placeholder="Contact Number"
-                value={contact.number}
-                onChange={(event) => handleContactChange(index, event)}
-                className="bg-gray-800 p-2 rounded-lg flex-1"
-                required
-              /> */}
+      
               <div className="relative flex-1">
                 <input
-                  type="number"
+                  type="tel"
                   name="number"
                   placeholder="Contact Number"
                   value={contact.number}

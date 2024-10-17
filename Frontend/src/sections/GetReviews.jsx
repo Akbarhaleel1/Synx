@@ -250,7 +250,7 @@ const GetReviews = () => {
               />
          <div className="relative w-full lg:w-5/12">
   <input
-    type="number"
+    type="tel"
     name="contact"
     value={input.contact}
     placeholder="Contact Number (include country code)"
