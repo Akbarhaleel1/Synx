@@ -73,7 +73,7 @@ const GetReviews = () => {
       }
 
       console.log('input', inputs)
-      setBalence(balence-inputs.length-1)
+      setBalence(balence-inputs.length)
       if (!companyName || !message) {
         setIsModalOpen(true);
         return;
