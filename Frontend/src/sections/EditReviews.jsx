@@ -77,6 +77,7 @@ const EditReviews = () => {
       if (response.status === 200) {
         console.log('Data successfully sent to the backend', response.data.endpoint);
         setEndpoint(response.data.endpoint)
+        window.location.reload();
       } else {
         console.error('Error sending data to the backend');
       }
