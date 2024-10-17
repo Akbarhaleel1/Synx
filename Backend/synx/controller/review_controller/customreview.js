@@ -94,6 +94,9 @@ const feedback = async (req, res) => {
     console.log('Request Body:', req.body);
 
     const reviewLink = await ReviewLink.findOne({ endpoint: endpoint });
+    const user=await User.findOne({_id:reviewLink.user});
+    let companyName=user.companyname || ""
+
     if (!reviewLink) {
       return res.status(404).json({ message: "Review link not found" });
     }
@@ -116,7 +119,7 @@ const feedback = async (req, res) => {
 
     console.log('Analytics:', analytics);
 
-    return res.status(200).json({ message: "Feedback recorded successfully." ,reviewLink});
+    return res.status(200).json({ message: "Feedback recorded successfully." ,reviewLink,companyName:companyName});
     
   } catch (error) {
     console.error('Error in feedback function:', error);
