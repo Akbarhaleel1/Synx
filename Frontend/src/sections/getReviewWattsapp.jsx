@@ -253,7 +253,7 @@ const SynXPlusReviewRequest = () => {
                 className="bg-gray-800 p-2 rounded-lg flex-1"
                 required
               />
-              <input
+              {/* <input
                 type="number"
                 name="number"
                 placeholder="Contact Number"
@@ -261,7 +261,40 @@ const SynXPlusReviewRequest = () => {
                 onChange={(event) => handleContactChange(index, event)}
                 className="bg-gray-800 p-2 rounded-lg flex-1"
                 required
-              />
+              /> */}
+              <div className="relative flex-1">
+  <input
+    type="number"
+    name="number"
+    placeholder="Contact Number"
+    value={contact.number}
+    onChange={(event) => handleContactChange(index, event)}
+    className="bg-gray-800 p-2 pl-10 rounded-lg w-full text-white"
+    required
+  />
+  {/* Icon inside the input */}
+  <span
+    className="absolute inset-y-0 left-2 flex items-center cursor-pointer"
+    title="Please enter your phone number including the country code, starting with your country code (e.g., for India, 91), followed by your 10-digit number. Do not include the '+' symbol. Example: 9123XXXXXXXX."
+  >
+    {/* Add an info or phone icon here */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5 text-white"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 12h-9m6.75-6.75L21 12l-9.75 6.75V5.25z"
+      />
+    </svg>
+  </span>
+</div>
+
               <button onClick={() => handleRemoveContact(index)} className="text-red-500">
                 <FaTrash /> {/* Remove icon */}
               </button>
