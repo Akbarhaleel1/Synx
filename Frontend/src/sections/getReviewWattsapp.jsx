@@ -32,7 +32,7 @@ import EnhancedSubmitButton from "./components/EnhancedSubmitButton";
 import { SuccessModal } from "./components/SweatAlert";
 import BeautifulErrorModal from "./components/BeautifulErrorModal";
 import { Plus } from "lucide-react";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import MonthlyLimitModal from './components/ui/MonthlyLimitModal';
 import WarningModal from "./components/ui/WarningMessage";
 
@@ -49,8 +49,8 @@ const SynXPlusReviewRequest = () => {
   const [isSuccessModalOpen, setSuccessModalOpen] = useState(false);
   const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
   const [errorMessages, setErrorMessages] = useState([]);
-  const [balence,setBalence] = useState('')
-  const [limit,setLimit] = useState('')
+  const [balence, setBalence] = useState('')
+  const [limit, setLimit] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
 
@@ -76,7 +76,7 @@ const SynXPlusReviewRequest = () => {
           },
         });
 
-        if(result.data.trailover){
+        if (result.data.trailover) {
           navigate('/PricingTable');
           return
         }
@@ -128,16 +128,16 @@ const SynXPlusReviewRequest = () => {
       }
     }
 
-    console.log('companyName',companyName)
-    console.log('messageTemplate',messageTemplate)
-    if(!companyName||!messageTemplate){
+    console.log('companyName', companyName)
+    console.log('messageTemplate', messageTemplate)
+    if (!companyName || !messageTemplate) {
       setIsErrorModalOpen(true);
       return
     }
 
     const endpoint = localStorage.getItem('endpoint')
-    console.log('enpiontssssssssssssss',endpoint)
-    if(!endpoint){
+    console.log('enpiontssssssssssssss', endpoint)
+    if (!endpoint) {
       console.log('Navigating to add link page');
       setShowWarning(true);
       return
@@ -152,7 +152,7 @@ const SynXPlusReviewRequest = () => {
 
     console.log('responsce is', response);
 
-    if(response.data.message == "it seems more than monthly limit"){
+    if (response.data.message == "it seems more than monthly limit") {
       // alert('it seems more than monthly limit')
       setIsModalOpen(true)
       return
@@ -185,7 +185,7 @@ const SynXPlusReviewRequest = () => {
     // alert(`Preview:\n${messageTemplate.replace("[Company Name]", companyName)}`);
   };
 
-  
+
   const GetReviews = () => {
     navigate('/GetReviews')
   };
@@ -208,25 +208,25 @@ const SynXPlusReviewRequest = () => {
       <div className="flex-1 bg-[rgb(241,241,241)] p-4 lg:p-6 overflow-y-auto lg:ml-64">
         {/* Tabs */}
         <div className="mb-4 lg:mb-8 flex flex-col space-y-2 lg:flex-row lg:space-y-0 lg:space-x-4">
-     
-     <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-       PHONE
-     </button>
+
+          <button onClick={GetReviews} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            PHONE
+          </button>
 
 
-     <button onClick={getReviewsEmail} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-       EMAIL
-     </button>
+          <button onClick={getReviewsEmail} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            EMAIL
+          </button>
 
 
-     <button onClick={getReviewWattsapp} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
-       Whatsapp
-     </button>
+          <button onClick={getReviewWattsapp} className="bg-gray-700 px-4 py-2 rounded-md text-white font-bold w-full lg:w-auto">
+            Whatsapp
+          </button>
 
-     <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
-       QR Code
-     </button>
- </div>
+          <button onClick={handleQr} className="bg-gray-900 px-4 py-2 rounded-md text-gray-400 font-bold w-full lg:w-auto">
+            QR Code
+          </button>
+        </div>
 
         {/* Request Reviews via SMS */}
         <div className="bg-white p-4 lg:p-6 rounded-lg mb-4 lg:mb-8">
@@ -263,37 +263,37 @@ const SynXPlusReviewRequest = () => {
                 required
               /> */}
               <div className="relative flex-1">
-  <input
-    type="number"
-    name="number"
-    placeholder="Contact Number"
-    value={contact.number}
-    onChange={(event) => handleContactChange(index, event)}
-    className="bg-gray-800 p-2 pl-10 rounded-lg w-full text-white"
-    required
-  />
-  {/* Icon inside the input */}
-  <span
-    className="absolute inset-y-0 left-2 flex items-center cursor-pointer"
-    title="Please enter your phone number including the country code, starting with your country code (e.g., for India, 91), followed by your 10-digit number. Do not include the '+' symbol. Example: 9123XXXXXXXX."
-  >
-    {/* Add an info or phone icon here */}
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="w-5 h-5 text-white"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M13.5 12h-9m6.75-6.75L21 12l-9.75 6.75V5.25z"
-      />
-    </svg>
-  </span>
-</div>
+                <input
+                  type="number"
+                  name="number"
+                  placeholder="Contact Number"
+                  value={contact.number}
+                  onChange={(event) => handleContactChange(index, event)}
+                  className="bg-gray-800 p-2 pl-10 rounded-lg w-full text-white"
+                  required
+                />
+                {/* Icon inside the input */}
+                <span
+                  className="absolute inset-y-0 left-2 flex items-center cursor-pointer"
+                  title="Please enter your phone number including the country code, starting with your country code (e.g., for India, 91), followed by your 10-digit number. Do not include the '+' symbol. Example: 9123XXXXXXXX."
+                >
+                  {/* Add an info or phone icon here */}
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth="1.5"
+                    stroke="currentColor"
+                    className="w-5 h-5 text-white"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M13.5 12h-9m6.75-6.75L21 12l-9.75 6.75V5.25z"
+                    />
+                  </svg>
+                </span>
+              </div>
 
               <button onClick={() => handleRemoveContact(index)} className="text-red-500">
                 <FaTrash /> {/* Remove icon */}
@@ -420,11 +420,11 @@ const SynXPlusReviewRequest = () => {
         errors={errorMessages}
       />
 
-<MonthlyLimitModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
+      <MonthlyLimitModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
       />
-           <WarningModal
+      <WarningModal
         isOpen={showWarning}
         onClose={() => setShowWarning(false)}
       />
