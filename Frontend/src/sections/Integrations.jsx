@@ -159,8 +159,8 @@ const PlatformIcon = ({ name, color }) => {
     'agoda': 'https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExcjlobGRvbm1reTd5YmQ4NXc4OXY5MnV4aTg0d2tnMjdmbXY3MW1rdyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/2MZJ5wvSB8b5aKJD4a/giphy.gif',
     'trustpilot': 'https://media1.giphy.com/media/jhVbcQnNyIqI69lTtB/giphy.gif?cid=ecf05e47liyfk9ya6ybeg1d6gsi90zco1lg31yr8u2w9647d&ep=v1_stickers_search&rid=giphy.gif&ct=s',
     'tripadvisor': 'https://cdnl.iconscout.com/lottie/premium/thumb/tripadvisor-logo-animation-download-in-lottie-json-gif-static-svg-file-formats--brand-social-media-identity-pack-logos-animations-8794850.gif',
-    'makeMyTrip': 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzM5cmRuYWRpMW14aGg2NHBzNzdqajZqZjE3eWthcXZ0cjM3MWczaSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/LNjsnKKe83ZiriWcAs/giphy.gif',
-    'goibibo': 'https://media1.giphy.com/media/jhVbcQnNyIqI69lTtB/giphy.gif?cid=ecf05e47liyfk9ya6ybeg1d6gsi90zco1lg31yr8u2w9647d&ep=v1_stickers_search&rid=giphy.gif&ct=s',
+    'makeMyTrip': 'https://cdn.brandfetch.io/idC6eY3m41/w/336/h/336/theme/dark/icon.jpeg?k=id64Mup7ac&t=1667562511574',
+    'goibibo': 'https://i.postimg.cc/76tFRR8H/1-USldg-A6yr-XVAa-VHgh-Ls-Uz-A.png',
   };
 
   return icons[name] ? (
