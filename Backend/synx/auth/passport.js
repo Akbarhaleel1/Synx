@@ -3,6 +3,12 @@ const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
 const dotenv = require('dotenv');
 const User = require('../models/user');
 const crypto = require('crypto');
+const Razorpay = require('razorpay');
+const razorpay = new Razorpay({
+    key_id: 'rzp_test_6aYUU1Lcsfqbw3',
+    key_secret: '0UqZWocm1vbMbUnIMruWmgaQ', 
+  });
+  
 
 dotenv.config();
 
@@ -44,16 +50,39 @@ const passportConfig = () => {
                         return done(null, user);
                     } else {
                         
+                        const customer = await razorpay.customers.create({
+                            name: profile._json.given_name, 
+                            email: profile._json.email,
+                             
+                          });
                         const newUser = new User({
                             name: profile._json.given_name || "",
                             email: profile._json.email,
                             isBlocked: false,
                             isVerified: true,
                             profilePic: profile._json.picture || null,
-                            password: generateRandomPassword(12)
+                            password: generateRandomPassword(12),
+                            customerId:customer.id,
                         });
                         console.log('New user:', newUser);
                         await newUser.save();
+                        let userData = await User.findOne({ email: profile._json.email });
+                        const subscriptionData = {
+                            userId: user._id,
+                            subscriptionType: "FREE",
+                            startDate: startDate,
+                            endDate: endDate,
+                            status: 'active',
+                          };
+                  
+                          
+                          // Use findOneAndUpdate to either update or create a subscription
+                          const subscription = await Subscription.findOneAndUpdate(
+                            { userId: user._id }, // Match by userId
+                            subscriptionData, // Data to update or create
+                            { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
+                          );
+
                         return done(null, newUser);
                     }
                 } catch (error) {
