@@ -86,13 +86,9 @@
 // export default PositiveFeedBack;
 
 
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Star, ThumbsUp } from 'lucide-react';
 
 const PositiveFeedback = () => {
   const [data, setData] = useState([]);
@@ -115,7 +111,7 @@ const PositiveFeedback = () => {
 
   const platformIcons = {
     google: (
-      <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2">
+      <svg viewBox="0 0 24 24" className="w-6 h-6 mr-2 inline-block">
         <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
         <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
         <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" />
@@ -123,40 +119,38 @@ const PositiveFeedback = () => {
         <path fill="none" d="M1 1h22v22H1z" />
       </svg>
     ),
-    facebook: <Star className="w-6 h-6 mr-2 text-blue-600" />,
-    yelp: <Star className="w-6 h-6 mr-2 text-red-600" />,
+    facebook: '⭐',
+    yelp: '⭐',
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 flex items-center justify-center p-4">
-      <Card className="w-full max-w-4xl bg-white/80 backdrop-blur-sm shadow-xl">
-        <CardHeader className="text-center">
-          <CardTitle className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
+      <div className="w-full max-w-4xl bg-white/80 backdrop-blur-sm shadow-xl rounded-lg p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">
             {companyName}
-          </CardTitle>
+          </h1>
           <p className="text-lg text-gray-600 mt-2">We Value Your Feedback</p>
-        </CardHeader>
-        <CardContent className="grid gap-6">
-          <div className="text-center">
-            <p className="text-gray-600 mb-4">
-              Your reviews help us grow and better serve customers like you.
-            </p>
-            <ThumbsUp className="w-16 h-16 mx-auto text-green-500" />
-          </div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {data.map((item) => (
-              <Button
-                key={item._id}
-                className="w-full py-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
-                onClick={() => window.open(item.platform === 'google' ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${item.link}` : item.link, '_blank')}
-              >
-                {platformIcons[item.platform] || <Star className="w-6 h-6 mr-2" />}
-                Review on {item.platform.charAt(0).toUpperCase() + item.platform.slice(1)}
-              </Button>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="text-center mb-8">
+          <p className="text-gray-600 mb-4">
+            Your reviews help us grow and better serve customers like you.
+          </p>
+          <span className="text-4xl">👍</span>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {data.map((item) => (
+            <button
+              key={item._id}
+              className="w-full py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center"
+              onClick={() => window.open(item.platform === 'google' ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${item.link}` : item.link, '_blank')}
+            >
+              <span className="mr-2">{platformIcons[item.platform] || '⭐'}</span>
+              Review on {item.platform.charAt(0).toUpperCase() + item.platform.slice(1)}
+            </button>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
