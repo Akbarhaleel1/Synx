@@ -244,7 +244,7 @@ const HospitalityReview = () => {
           <div className="md:w-1/2 p-8 flex flex-col justify-center items-center">
             <div className="mb-6">
               <img 
-                src="https://cdnl.iconscout.com/lottie/premium/thumb/user-rating-4537395-3763776.gif" 
+                src="https://cdnl.iconscout.com/lottie/premium/thumb/home-animated-icon-download-in-lottie-json-gif-static-svg-file-formats--house-building-property-estate-circle-glass-morphism-pack-design-development-icons-5804353.gif" 
                 alt="Rating animation" 
                 className="w-32 h-32 object-cover"
               />
