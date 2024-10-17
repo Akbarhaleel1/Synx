@@ -238,7 +238,7 @@ const GetReviews = () => {
               key={index}
               className="flex flex-col lg:flex-row mb-4 space-y-4 lg:space-y-0 lg:space-x-4 items-center"
             >
-              <i className="fas fa-building text-gray-600">dfdfewrewr</i>
+            
               <input
                 type="text"
                 name="name"
@@ -248,17 +248,39 @@ const GetReviews = () => {
                 onChange={(e) => handleInputChange(index, e)}
                 required
               />
-              <i className="fas fa-building text-gray-600">sadferwe4rer</i>
+         <div className="relative w-full lg:w-5/12">
+  <input
+    type="number"
+    name="contact"
+    value={input.contact}
+    placeholder="Contact Number (include country code)"
+    className="bg-gray-800 p-2 pl-10 rounded-lg w-full text-white"
+    onChange={(e) => handleInputChange(index, e)}
+    required
+  />
+  {/* Icon inside the input */}
+  <span
+    className="absolute inset-y-0 left-2 flex items-center cursor-pointer"
+    title="Please enter your phone number including the country code, starting with your country code (e.g., for India, 91), followed by your 10-digit number. Do not include the '+' symbol. Example: 9123XXXXXXXX."
+  >
+    {/* Add an info or phone icon here */}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      className="w-5 h-5 text-white"
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        d="M13.5 12h-9m6.75-6.75L21 12l-9.75 6.75V5.25z"
+      />
+    </svg>
+  </span>
+</div>
 
-              <input
-                type="number"
-                name="contact"
-                value={input.contact}
-                placeholder="Contact Number (include country code)"
-                className="bg-gray-800 p-2 rounded-lg w-full lg:w-5/12 text-white"
-                onChange={(e) => handleInputChange(index, e)}
-                required
-              />
               <button
                 onClick={() => handleDeleteLine(index)}
                 className="p-2 rounded-lg bg-red-500 hover:bg-red-600 transition duration-150 ease-in-out"
