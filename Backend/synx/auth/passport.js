@@ -4,6 +4,7 @@ const dotenv = require('dotenv');
 const User = require('../models/user');
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
+const Subscription = require('../models/subscription');
 const razorpay = new Razorpay({
     key_id: 'rzp_test_6aYUU1Lcsfqbw3',
     key_secret: '0UqZWocm1vbMbUnIMruWmgaQ', 
@@ -67,8 +68,11 @@ const passportConfig = () => {
                         console.log('New user:', newUser);
                         await newUser.save();
                         let userData = await User.findOne({ email: profile._json.email });
+                        const startDate = new Date();
+                        const endDate = new Date();
+                        endDate.setMonth(startDate.getMonth() + 1);
                         const subscriptionData = {
-                            userId: user._id,
+                            userId: userData._id,
                             subscriptionType: "FREE",
                             startDate: startDate,
                             endDate: endDate,
@@ -76,11 +80,11 @@ const passportConfig = () => {
                           };
                   
                           
-                          // Use findOneAndUpdate to either update or create a subscription
+                          
                           const subscription = await Subscription.findOneAndUpdate(
-                            { userId: user._id }, // Match by userId
-                            subscriptionData, // Data to update or create
-                            { new: true, upsert: true } // Options: new returns the updated document; upsert creates if not found
+                            { userId: userData._id }, 
+                            subscriptionData, 
+                            { new: true, upsert: true } 
                           );
 
                         return done(null, newUser);
