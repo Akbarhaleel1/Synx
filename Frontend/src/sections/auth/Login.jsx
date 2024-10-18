@@ -201,6 +201,12 @@ const EnhancedLogin = () => {
             </div>
           </div>
         </div>
+        <div className="mt-8 text-center md:hidden">
+            <p className="text-gray-600">Don't have an account?</p>
+            <a href="/signup" className="mt-2 inline-block px-6 py-3 border border-indigo-600 text-indigo-600 rounded-full hover:bg-indigo-600 hover:text-white transition duration-300">
+              Create Account
+            </a>
+          </div>
       </div>
     </div>
   );
