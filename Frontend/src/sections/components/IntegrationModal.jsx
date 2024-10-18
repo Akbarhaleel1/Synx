@@ -85,7 +85,14 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
           {platform.name === 'google' && (
             <>
               <li>Search for the <strong>Google Place ID Tool</strong> on Google or visit the official tool.</li>
-              <li className='text-blue'><a href="https://developers.google.com/maps/documentation/places/web-service/place-id">Google Place ID Tool</a></li>
+              <li className="mb-2">
+  <a 
+    href="https://developers.google.com/maps/documentation/places/web-service/place-id" 
+    className="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-500 hover:shadow-lg"
+  >
+    Google Place ID Tool
+  </a>
+</li>
               <li>Search for your business, select it, and copy the Place ID.</li>
               <li>Paste the Place ID into the input box below.</li>
               <li>Click the "Integrate" button.</li>
