@@ -113,8 +113,8 @@ const Subscription = require('../models/subscription');
 dotenv.config();
 
 const razorpay = new Razorpay({
-    key_id: process.env.RAZORPAY_KEY_ID,
-    key_secret: process.env.RAZORPAY_KEY_SECRET,
+    key_id: 'rzp_test_6aYUU1Lcsfqbw3',
+    key_secret: '0UqZWocm1vbMbUnIMruWmgaQ',
 });
 
 const generateRandomPassword = (length = 10) => {
