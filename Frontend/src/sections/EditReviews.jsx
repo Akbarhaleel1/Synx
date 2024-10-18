@@ -87,8 +87,11 @@ const EditReviews = () => {
     setShowConfirmModal(false);
   };
 
+  // const handleVisitLink = () => {
+  //   navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}$tab=text`);
+  // };
   const handleVisitLink = () => {
-    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}$tab=text`);
+    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}&tab=text`);
   };
 
   const handleStarClick = (rating) => {
@@ -185,7 +188,7 @@ const EditReviews = () => {
                 </div>
               </div> */}
             </div>
-            <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
+            {/* <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
               <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">Visit the Link</button>
               <button
                 type="submit"
@@ -193,16 +196,24 @@ const EditReviews = () => {
               >
                 Add Changes
               </button>
-            </div>
+            </div> */}
+             <div className="flex flex-col space-y-2 sm:flex-row sm:space-y-0 sm:space-x-4">
+      <button onClick={handleVisitLink} type="button" className="bg-gray-700 px-4 py-2 rounded">
+        Visit the Link
+      </button>
+      <button type="submit" className="bg-gray-700 px-4 py-2 rounded">
+        Add Changes
+      </button>
+    </div>
           </div>
 
           {/* Right Column */}
           <div className="w-full lg:w-1/2 bg-gray-950 rounded-lg p-6">
-            <div className="flex justify-between items-center mb-6">
+            {/* <div className="flex justify-between items-center mb-6">
               <button className="bg-gray-700 px-4 py-2 rounded flex items-center">
                 <i className="fas fa-bars mr-2"></i> Edit
               </button>
-            </div>
+            </div> */}
             <div className="text-center">
               <i className="fas fa-store text-6xl mb-4"></i>
               <h3 className="text-2xl font-bold mb-2">{linkTitle}</h3>
