@@ -56,6 +56,29 @@ const ForgotPasswordOtp = () => {
     }, 2000);
   };
 
+
+  const handleResend = async () => {
+    setIsDisabled(true);
+    setCountdown(30);
+
+    try {
+      await axios.post('https://synxbackend.synxautomate.com/resendOtp', { email });
+      // Start the countdown
+      const timer = setInterval(() => {
+        setCountdown((prevCount) => {
+          if (prevCount <= 1) {
+            clearInterval(timer);
+            setIsDisabled(false);
+            return 0;
+          }
+          return prevCount - 1;
+        });
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to resend OTP:', error);
+      setIsDisabled(false);
+    }
+  };
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
@@ -109,9 +132,9 @@ const ForgotPasswordOtp = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Did not receive the code?{' '}
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+            <button onClick={handleResend} className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
               Resend OTP
-            </a>
+            </button>
           </p>
         </div>
       </div>
