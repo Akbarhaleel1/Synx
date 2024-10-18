@@ -114,7 +114,7 @@ const Reviews = () => {
             rel="noopener noreferrer"
             className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
           >
-            View on Google Maps
+            View And Replay on Google Maps
           </a>
         ) : (
           <a
@@ -123,7 +123,7 @@ const Reviews = () => {
             rel="noopener noreferrer"
             className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
           >
-            View on {review.platform}
+            View And Replay on {review.platform}
           </a>
         )
       )}

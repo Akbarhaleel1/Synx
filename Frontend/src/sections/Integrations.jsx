@@ -239,8 +239,8 @@ const IntegrationCard = ({ platform, onEdit, onIntegrate, integrated }) => {
       <button
         onClick={() => isPlatformIntegrated ? onEdit(platform) : onIntegrate(platform)}
         className={`mt-4 w-full py-2 rounded-lg ${isPlatformIntegrated
-            ? 'bg-black text-white'
-            : 'bg-gray-200 text-gray-600'
+          ? 'bg-black text-white'
+          : 'bg-gray-200 text-gray-600'
           }`}
       >
         {isPlatformIntegrated ? 'Edit' : 'Integrate'}
@@ -285,11 +285,11 @@ const Integrations = () => {
           }
         });
 
-        if(result.data.trailover){
+        if (result.data.trailover) {
           navigate('/PricingTable');
           return
         }
-        console.log('result.data.message',result.data.message)
+        console.log('result.data.message', result.data.message)
 
         setIntegrated(result.data.reviewLink)
         console.log('result', result.data);
@@ -329,11 +329,7 @@ const Integrations = () => {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl font-bold mb-4">Integrations</h1>
           <p className="text-gray-600 mb-6">
-            Integrate the platforms where you receive or want to receive reviews.
-            Connect with Google and Google directly via login, so you can reply to
-            reviews from the Public reviews section. For the other platforms, simply
-            enter your page link to import reviews. We do not import all the reviews
-            but the most recent ones.
+            Connect (integrate) your Google account using your Google Place ID to respond directly to public reviews within the platform. For other review sites, simply enter your page link to import the most recent reviews. Please note, we only import the latest reviews, not all of them.
           </p>
           <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
             <input
