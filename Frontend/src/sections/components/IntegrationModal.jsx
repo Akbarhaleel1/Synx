@@ -129,7 +129,7 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
             </>
           )}
 
-          {platform.name === 'tripAdvisor' && (
+          {platform.name === 'tripadvisor' && (
             <>
               <li>Visit <strong>TripAdvisor.com</strong>: Open TripAdvisor in your browser.</li>
               <li>Search for Your Hotel: Use the search bar to find your hotel by name and go to its listing page.</li>
