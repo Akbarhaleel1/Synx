@@ -19,6 +19,7 @@ Route.post("/signup", authentication.signup);
 Route.post("/login", authentication.login);
 Route.post("/refresh_token", authentication.refreshToken);
 Route.post("/otp", authentication.validateOtp);
+Route.post("/resendOtp",authentication.resendOtp)
 Route.post("/integrations", authMiddleware, scrapper.integrate);
 Route.post("/integratepage", authMiddleware,checkSubscription, scrapper.integratepage);
 Route.post("/deleteLink", authMiddleware, scrapper.deleteLink);

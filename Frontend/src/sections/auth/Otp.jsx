@@ -7,6 +7,9 @@ const OTPVerificationPage = () => {
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isVerified, setIsVerified] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(false);
+  const [countdown, setCountdown] = useState(0);
+
   const inputs = useRef([]);
   const navigate = useNavigate();
 
@@ -22,6 +25,8 @@ const OTPVerificationPage = () => {
       inputs.current[0].focus();
     }
   }, []);
+
+  
 
   const handleChange = (element, index) => {
     if (isNaN(element.value)) return false;
@@ -51,6 +56,30 @@ const OTPVerificationPage = () => {
       setIsSubmitting(false);
       setIsVerified(true);
     }, 2000);
+  };
+
+
+  const handleResend = async () => {
+    setIsDisabled(true);
+    setCountdown(30);
+
+    try {
+      await axios.post('https://synxbackend.synxautomate.com/resendOtp', { email });
+      // Start the countdown
+      const timer = setInterval(() => {
+        setCountdown((prevCount) => {
+          if (prevCount <= 1) {
+            clearInterval(timer);
+            setIsDisabled(false);
+            return 0;
+          }
+          return prevCount - 1;
+        });
+      }, 1000);
+    } catch (error) {
+      console.error('Failed to resend OTP:', error);
+      setIsDisabled(false);
+    }
   };
 
   return (
@@ -106,9 +135,20 @@ const OTPVerificationPage = () => {
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
             Did not receive the code?{' '}
-            <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
+            {/* <button onClick={handleResend} className="font-medium text-indigo-600 hover:text-indigo-500 transition duration-150 ease-in-out">
               Resend OTP
-            </a>
+            </button> */}
+               <button
+      onClick={handleResend}
+      disabled={isDisabled}
+      className={`font-medium transition duration-150 ease-in-out ${
+        isDisabled
+          ? 'text-gray-400 cursor-not-allowed'
+          : 'text-indigo-600 hover:text-indigo-500'
+      }`}
+    >
+      {isDisabled ? `Resend OTP (${countdown}s)` : 'Resend OTP'}
+    </button>
           </p>
         </div>
       </div>
