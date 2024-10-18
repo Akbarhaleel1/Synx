@@ -59,9 +59,9 @@ const passportConfig = () => {
                         const newUser = new User({
                             name: profile._json.given_name || "",
                             email: profile._json.email,
-                            isBlocked: false,
+                            // isBlocked: false,
                             isVerified: true,
-                            profilePic: profile._json.picture || null,
+                            // profilePic: profile._json.picture || null,
                             password: generateRandomPassword(12),
                             customerId:customer.id,
                         });
