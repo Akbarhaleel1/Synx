@@ -88,7 +88,7 @@ const EditReviews = () => {
   };
 
   const handleVisitLink = () => {
-    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}`);
+    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}$tab=text`);
   };
 
   const handleStarClick = (rating) => {
