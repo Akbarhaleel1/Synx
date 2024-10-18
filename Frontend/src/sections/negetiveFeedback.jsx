@@ -344,7 +344,7 @@ const NegativeReview = () => {
               {errors.submit && <p className="text-red-500 text-xs mt-1">{errors.submit}</p>}
               <button
                 type="submit"
-                className="w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300 transition duration-300"
+                className="bg-blue w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300 transition duration-300"
               >
                 Send
               </button>

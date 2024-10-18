@@ -108,7 +108,7 @@ const EditReviews = () => {
       <Nav />
       <main className="flex-1 p-4 lg:p-10 lg:ml-64">
         <h2 className="text-black text-2xl font-bold mb-4">Edit your review link</h2>
-        <p className="text-black mb-8">This is the link your customers will visit to leave you a review. Customize the page by changing requests and the image. If only a review page is present, the user will be redirected directly to the review site without going through the "Positive Experience" page.</p>
+        <p className="text-black mb-8">This is the link your customers will visit to leave you a review. You can customize the review page by changing the requests or prompts that customers see. If only a review page is present, customers will be redirected directly to the review site without going through the 'Positive Experience' page.</p>
 
         <form className="flex flex-col lg:flex-row lg:space-x-6 space-y-6 lg:space-y-0" onSubmit={handleSubmit}>
           {/* Left Column */}
