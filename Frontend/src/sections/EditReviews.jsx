@@ -91,7 +91,8 @@ const EditReviews = () => {
   //   navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}$tab=text`);
   // };
   const handleVisitLink = () => {
-    navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}&tab=text`);
+    window.open(`https:///HotelReview?endpoint=${encodeURIComponent(endpoint)}&tab=text}`, '_blank');
+    // navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}&tab=text`);
   };
 
   const handleStarClick = (rating) => {
