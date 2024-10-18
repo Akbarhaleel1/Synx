@@ -184,7 +184,7 @@ const Reviews = () => {
       </p>
       
       {/* Add a subtle button encouraging engagement */}
-     <a href="https://synx-frontend-hosting-9kae.vercel.app/integrations">
+     <a href="https://synx-review.synxautomate.com/integrations">
       <button
         className="mt-6 px-6 py-2 bg-gradient-to-r from-indigo-500 to-pink-500 text-white text-sm font-medium rounded-full shadow-md hover:shadow-lg transition-transform transform hover:scale-105"
       >
