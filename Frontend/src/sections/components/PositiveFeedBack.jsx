@@ -127,7 +127,7 @@ const PositiveFeedback = () => {
             <button
               key={item._id}
               className="w-full py-4 px-6 bg-white hover:bg-gray-50 text-gray-800 font-semibold rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex flex-col items-center justify-center"
-              onClick={() => window.open(item.platform === 'google' ? `https://www.google.com/maps/search/?api=1&query=Google&query_place_id=${item.link}` : item.link, '_blank')}
+              onClick={() => window.open(item.platform === 'google' ? `https://search.google.com/local/writereview?placeid=${item.link}` : item.link, '_blank')}
             >
               <img 
                 src={platformIcons[item.platform.toLowerCase()] || "/api/placeholder/100/100"} 
