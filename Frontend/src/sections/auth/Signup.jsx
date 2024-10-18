@@ -29,7 +29,6 @@ const EnhancedSignup = () => {
     if (!formData.email.trim()) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Invalid email format";
     // if (!formData.phonenumber.trim()) newErrors.phonenumber = "Phone number is required";
-    else if (!/^\d{10}$/.test(formData.phonenumber)) newErrors.phonenumber = "Invalid phone number";
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 8) newErrors.password = "Password must be at least 8 characters";
 
