@@ -202,7 +202,7 @@ const NegativeReview = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    
+
     // Name validation
     if (!formData.name.trim()) {
       newErrors.name = 'Name is required';
@@ -284,7 +284,7 @@ const NegativeReview = () => {
             bad experience, so we can improve our service. Leave your email to be contacted.
           </p>
 
-          {isFormVisible ? ( 
+          {isFormVisible ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <input
@@ -344,10 +344,11 @@ const NegativeReview = () => {
               {errors.submit && <p className="text-red-500 text-xs mt-1">{errors.submit}</p>}
               <button
                 type="submit"
-                className="bg-blue w-full bg-gray-200 text-gray-800 py-2 rounded hover:bg-gray-300 transition duration-300"
+                className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 shadow-lg hover:shadow-xl focus:outline-none focus:ring-2 focus:ring-blue-300"
               >
                 Send
               </button>
+
             </form>
           ) : (
             <p className="text-center text-lg font-semibold text-gray-800 mt-4">
@@ -360,9 +361,9 @@ const NegativeReview = () => {
         </div>
       </div>
       <div className="md:w-1/2 bg-gray-100 hidden md:block">
-        <img 
-          src="https://wallpaperaccess.com/full/2484157.jpg" 
-          alt="Person working on laptop" 
+        <img
+          src="https://wallpaperaccess.com/full/2484157.jpg"
+          alt="Person working on laptop"
           className="w-full h-full object-cover"
         />
       </div>
