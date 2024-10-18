@@ -6,6 +6,7 @@ const passportConfig = require('../synx/auth/passport')
 const Route = require("./routes/router");
 const session = require('express-session');
 const app = express();
+passportConfig();
 
 app.use(session({
     secret: '89093789021', 
@@ -14,7 +15,7 @@ app.use(session({
     cookie: { secure: false } 
   }));
 
-passportConfig();
+
 app.use(passport.initialize());
 app.use(passport.session());
 

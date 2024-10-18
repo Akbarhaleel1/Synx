@@ -1,24 +1,24 @@
-const passport = require('passport');
-const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
-const dotenv = require('dotenv');
-const User = require('../models/user');
-const crypto = require('crypto');
-const Razorpay = require('razorpay');
-const Subscription = require('../models/subscription');
-const razorpay = new Razorpay({
-    key_id: 'rzp_test_6aYUU1Lcsfqbw3',
-    key_secret: '0UqZWocm1vbMbUnIMruWmgaQ', 
-  });
+// const passport = require('passport');
+// const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
+// const dotenv = require('dotenv');
+// const User = require('../models/user');
+// const crypto = require('crypto');
+// const Razorpay = require('razorpay');
+// const Subscription = require('../models/subscription');
+// const razorpay = new Razorpay({
+//     key_id: 'rzp_test_6aYUU1Lcsfqbw3',
+//     key_secret: '0UqZWocm1vbMbUnIMruWmgaQ', 
+//   });
   
 
-dotenv.config();
+// dotenv.config();
 
 
-const generateRandomPassword = (length = 10) => {
-    return crypto.randomBytes(Math.ceil(length / 2))
-        .toString('hex')
-        .slice(0, length); 
-};
+// const generateRandomPassword = (length = 10) => {
+//     return crypto.randomBytes(Math.ceil(length / 2))
+//         .toString('hex')
+//         .slice(0, length); 
+// };
 
 
 // const passportConfig = () => {
@@ -100,6 +100,29 @@ const generateRandomPassword = (length = 10) => {
 // module.exports = passportConfig;
 
 
+
+// synx/auth/passport.js
+const passport = require('passport');
+const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
+const dotenv = require('dotenv');
+const User = require('../models/user'); // Adjust according to your project structure
+const crypto = require('crypto');
+const Razorpay = require('razorpay');
+const Subscription = require('../models/subscription');
+
+dotenv.config();
+
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
+
+const generateRandomPassword = (length = 10) => {
+    return crypto.randomBytes(Math.ceil(length / 2))
+        .toString('hex')
+        .slice(0, length);
+};
+
 const passportConfig = () => {
     passport.serializeUser((user, done) => {
         done(null, user._id);
@@ -107,11 +130,9 @@ const passportConfig = () => {
 
     passport.deserializeUser(async (id, done) => {
         try {
-            console.log('deserializeUser')
             const user = await User.findById(id);
             done(null, user);
         } catch (error) {
-            console.error('Error during deserialization:', error);
             done(error);
         }
     });
@@ -127,7 +148,6 @@ const passportConfig = () => {
                 try {
                     console.log('Passport configuration is working');
                     let user = await User.findOne({ email: profile._json.email });
-                    
                     if (user) {
                         console.log('User already exists!');
                         return done(null, user);
@@ -143,16 +163,14 @@ const passportConfig = () => {
                             isBlocked: false,
                             isVerified: true,
                             profilePic: profile._json.picture || null,
-                            password: generateRandomPassword(12), // For local account creation
+                            password: generateRandomPassword(12),
                             customerId: customer.id,
                         });
-
                         console.log('New user:', newUser);
                         await newUser.save();
 
-                        // Create or update subscription
                         const startDate = new Date();
-                        const endDate = new Date(startDate);
+                        const endDate = new Date();
                         endDate.setMonth(startDate.getMonth() + 1);
 
                         const subscriptionData = {
@@ -179,6 +197,5 @@ const passportConfig = () => {
         )
     );
 };
-
 
 module.exports = passportConfig;

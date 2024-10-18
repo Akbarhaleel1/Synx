@@ -35,12 +35,23 @@ Route.get("/auth/google", (req, res, next) => {
   );
 });
 
+// Route.get(
+//     "/auth/google/callback",
+//     passport.authenticate("google", {
+//         failureRedirect: "https://synx-review.synxautomate.com/login",
+//     }),
+//     authentication.googleCallback
+// );
 Route.get(
-    "/auth/google/callback",
-    passport.authenticate("google", {
-        failureRedirect: "https://synx-review.synxautomate.com/login",
-    }),
-    authentication.googleCallback
+  "/auth/google/callback",
+  passport.authenticate("google", {
+      failureRedirect: "https://synx-review.synxautomate.com/login",
+  }),
+  (req, res) => {
+      // Successful authentication
+      console.log('User authenticated successfully:', req.user);
+      res.redirect("/"); // Redirect to your desired route
+  }
 );
 
 
