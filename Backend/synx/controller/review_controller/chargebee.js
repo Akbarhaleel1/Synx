@@ -207,7 +207,7 @@ const handlePaymentSuccess = async (req, res) => {
         status: 'active',
         msgLimit:msgLimit,
         whatsappLimit:whatsappLimit,
-        integrationLimit:integrationLimit;
+        integrationLimit:integrationLimit
       };
       
       // Use findOneAndUpdate to either update or create a subscription
