@@ -36,16 +36,33 @@ Route.get("/auth/google", (req, res, next) => {
   );
 });
 
+// Route.get(
+//   "/auth/google/callback",
+//   passport.authenticate("google", {
+//       failureRedirect: "https://synx-review.synxautomate.com/login",
+//   }),
+//   (req, res) => {
+//       console.log('User authenticated successfully:', req.user);
+//       authentication.googleCallback
+//   }
+// );
+
 Route.get(
   "/auth/google/callback",
   passport.authenticate("google", {
       failureRedirect: "https://synx-review.synxautomate.com/login",
   }),
-  (req, res) => {
-      console.log('User authenticated successfully:', req.user);
-      authentication.googleCallback
+  (err, req, res, next) => {
+      if (err) {
+          console.error("Error in authentication:", err);
+          res.redirect("https://synx-review.synxautomate.com/error");
+      } else {
+          console.log('User authenticated successfully:', req.user);
+          authentication.googleCallback(req, res);
+      }
   }
 );
+
 
 
 Route.post("/generateqr", authMiddleware,checkSubscription, getReview.generateqr);
