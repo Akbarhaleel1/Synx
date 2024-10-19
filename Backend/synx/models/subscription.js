@@ -79,7 +79,7 @@ const subscriptionSchema = new mongoose.Schema({
     required: true,
     default: function () {
       switch (this.subscriptionType) {
-        case 'free':
+        case 'FREE':
           return 5;
         case 'SILVER':
           return 5;

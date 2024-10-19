@@ -13,7 +13,7 @@ import {
 } from 'recharts';
 
 const data = [
-  { name: 'One Start', reviews:3 },
+  { name: 'One Star', reviews:3 },
   { name: 'Two Star', reviews: 2 },
   { name: 'Three Start', reviews: 2 },
   { name: 'Four Start', reviews: 3 },

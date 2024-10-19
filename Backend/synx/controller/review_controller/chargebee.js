@@ -172,7 +172,22 @@ const handlePaymentSuccess = async (req, res) => {
 
     console.log("details",req.body)
 
-    
+    let msgLimit;
+    let whatsappLimit;
+    let integrationLimit;
+    if(title=="SILVER"){
+      msgLimit=100;
+      whatsappLimit=100;
+      integrationLimit=5
+    }else if(title=="GOLD"){
+      msgLimit=250;
+      whatsappLimit=250;
+      integrationLimit=10
+    }else if(title=="DIAMOND"||title=="FREE"){
+      msgLimit=500;
+      whatsappLimit=500;
+      integrationLimit=20
+    }
     
       const startDate = new Date();
 
@@ -190,6 +205,9 @@ const handlePaymentSuccess = async (req, res) => {
         razorpaySubscriptionId: paymentData.razorpay_subscription_id,
         signature: paymentData.razorpay_signature,
         status: 'active',
+        msgLimit:msgLimit,
+        whatsappLimit:whatsappLimit,
+        integrationLimit:integrationLimit;
       };
       
       // Use findOneAndUpdate to either update or create a subscription

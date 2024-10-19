@@ -43,14 +43,13 @@ Route.get("/auth/google", (req, res, next) => {
 //     authentication.googleCallback
 // );
 Route.get(
-  "/auth/google/callback",
+  "/synx-review.synxautomate.com/auth/google/callback",
   passport.authenticate("google", {
       failureRedirect: "https://synx-review.synxautomate.com/login",
   }),
   (req, res) => {
-      // Successful authentication
       console.log('User authenticated successfully:', req.user);
-      res.redirect("/"); // Redirect to your desired route
+      authentication.googleCallback
   }
 );
 
