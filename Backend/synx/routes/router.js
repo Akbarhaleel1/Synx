@@ -26,6 +26,7 @@ Route.post("/deleteLink", authMiddleware, scrapper.deleteLink);
 // Route.post("/subscribe", authMiddleware, subscription.subscribe);
 Route.post("/editReview", authMiddleware, reviewLink.createOrUpdateReviewLink);
 
+
 Route.get("/auth/google", (req, res, next) => {
   console.log("Google OAuth initiated");
   passport.authenticate("google", { scope: ["profile", "email"] })(

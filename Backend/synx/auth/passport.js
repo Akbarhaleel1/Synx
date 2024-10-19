@@ -105,7 +105,7 @@
 const passport = require('passport');
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
 const dotenv = require('dotenv');
-const User = require('../models/user'); // Adjust according to your project structure
+const User = require('../models/user'); 
 const crypto = require('crypto');
 const Razorpay = require('razorpay');
 const Subscription = require('../models/subscription');
@@ -120,7 +120,7 @@ const razorpay = new Razorpay({
 const generateRandomPassword = (length = 10) => {
     return crypto.randomBytes(Math.ceil(length / 2))
         .toString('hex')
-        .slice(0, length);
+        .slice(0, length)
 };
 
 const passportConfig = () => {
@@ -143,7 +143,7 @@ const passportConfig = () => {
     passport.use(
         new GoogleStrategy(
             {
-                callbackURL: 'https://synx-review.synxautomate.com/auth/google/callback',
+                callbackURL: '/auth/google/callback',
                 clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
             },
