@@ -35,15 +35,8 @@ Route.get("/auth/google", (req, res, next) => {
   );
 });
 
-// Route.get(
-//     "/auth/google/callback",
-//     passport.authenticate("google", {
-//         failureRedirect: "https://synx-review.synxautomate.com/login",
-//     }),
-//     authentication.googleCallback
-// );
 Route.get(
-  "/synx-review.synxautomate.com/auth/google/callback",
+  "/auth/google/callback",
   passport.authenticate("google", {
       failureRedirect: "https://synx-review.synxautomate.com/login",
   }),

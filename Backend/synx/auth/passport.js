@@ -125,12 +125,15 @@ const generateRandomPassword = (length = 10) => {
 
 const passportConfig = () => {
     passport.serializeUser((user, done) => {
+        console.log('userid is', user)
         done(null, user._id);
     });
 
     passport.deserializeUser(async (id, done) => {
         try {
             const user = await User.findById(id);
+            console.log('deserializeUser is', user)
+
             done(null, user);
         } catch (error) {
             done(error);
