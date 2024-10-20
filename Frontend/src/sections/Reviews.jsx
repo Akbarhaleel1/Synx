@@ -12,7 +12,7 @@ const Reviews = () => {
   const [searchQuery, setSearchQuery] = useState(""); 
   const [selectedFilter, setSelectedFilter] = useState("Types");
   const navigate = useNavigate()
-  useAuth();
+  // useAuth();
 
   
   const handleClick = (index) => {
