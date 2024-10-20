@@ -18,6 +18,7 @@ const checkSubscription = require("../utils/checksubscription");
 Route.post("/signup", authentication.signup);
 Route.post("/login", authentication.login);
 Route.post("/refresh_token", authentication.refreshToken);
+Route.post("/companyName",authentication.updateCompanyName)
 Route.post("/otp", authentication.validateOtp);
 Route.post("/resendOtp",authentication.resendOtp)
 Route.post("/integrations", authMiddleware, scrapper.integrate);

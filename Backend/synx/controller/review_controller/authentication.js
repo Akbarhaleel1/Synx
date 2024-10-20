@@ -610,12 +610,13 @@ const resetPassword = async (req, res) => {
 };
 const updateCompanyName= async (req,res)=>{
   try {
-    const {user,companyname}=req.body;
-    await User.findOneAndUpdate(
-      {id:user._id},
-      {
-    companyname}
+    const {userdata,companyName}=req.body;
+    let user = await User.findOneAndUpdate(
+      {id:userdata._id},
+      {$set:{companyname:companyName}},
+      { upsert: true } 
     )
+    res.status(200).json({meaasge:"company name updated successfully",user})
   } catch (error) {
     
   }
@@ -659,5 +660,6 @@ module.exports = {
   forgotPassword,
   resetPassword,
   googleCallback, 
-  validateOtpforgotten 
+  validateOtpforgotten,
+  updateCompanyName
 };
