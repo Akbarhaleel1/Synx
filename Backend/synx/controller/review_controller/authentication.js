@@ -610,11 +610,11 @@ const resetPassword = async (req, res) => {
 };
 const updateCompanyName= async (req,res)=>{
   console.log('updatecomapny name is owkring')
-  console.log("useeeeeeeerdata ",req,body)
+  console.log("useeeeeeeerdata ",req.body)
 
   try {
     const {userdata,companyName}=req.body;
-    console.log("useeeeeeeerdata ",req,body)
+    console.log("useeeeeeeerdata ",req.body)
     let user = await User.findOneAndUpdate(
       {_id:userdata._id},
       {$set:{companyname:companyName}},
