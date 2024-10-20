@@ -10,13 +10,12 @@ const Nav = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     const getUser = localStorage.getItem('user');
-    const user = JSON.parse(getUser);
-
-    console.log('user is', user.companyname);
     
-    setCompanyName('user.companyname');
+    const user = JSON.parse(getUser);
+    console.log('user is', user);
+    
+    setCompanyName(user.companyname);
   }, []);
 
   const toggleMenu = () => {
