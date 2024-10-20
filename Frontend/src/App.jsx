@@ -40,7 +40,7 @@ const App = () => {
     <main className="relative">
       <Router>
         <Routes>
-          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/reviews" element={<Reviews/>} />
           <Route path="/GetReviews" element={<GetReviews />} />
           <Route path="/GetReviews/email" element={<GetReviewsEmail />} />
           <Route

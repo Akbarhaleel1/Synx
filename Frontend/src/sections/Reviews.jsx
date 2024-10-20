@@ -12,7 +12,7 @@ const Reviews = () => {
   const [searchQuery, setSearchQuery] = useState(""); 
   const [selectedFilter, setSelectedFilter] = useState("Types");
   const navigate = useNavigate()
-  // useAuth();
+  useAuth();
 
   
   const handleClick = (index) => {
@@ -25,15 +25,6 @@ const Reviews = () => {
 
   useEffect(() => {
     const fetchReviews = async () => {
-      
-    const params = new URLSearchParams(window.location.search);
-    const userData = params.get('userData');
-    const tokens = params.get('token');
-    const refreshToken = params.get('refreshToken');
-
-    console.log('User Data:', userData);
-    console.log('Token:', decodeURIComponent(tokens));
-    console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
       const user = localStorage.getItem("user");
       const getToken = localStorage.getItem('token');

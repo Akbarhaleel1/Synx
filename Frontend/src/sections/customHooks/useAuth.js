@@ -4,7 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const useAuth = () => {
     const navigate = useNavigate();
+    const params = new URLSearchParams(window.location.search);
+    const userData = params.get('userData');
+    const tokens = params.get('token');
+    const refreshToken = params.get('refreshToken');
 
+    console.log('User Data:', userData);
+    console.log('Token:', decodeURIComponent(tokens));
+    console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
     useEffect(() => {
         const manageTokens = async () => {
