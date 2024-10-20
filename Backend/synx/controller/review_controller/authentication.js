@@ -620,7 +620,7 @@ const updateCompanyName= async (req,res)=>{
     //   {$set:{companyname:companyName}},
     //   { upsert: true } 
     // )
-    const  user = await User.findOne({_id: userdata._id});
+    let user = await User.findOne({_id: userdata._id});
 user.companyname = companyName;
    console.log('this gonna be saved', savedData)
     await user.save()
