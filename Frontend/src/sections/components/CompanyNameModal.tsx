@@ -7,22 +7,22 @@ const CloseIcon = () => (
   </svg>
 );
 
-const CompanyNameModal = ({ onClose }) => {
+const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
   const [companyName, setCompanyName] = useState('');
-  const [errorMessage, setErrorMessage] = useState(''); // To display validation messages
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    // Disable scrolling on the body when the modal is open
-    document.body.style.overflow = 'hidden';
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    }
     return () => {
       document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [isOpen]);
 
-  const handleSubmit = async(e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation logic
     if (!companyName.trim()) {
       setErrorMessage('Company name is required.');
       return;
@@ -32,19 +32,34 @@ const CompanyNameModal = ({ onClose }) => {
       setErrorMessage('Company name must be at least 3 characters.');
       return;
     }
-    const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ companyName }),
-    });
-    // If valid, proceed to submit
-    console.log('Company name submitted:', response);
-    setCompanyName('');
-    setErrorMessage(''); // Clear error message on successful submit
-    onClose();
+
+    try {
+      const getUser = localStorage.getItem('user');
+      const user = JSON.parse(getUser)
+      const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ companyName,user }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit company name');
+      }
+
+      console.log('Company name submitted successfully');
+      setCompanyName('');
+      setErrorMessage('');
+      onSubmit(companyName);
+      onClose();
+    } catch (error) {
+      console.error('Error submitting company name:', error);
+      setErrorMessage('Failed to submit company name. Please try again.');
+    }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
@@ -71,7 +86,7 @@ const CompanyNameModal = ({ onClose }) => {
               placeholder="Enter company name"
             />
             {errorMessage && (
-              <p className="text-red-500 text-sm mt-2">{errorMessage}</p> // Error message display
+              <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
             )}
           </div>
           <div className="flex justify-end">

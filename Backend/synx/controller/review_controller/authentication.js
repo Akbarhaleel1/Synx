@@ -608,7 +608,18 @@ const resetPassword = async (req, res) => {
 
   
 };
-
+const updateCompanyName= async (req,res)=>{
+  try {
+    const {user,companyname}=req.body;
+    await User.findOneAndUpdate(
+      {id:user._id},
+      {
+    companyname}
+    )
+  } catch (error) {
+    
+  }
+}
 // cronjob.......................
 
 cron.schedule('0 0 * * *', async () => {
