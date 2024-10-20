@@ -14,7 +14,7 @@ const Nav = () => {
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    console.log('user is', user.companyname);
+    console.log('user is', user);
     let cName = user.companyname
     if(!cName || cName.trim() === ""){
       setCompanyModal(true); 
