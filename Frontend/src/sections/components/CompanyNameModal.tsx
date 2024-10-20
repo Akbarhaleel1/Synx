@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const CloseIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -7,20 +7,27 @@ const CloseIcon = () => (
   </svg>
 );
 
-const CompanyNameModal = ({ isOpen, onClose }) => {
+const CompanyNameModal = ({ onClose }) => {
   const [companyName, setCompanyName] = useState('');
-  console.log('teh modal is workign')
 
-  if (!isOpen) return null;
+  useEffect(() => {
+    // Disable scrolling on the body when the modal is open
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Here you can handle the submission of the company name
+    console.log('Company name submitted:', companyName);
     setCompanyName('');
     onClose();
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-md">
         <div className="flex justify-between items-center p-6 border-b">
           <h2 className="text-xl font-semibold text-gray-900">Add Company Name</h2>
@@ -45,17 +52,10 @@ const CompanyNameModal = ({ isOpen, onClose }) => {
           </div>
           <div className="flex justify-end">
             <button
-              type="button"
-              onClick={onClose}
-              className="mr-3 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="px-4 py-2 text-sm font-medium text-white bg-blue-600 border border-transparent rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
             >
-              Add Company
+              Okay
             </button>
           </div>
         </form>
