@@ -616,7 +616,7 @@ const updateCompanyName= async (req,res)=>{
     const {userdata,companyName}=req.body;
     console.log("useeeeeeeerdata ",req,body)
     let user = await User.findOneAndUpdate(
-      {id:userdata._id},
+      {_id:userdata._id},
       {$set:{companyname:companyName}},
       { upsert: true } 
     )
