@@ -82,15 +82,14 @@ const EnhancedLogin = () => {
   }, []);
   
 
-  // const handleGoogleLogin = () => {
-  //   window.location.href = "https://synxbackend.synxautomate.com/auth/google";
-  // };
   const handleGoogleLogin = () => {
-
-      const result = axios.get('https://synxbackend.synxautomate.com/auth/google');
-      alert('reslut is', result)
-
+    window.location.href = "https://synxbackend.synxautomate.com/auth/google";
   };
+  // const handleGoogleLogin = () => {
+  //     const result = axios.get('https://synxbackend.synxautomate.com/auth/google');
+  //     console.log('result',result)
+  //     alert(`result is ${result}`)
+  // };
 
   
 
