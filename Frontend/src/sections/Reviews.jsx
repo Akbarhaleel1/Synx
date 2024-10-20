@@ -35,7 +35,8 @@ const Reviews = () => {
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
-      console.log('result.message',result.data.message)
+
+      console.log('result.message',result.data)
       if(result.data.trailover){
         navigate('/PricingTable');
         return

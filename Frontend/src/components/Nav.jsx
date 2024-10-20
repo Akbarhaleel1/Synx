@@ -13,6 +13,9 @@ const Nav = () => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
     console.log('user is', user);
+    if(!user){
+      setCompanyName('logham');
+    }
     setCompanyName(user.companyname);
   }, []);
 
