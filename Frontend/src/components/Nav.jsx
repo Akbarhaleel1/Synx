@@ -3,10 +3,12 @@ import { useEffect, useState } from 'react';
 import logo from '../assets/images/logo.png';
 import menuBar from '../assets/images/menuBar.png';
 import { useNavigate } from 'react-router-dom';
+import CompanyNameModal from '../sections/components/CompanyNameModal';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
+  const [isModalOpen, setCompanyModal] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,7 +16,8 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user);
     if(!user){
-      setCompanyName('logham');
+      setCompanyModal(true)
+      onSubmit('data is')
     }
     setCompanyName(user.companyname);
   }, []);
@@ -42,6 +45,10 @@ const Nav = () => {
     localStorage.removeItem('token');
     navigate('/login');
   };
+
+  const handleCloseModal = ()=>{
+    console.log('handleCloseModal')
+  }
 
   const NavItem = ({ item }) => (
     <div
@@ -132,6 +139,11 @@ const Nav = () => {
           </nav>
         )}
       </div>
+      <CompanyNameModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={handleSubmit}
+      />
     </header>
   );
 };
