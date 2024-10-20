@@ -12,7 +12,7 @@ const Nav = () => {
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-
+    console.log('user data is',typeof(user))
     if (typeof user === 'string') {
       try {
           decodedUserData = JSON.parse(userData);
