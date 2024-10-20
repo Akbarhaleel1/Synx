@@ -13,12 +13,10 @@ const useAuth = () => {
     console.log('Token111111111111111:', decodeURIComponent(tokens));
     console.log('Refresh Token:111111', decodeURIComponent(refreshToken));
 
-    let accessToken = tokens;
-
     useEffect(() => {
         const manageTokens = async () => {
             accessToken = JSON.parse(localStorage.getItem('token'));
-
+            console.log('accessToken',accessToken)
             if (isTokenExpired(accessToken)) {
                 try {
                     await refreshAccessToken(); 
