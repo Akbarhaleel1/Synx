@@ -608,28 +608,34 @@ const resetPassword = async (req, res) => {
 
   
 };
-const updateCompanyName= async (req,res)=>{
-  console.log('updatecomapny name is owkring')
-  console.log("useeeeeeeerdata ",req.body)
+const updateCompanyName = async (req, res) => {
+  console.log('updateCompanyName function is working');
+  console.log("Received data: ", req.body);
 
   try {
-    const {userdata,companyName}=req.body;
-    console.log("useeeeeeeerdata ",req.body)
-    // let user = await User.findOneAndUpdate(
-    //   {_id:userdata._id},
-    //   {$set:{companyname:companyName}},
-    //   { upsert: true } 
-    // )
-    let user = await User.findOne({_id: userdata._id});
-user.companyname = companyName;
-   console.log('this gonna be saved', savedData)
-    await user.save()
-    console.log("the after update", user)
-    res.status(200).json({meaasge:"company name updated successfully",user})
+    const { userdata, companyName } = req.body;
+
+    // Find the user by their ID
+    let user = await User.findOne({ _id: userdata._id });
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Update the company name
+    user.companyname = companyName;
+
+    // Save the updated user
+    await user.save();
+
+    console.log("Updated user:", user);
+    res.status(200).json({ message: "Company name updated successfully", user });
+
   } catch (error) {
-    res.status(500).json({meaasge:"error"})
+    console.error("Error updating company name:", error);
+    res.status(500).json({ message: "Error updating company name" });
   }
-}
+};
 // cronjob.......................
 
 cron.schedule('0 0 * * *', async () => {
