@@ -19,7 +19,7 @@ const Nav = () => {
       setCompanyModal(true); 
       // alert('company name is not found')
       }
-    setCompanyName('user.companyname');
+    setCompanyName(user.companyname);
   }, []);
 
   const toggleMenu = () => {
