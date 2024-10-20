@@ -10,35 +10,34 @@ const useAuth = () => {
     const token = params.get('token');
     const refreshToken = params.get('refreshToken');
 
-
     console.log('User Data:', userData);
     console.log('Token:', decodeURIComponent(token));
     console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
-    useEffect(() => {
-        const manageTokens = async () => {
-            let accessToken = JSON.parse(localStorage.getItem('token'));
+    // useEffect(() => {
+    //     const manageTokens = async () => {
+    //         let accessToken = JSON.parse(localStorage.getItem('token'));
 
-            if (isTokenExpired(accessToken)) {
-                try {
-                    await refreshAccessToken(); 
-                    accessToken = JSON.parse(localStorage.getItem('token'));
-                } catch (error) {
-                    console.error("Failed to refresh token:", error);
-                    navigate('/login');
-                }
-            }
-        };
+    //         if (isTokenExpired(accessToken)) {
+    //             try {
+    //                 await refreshAccessToken(); 
+    //                 accessToken = JSON.parse(localStorage.getItem('token'));
+    //             } catch (error) {
+    //                 console.error("Failed to refresh token:", error);
+    //                 navigate('/login');
+    //             }
+    //         }
+    //     };
 
-        manageTokens();
-    }, [navigate]);
+    //     manageTokens();
+    // }, [navigate]);
 
-    const isTokenExpired = (token) => {
-        if (!token) return true; // Token not available
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        const expirationTime = payload.exp * 1000;
-        return Date.now() > expirationTime;
-    };
+    // const isTokenExpired = (token) => {
+    //     if (!token) return true; // Token not available
+    //     const payload = JSON.parse(atob(token.split('.')[1]));
+    //     const expirationTime = payload.exp * 1000;
+    //     return Date.now() > expirationTime;
+    // };
 };
 
 export default useAuth;
