@@ -17,8 +17,8 @@ const Nav = () => {
     console.log('user is', user.companyname);
     if(!user.companyname){
       setCompanyModal(true); 
-      // alert('company name is not found')
-      }
+    return
+    }
     setCompanyName(user.companyname);
   }, []);
 
