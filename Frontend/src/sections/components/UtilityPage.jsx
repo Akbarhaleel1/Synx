@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Lock, Unlock } from 'lucide-react';
+import { Lock, Unlock, Settings, Info } from 'lucide-react';
 import Nav from '../../components/Nav';
 
 const UtilityPage = () => {
@@ -10,46 +10,58 @@ const UtilityPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Add your NavComponent at the top */}
+    <div className="min-h-screen flex flex-col bg-white">
       <Nav />
-
-      <div className="flex-1 bg-gradient-to-br from-blue-100 to-indigo-200 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-          <h1 className="text-3xl font-bold text-center mb-6 text-indigo-600">Utility Dashboard</h1>
+      <div className="flex-1 flex items-center justify-center p-8">
+        <div className="w-full max-w-4xl">
+          <h1 className="text-4xl font-bold text-center mb-12 text-gray-800">Utility Dashboard</h1>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-between bg-gray-100 p-4 rounded-lg">
-              <span className="font-medium">Feature 1</span>
-              <button 
-                className={`px-4 py-2 rounded-full transition-colors ${
-                  isLocked ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-semibold text-gray-700 flex items-center">
+                  <Settings className="mr-2" size={24} /> Feature Control
+                </h2>
+                <button
+                  className={`p-2 rounded-full transition-all ${
+                    isLocked ? 'bg-red-100 text-red-600' : 'bg-green-100 text-green-600'
+                  }`}
+                  onClick={toggleLock}
+                >
+                  {isLocked ? <Lock size={24} /> : <Unlock size={24} />}
+                </button>
+              </div>
+              <p className="text-gray-600 mb-6">
+                {isLocked
+                  ? "This feature is currently locked. Unlock to access advanced settings and controls."
+                  : "Feature unlocked. You now have full access to all controls and settings."}
+              </p>
+              <button
+                className={`w-full py-3 rounded-lg transition-colors text-lg font-medium ${
+                  isLocked
+                    ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
                 }`}
-                onClick={toggleLock}
+                disabled={isLocked}
               >
-                {isLocked ? <Lock size={20} /> : <Unlock size={20} />}
+                Access Feature
               </button>
             </div>
-            
-            <div className="bg-gray-100 p-4 rounded-lg">
-              <h2 className="font-semibold mb-2">Utility Information</h2>
-              <p className="text-sm text-gray-600">
-                {isLocked 
-                  ? "This feature is currently locked. Unlock to view more information."
-                  : "Welcome to the utility page. Here you can manage various features and settings."}
+
+            <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200">
+              <h2 className="text-xl font-semibold text-gray-700 mb-6 flex items-center">
+                <Info className="mr-2" size={24} /> Utility Information
+              </h2>
+              <p className="text-gray-600 mb-4">
+                Welcome to the utility dashboard. Here you can manage various features and settings for your system.
               </p>
+              <ul className="list-disc list-inside text-gray-600 space-y-2">
+                <li>Monitor system performance</li>
+                <li>Adjust security settings</li>
+                <li>View usage statistics</li>
+                <li>Manage user permissions</li>
+              </ul>
             </div>
-            
-            <button 
-              className={`w-full py-2 rounded-lg transition-colors ${
-                isLocked 
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
-                  : 'bg-indigo-600 text-white hover:bg-indigo-700'
-              }`}
-              disabled={isLocked}
-            >
-              Access Feature
-            </button>
           </div>
         </div>
       </div>
