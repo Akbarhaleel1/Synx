@@ -16,8 +16,8 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user);
     if(!user){
-      // setCompanyModal(true); 
-      alert('company name is not found')
+      setCompanyModal(true); 
+      // alert('company name is not found')
       }
     setCompanyName('user.companyname');
   }, []);
