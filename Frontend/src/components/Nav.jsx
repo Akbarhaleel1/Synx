@@ -16,10 +16,10 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user.companyname);
     let cName = user.companyname
-    if(cName==null){
-      setCompanyModal(true); 
-    return
-    }
+    // if(cName==null){
+    //   setCompanyModal(true); 
+    // return
+    // }
     setCompanyName(user.companyname);
   }, []);
 
