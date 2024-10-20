@@ -142,7 +142,7 @@ const Nav = () => {
       <CompanyNameModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
       />
     </header>
   );

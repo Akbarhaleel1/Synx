@@ -7,14 +7,14 @@ const CloseIcon = () => (
   </svg>
 );
 
-const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
+const CompanyNameModal = ({ isOpen, onClose }) => {
   const [companyName, setCompanyName] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(companyName);
+    // onSubmit(companyName);
     setCompanyName('');
     onClose();
   };
