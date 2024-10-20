@@ -9,6 +9,7 @@ const CloseIcon = () => (
 
 const CompanyNameModal = ({ onClose }) => {
   const [companyName, setCompanyName] = useState('');
+  const [errorMessage, setErrorMessage] = useState(''); // To display validation messages
 
   useEffect(() => {
     // Disable scrolling on the body when the modal is open
@@ -20,9 +21,22 @@ const CompanyNameModal = ({ onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you can handle the submission of the company name
+
+    // Basic validation logic
+    if (!companyName.trim()) {
+      setErrorMessage('Company name is required.');
+      return;
+    }
+
+    if (companyName.length < 3) {
+      setErrorMessage('Company name must be at least 3 characters.');
+      return;
+    }
+
+    // If valid, proceed to submit
     console.log('Company name submitted:', companyName);
     setCompanyName('');
+    setErrorMessage(''); // Clear error message on successful submit
     onClose();
   };
 
@@ -45,10 +59,15 @@ const CompanyNameModal = ({ onClose }) => {
               id="companyName"
               value={companyName}
               onChange={(e) => setCompanyName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+              className={`w-full px-3 py-2 border ${
+                errorMessage ? 'border-red-500' : 'border-gray-300'
+              } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
               placeholder="Enter company name"
               required
             />
+            {errorMessage && (
+              <p className="text-red-500 text-sm mt-2">{errorMessage}</p> // Error message display
+            )}
           </div>
           <div className="flex justify-end">
             <button
