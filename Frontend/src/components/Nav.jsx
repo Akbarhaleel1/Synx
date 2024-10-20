@@ -16,7 +16,7 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user.companyname);
     let cName = user.companyname
-    if(!cName){
+    if(cName==null){
       setCompanyModal(true); 
     return
     }
