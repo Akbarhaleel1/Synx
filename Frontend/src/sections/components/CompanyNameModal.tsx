@@ -19,7 +19,7 @@ const CompanyNameModal = ({ onClose }) => {
     };
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
 
     // Basic validation logic
@@ -32,9 +32,15 @@ const CompanyNameModal = ({ onClose }) => {
       setErrorMessage('Company name must be at least 3 characters.');
       return;
     }
-
+    const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ companyName }),
+    });
     // If valid, proceed to submit
-    console.log('Company name submitted:', companyName);
+    console.log('Company name submitted:', response);
     setCompanyName('');
     setErrorMessage(''); // Clear error message on successful submit
     onClose();
@@ -63,7 +69,6 @@ const CompanyNameModal = ({ onClose }) => {
                 errorMessage ? 'border-red-500' : 'border-gray-300'
               } rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500`}
               placeholder="Enter company name"
-              required
             />
             {errorMessage && (
               <p className="text-red-500 text-sm mt-2">{errorMessage}</p> // Error message display
