@@ -9,6 +9,7 @@ const CloseIcon = () => (
 
 const CompanyNameModal = ({ isOpen, onClose }) => {
   const [companyName, setCompanyName] = useState('');
+  console.log('teh modal is workign')
 
   if (!isOpen) return null;
 
