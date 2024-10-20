@@ -611,14 +611,16 @@ const resetPassword = async (req, res) => {
 const updateCompanyName= async (req,res)=>{
   try {
     const {userdata,companyName}=req.body;
+    console.log("useeeeeeeerdata ",req,body)
     let user = await User.findOneAndUpdate(
       {id:userdata._id},
       {$set:{companyname:companyName}},
       { upsert: true } 
     )
+    console.log("the after update", user)
     res.status(200).json({meaasge:"company name updated successfully",user})
   } catch (error) {
-    
+    res.status(500).json({meaasge:"error"})
   }
 }
 // cronjob.......................

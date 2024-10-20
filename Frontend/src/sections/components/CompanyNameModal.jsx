@@ -44,7 +44,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ companyName,userdata }),
+        body: JSON.stringify({ companyName, userdata }),
       });
       
       let userDatas = response.data.user

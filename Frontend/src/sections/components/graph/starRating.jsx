@@ -15,8 +15,8 @@ import {
 const data = [
   { name: 'One Star', reviews:3 },
   { name: 'Two Star', reviews: 2 },
-  { name: 'Three Start', reviews: 2 },
-  { name: 'Four Start', reviews: 3 },
+  { name: 'Three Star', reviews: 2 },
+  { name: 'Four Star', reviews: 3 },
 ];
 
 const CustomTooltip = ({ active, payload, label }) => {
