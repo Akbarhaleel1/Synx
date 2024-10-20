@@ -8,7 +8,7 @@ import CompanyNameModal from '../sections/components/CompanyNameModal';
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
-  const [isModalOpen, setCompanyModal] = useState();
+  const [isModalOpen, setCompanyModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
