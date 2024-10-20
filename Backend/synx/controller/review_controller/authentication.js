@@ -561,24 +561,22 @@ Registered as Synx Automation Private Limited under the Govt. Of India.
 const googleCallback = async (req, res) => {
     try {
         console.log('Google callback is working');
-        console.log('reqsssssssssssssss', req.user)
+
         if (req.user) {
             let user = req.user;
+            console.log('userssss', user)
             let { _id, email } = user;
             let token = generateToken({ _id, email });
             let refresh_token = generateRefreshToken({ _id, email })
 
-            console.log('Tokensssssssssss:', token);
+            console.log('Token:', token);
             console.log('refreshToken:', refresh_token);
 
-            // // const userData = encodeURIComponent(JSON.stringify(req.user));
-            // const userDatas = req.user;
-            // // const tokenData = encodeURIComponent(token);
-            // // const refreshToken = encodeURIComponent(refresh_token);
-            // console.log('userData',userDatas)
-            // console.log('tokenData',tokenData)
-            console.log('refreshToken',refreshToken)
-            res.redirect(`https://synx-review.synxautomate.com/reviews?userData=${token}&token=${tokenData}&refreshToken=${refreshToken}`);
+            const userData = encodeURIComponent(JSON.stringify(req.user));
+            const tokenData = encodeURIComponent(token);
+            const refreshToken = encodeURIComponent(refresh_token);
+            
+            res.redirect(`https://synx-review.synxautomate.com/reviews?userData=${userData}&token=${tokenData}&refreshToken=${refreshToken}`);
         } else {
             res.redirect("https://synx-review.synxautomate.com/login");
         }
