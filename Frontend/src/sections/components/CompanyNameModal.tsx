@@ -14,7 +14,6 @@ const CompanyNameModal = ({ isOpen, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // onSubmit(companyName);
     setCompanyName('');
     onClose();
   };

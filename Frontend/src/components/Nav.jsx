@@ -8,7 +8,7 @@ import CompanyNameModal from '../sections/components/CompanyNameModal';
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
-  const [isModalOpen, setCompanyModal] = useState(false);
+  const [companyModal, setCompanyModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,9 +16,8 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user);
     if(!user){
-      setCompanyModal(true)
-      // onSubmit('data is')
-    }
+      setCompanyModal(true); 
+      }
     setCompanyName(user.companyname);
   }, []);
 
@@ -139,11 +138,8 @@ const Nav = () => {
           </nav>
         )}
       </div>
-      <CompanyNameModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        // onSubmit={handleSubmit}
-      />
+      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
+
     </header>
   );
 };
