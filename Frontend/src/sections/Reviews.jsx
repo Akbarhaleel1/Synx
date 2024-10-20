@@ -9,8 +9,8 @@ const Reviews = () => {
   const [isToggled, setToggled] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
-  const [selectedFilter, setSelectedFilter] = useState("Types"); // State for filter selection
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [selectedFilter, setSelectedFilter] = useState("Types");
   const navigate = useNavigate()
   useAuth();
 
@@ -25,6 +25,16 @@ const Reviews = () => {
 
   useEffect(() => {
     const fetchReviews = async () => {
+      
+    const params = new URLSearchParams(window.location.search);
+    const userData = params.get('userData');
+    const tokens = params.get('token');
+    const refreshToken = params.get('refreshToken');
+
+    console.log('User Data:', userData);
+    console.log('Token:', decodeURIComponent(tokens));
+    console.log('Refresh Token:', decodeURIComponent(refreshToken));
+
       const user = localStorage.getItem("user");
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
