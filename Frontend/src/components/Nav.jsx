@@ -16,9 +16,10 @@ const Nav = () => {
     const user = JSON.parse(getUser);
     console.log('user is', user);
     if(!user){
-      setCompanyModal(true); 
+      // setCompanyModal(true); 
+      alert('company name is not found')
       }
-    setCompanyName(user.companyname);
+    setCompanyName('user.companyname');
   }, []);
 
   const toggleMenu = () => {
