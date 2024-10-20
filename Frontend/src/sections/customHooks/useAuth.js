@@ -19,6 +19,7 @@ const useAuth = () => {
             console.log('accessToken',accessToken)
             if (isTokenExpired(accessToken)) {
                 try {
+                    console.log('refreshAccessToken')
                     await refreshAccessToken(); 
                     accessToken = JSON.parse(localStorage.getItem('token'));
                 } catch (error) {
