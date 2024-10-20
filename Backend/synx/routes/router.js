@@ -50,16 +50,15 @@ Route.get("/auth/google", (req, res, next) => {
 Route.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-      failureRedirect: "https://synxbackend.synxautomate.com/login",
+    failureRedirect: "https://synxbackend.synxautomate.com/login",
   }),
+  (req, res) => {
+    console.log('User authenticated successfully:', req.user);
+    authentication.googleCallback(req, res);
+  },
   (err, req, res, next) => {
-      if (err) {
-          console.error("Error in authentication:", err);
-          res.redirect("https://synxbackend.synxautomate.com/error");
-      } else {
-          console.log('User authenticated successfully:', req.user);
-          authentication.googleCallback(req, res);
-      }
+    console.error("Error in authentication:", err);
+    res.redirect("https://synxbackend.synxautomate.com/error");
   }
 );
 
