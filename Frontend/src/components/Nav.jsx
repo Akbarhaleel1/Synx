@@ -12,8 +12,9 @@ const Nav = () => {
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    // if(!user.companyname){
-    // }
+    if(!user.companyname){
+      alert('compony name is null')
+    }
       console.log('user is', user.companyname);
     setCompanyName(user.companyname);
   }, []);
