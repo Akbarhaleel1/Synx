@@ -11,11 +11,10 @@ const useAuth = () => {
     const refreshToken = params.get('refreshToken');
 
 
-
-    console.log('User Data:', decodedUserData);
+    console.log('User Data:', userData);
     console.log('Token:', decodeURIComponent(token));
     console.log('Refresh Token:', decodeURIComponent(refreshToken));
-    
+
     useEffect(() => {
         const manageTokens = async () => {
             let accessToken = JSON.parse(localStorage.getItem('token'));
