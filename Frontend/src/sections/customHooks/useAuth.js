@@ -73,19 +73,18 @@ const useAuth = () => {
                 // If userData is a string, parse it, otherwise use it as it is
                 if (typeof userData === 'string') {
                     userDatas = JSON.parse(userData);
-                } else {
-                    userDatas = userData; // Assume it's already an object
+                    console.log('Parsed User Data:', userDatas);
                 }
-                console.log('Parsed User Data:', userDatas);
+               
             } catch (error) {
                 console.error("Error parsing userData:", error);
                 return; // Exit if userData is not valid
             }
-
-            // Store user data in localStorage as a string
-            const getUserData = JSON.stringify(userDatas);
-            console.log('Stored User Data:', getUserData);
-            localStorage.setItem('user', getUserData);
+            if(userDatas){
+                const getUserData = JSON.stringify(userDatas);
+                console.log('Stored User Data:', getUserData);
+                localStorage.setItem('user', getUserData);
+            }
 
             // Handle tokens
             let accessToken = decodeURIComponent(tokens);
