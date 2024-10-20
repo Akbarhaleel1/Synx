@@ -82,9 +82,17 @@ const EnhancedLogin = () => {
   }, []);
   
 
+  // const handleGoogleLogin = () => {
+  //   window.location.href = "https://synxbackend.synxautomate.com/auth/google";
+  // };
   const handleGoogleLogin = () => {
-    window.location.href = "https://synxbackend.synxautomate.com/auth/google";
+
+      const result = axios.get('https://synxbackend.synxautomate.com/auth/google');
+      alert('reslut is', result)
+
   };
+
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600  flex items-center justify-center p-4">
