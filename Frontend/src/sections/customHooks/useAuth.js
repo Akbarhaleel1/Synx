@@ -20,7 +20,9 @@ const useAuth = () => {
             console.log('userDatauserData:',userData );
             const userDatas = JSON.parse(userData);
             console.log('userDatausersssssssssssssssssssssssssData:',userDatas );
-            localStorage.setItem('user',userDatas)
+            const getUserData = JSON.stringify(userData)
+            console.log('getUserData:',getUserData );
+            localStorage.setItem('user',getUserData)
             let accessToken = decodeURIComponent(tokens)
             if(!accessToken){
                 accessToken = JSON.parse(localStorage.getItem('token'));
