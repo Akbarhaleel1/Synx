@@ -12,23 +12,9 @@ const Nav = () => {
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    console.log('user data is',typeof(user))
-    if (typeof user === 'string') {
-      try {
-          decodedUserData = JSON.parse(userData);
-          console.log("Decoded User Data:", decodedUserData);
-      } catch (error) {
-          console.error("Error parsing userData:", error);
-      }
-  } else {
-      console.warn("userData is not a valid string.");
-      decodedUserData = userData; // or handle it as needed
-  }
-    if(!user.companyname){
-      alert('compony name is null')
-    }
-      console.log('user is', user.companyname);
-    setCompanyName(user.companyname);
+    console.log('user is', user.companyname);
+    
+    setCompanyName('user.companyname');
   }, []);
 
   const toggleMenu = () => {
