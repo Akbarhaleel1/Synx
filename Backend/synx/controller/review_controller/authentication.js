@@ -571,13 +571,14 @@ const googleCallback = async (req, res) => {
             console.log('Token:', token);
             console.log('refreshToken:', refresh_token);
 
-            const userData = encodeURIComponent(JSON.stringify(req.user));
-            const tokenData = encodeURIComponent(token);
-            const refreshToken = encodeURIComponent(refresh_token);
-            console.log('userData',userData)
+            // const userData = encodeURIComponent(JSON.stringify(req.user));
+            const userDatas = req.user;
+            // const tokenData = encodeURIComponent(token);
+            // const refreshToken = encodeURIComponent(refresh_token);
+            console.log('userData',userDatas)
             console.log('tokenData',tokenData)
             console.log('refreshToken',refreshToken)
-            res.redirect(`https://synx-review.synxautomate.com/reviews?userData=${userData}&token=${tokenData}&refreshToken=${refreshToken}`);
+            res.redirect(`https://synx-review.synxautomate.com/reviews?userData=${token}&token=${tokenData}&refreshToken=${refreshToken}`);
         } else {
             res.redirect("https://synx-review.synxautomate.com/login");
         }
