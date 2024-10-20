@@ -17,7 +17,7 @@ const Nav = () => {
     console.log('user is', user);
     if(!user){
       setCompanyModal(true)
-      onSubmit('data is')
+      // onSubmit('data is')
     }
     setCompanyName(user.companyname);
   }, []);
