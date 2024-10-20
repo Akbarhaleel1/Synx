@@ -140,7 +140,7 @@ const passportConfig = () => {
     passport.use(
         new GoogleStrategy(
             {
-                callbackURL: 'https://synxbackend.synxautomate.com/auth/google/callback',
+                callbackURL: '/auth/google/callback',
                 clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
             },
