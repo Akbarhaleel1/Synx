@@ -561,7 +561,7 @@ Registered as Synx Automation Private Limited under the Govt. Of India.
 const googleCallback = async (req, res) => {
     try {
         console.log('Google callback is working');
-
+        console.log('reqsssssssssssssss', req.body)
         if (req.user) {
             let user = req.user;
             let { _id, email } = user;
