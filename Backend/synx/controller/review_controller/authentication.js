@@ -621,9 +621,9 @@ const updateCompanyName= async (req,res)=>{
     //   { upsert: true } 
     // )
     const  user = await User.findOne({_id: userdata._id});
-   const savedData = user.companyname = companyName;
+user.companyname = companyName;
    console.log('this gonna be saved', savedData)
-    await savedData.save()
+    await user.save()
     console.log("the after update", user)
     res.status(200).json({meaasge:"company name updated successfully",user})
   } catch (error) {
