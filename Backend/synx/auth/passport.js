@@ -99,9 +99,6 @@
 
 // module.exports = passportConfig;
 
-
-
-// synx/auth/passport.js
 const passport = require('passport');
 const { Strategy: GoogleStrategy } = require('passport-google-oauth20');
 const dotenv = require('dotenv');
@@ -143,7 +140,7 @@ const passportConfig = () => {
     passport.use(
         new GoogleStrategy(
             {
-                callbackURL: 'https://synx-review.synxautomate.com/auth/google/callback',
+                callbackURL: 'https://synxbackend.synxautomate.com/auth/google/callback',
                 clientID: process.env.GOOGLE_AUTH_CLIENT_ID,
                 clientSecret: process.env.GOOGLE_AUTH_CLIENT_SECRET,
             },

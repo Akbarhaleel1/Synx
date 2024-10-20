@@ -19,15 +19,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-// app.use(cors());
-
-// app.use(cors({
-//   origin: 'http://localhost:5173',
-//   credentials: true, 
-//   allowedHeaders: ['Authorization', 'Content-Type'] 
-// }));
-
 const allowedOrigins = [process.env.DOMAIN,'https://synx-review.synxautomate.com'];
 
 console.log(allowedOrigins)
