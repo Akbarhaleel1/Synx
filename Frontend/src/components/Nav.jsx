@@ -12,7 +12,9 @@ const Nav = () => {
   useEffect(() => {
     const getUser = localStorage.getItem('user');
     const user = JSON.parse(getUser);
-    console.log('user is', user.companyname);
+    // if(!user.companyname){
+    // }
+      console.log('user is', user.companyname);
     setCompanyName(user.companyname);
   }, []);
 
