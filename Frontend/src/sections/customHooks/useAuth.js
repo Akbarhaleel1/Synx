@@ -9,9 +9,9 @@ const useAuth = () => {
     const tokens = params.get('token');
     const refreshToken = params.get('refreshToken');
 
-    console.log('User Data:', userData);
-    console.log('Token:', decodeURIComponent(tokens));
-    console.log('Refresh Token:', decodeURIComponent(refreshToken));
+    console.log('User Data111111111111111111111:', userData);
+    console.log('Token111111111111111:', decodeURIComponent(tokens));
+    console.log('Refresh Token:111111', decodeURIComponent(refreshToken));
 
     useEffect(() => {
         const manageTokens = async () => {
