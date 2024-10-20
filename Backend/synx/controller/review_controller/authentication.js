@@ -574,6 +574,9 @@ const googleCallback = async (req, res) => {
             const userData = encodeURIComponent(JSON.stringify(req.user));
             const tokenData = encodeURIComponent(token);
             const refreshToken = encodeURIComponent(refresh_token);
+            console.log('userData',userData)
+            console.log('tokenData',tokenData)
+            console.log('refreshToken',refreshToken)
             res.redirect(`https://synx-review.synxautomate.com/reviews?userData=${userData}&token=${tokenData}&refreshToken=${refreshToken}`);
         } else {
             res.redirect("https://synx-review.synxautomate.com/login");
