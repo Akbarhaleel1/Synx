@@ -15,7 +15,7 @@ const useAuth = () => {
 
     useEffect(() => {
         const manageTokens = async () => {
-            accessToken = JSON.parse(localStorage.getItem('token'));
+            const accessToken = JSON.parse(localStorage.getItem('token'));
             console.log('accessToken',accessToken)
             if (isTokenExpired(accessToken)) {
                 try {
