@@ -574,9 +574,9 @@ const googleCallback = async (req, res) => {
             const userData = encodeURIComponent(JSON.stringify(req.user));
             const tokenData = encodeURIComponent(token);
             const refreshToken = encodeURIComponent(refresh_token);
-            res.redirect(`https://synxbackend.synxautomate.com/reviews`);
+            res.redirect(`https://synx-review.synxautomate.com/reviews`);
         } else {
-            res.redirect("https://synxbackend.synxautomate.com/login");
+            res.redirect("https://synx-review.synxautomate.com/login");
         }
     } catch (error) {
         console.error("Error during Google callback:", error);
