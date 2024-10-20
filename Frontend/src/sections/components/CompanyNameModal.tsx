@@ -35,17 +35,18 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
 
     try {
       const getUser = localStorage.getItem('user');
-      // let userdata 
-      // if(getUser){
-        //  userdata = getUser
-      // }
-      console.log(' const userdata ',getUser )
+      console.log('userdata sssssssss',getUser)
+      let userdata 
+      if(getUser){
+         userdata = JSON.parse(getUser)
+      }
+      console.log(' const userdata ',userdata )
       const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ companyName, userdata:getUser }),
+        body: JSON.stringify({ companyName, userdata }),
       });
 
       if (!response.ok) {
