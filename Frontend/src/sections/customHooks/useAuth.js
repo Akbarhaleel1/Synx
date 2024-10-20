@@ -18,7 +18,7 @@ const useAuth = () => {
     useEffect(() => {
         const manageTokens = async () => {
             console.log('Token111111111111111:', );
-            const userDatas = JSON.parse(userData);
+            const userDatas = JSON.stringify(userData);
             localStorage.setItem('user',userDatas)
             let accessToken = decodeURIComponent(tokens)
             if(!accessToken){
