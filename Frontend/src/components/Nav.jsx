@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [companyName, setCompanyName] = useState('');
+  const [companyName, setCompanyName] = useState('Hello');
   const navigate = useNavigate();
 
   useEffect(() => {
