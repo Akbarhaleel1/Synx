@@ -39,7 +39,7 @@ Route.get("/auth/google", (req, res, next) => {
 Route.get(
   "/auth/google/callback",
   passport.authenticate("google", {
-      failureRedirect: "https://synx-review.synxautomate.com/login",
+      failureRedirect: "https://synx-review.synxautomate.com/signup",
   }),
   (req, res) => {
       console.log('User authenticated successfully:', req.user);
