@@ -921,6 +921,7 @@ const goibibo = async (url) => {
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
+  console.log("helloooooooooooooooooooooooooooooooooo")
 
   const page = await createPage(browser);
 
