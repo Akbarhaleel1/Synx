@@ -844,7 +844,14 @@ const tripadvisor = async (url) => {
 
 const makemytrip = async (url) => {
   const browser = await puppeteer.launch({
-    args: chromium.args,
+    args:[
+    ...chromium.args, 
+    '--disable-http2',  // Disable HTTP/2
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage', // Prevents crashes when Chromium uses too much memory
+    '--disable-features=IsolateOrigins,site-per-process' // Avoids CORS-related issues
+  ],
     defaultViewport: chromium.defaultViewport,
     executablePath: await chromium.executablePath(),
     headless: chromium.headless,
