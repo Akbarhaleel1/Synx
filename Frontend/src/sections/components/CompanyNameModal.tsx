@@ -40,7 +40,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       if(getUser){
          userdata = JSON.parse(getUser)
       }
-      console.log(' const userdata ',userdata )
+      console.log('const userdata ',userdata )
       const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
         method: 'POST',
         headers: {
