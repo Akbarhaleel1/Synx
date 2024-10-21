@@ -850,57 +850,61 @@ const makemytrip = async (url) => {
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
-  const page = await createPage(browser);
+   const page = await browser.newPage();
 
-  try {
-    await page.setViewport({ width: 1080, height: 1024 });
-    await navigateToPage(page, url);
-    await page.waitForSelector(".reviewBox", { timeout: 30000 });
+try {
+     await page.setViewport({ width: 1080, height: 1024 });
+   //   await page.goto(url, { waitUntil: 'networkidle2' });
+   await page.goto(url, { waitUntil: 'networkidle2' });
+     await page.waitForSelector(".userRvs__item", { timeout: 30000 });
 
-    const reviews = await page.evaluate(() => {
-      return Array.from(document.querySelectorAll(".reviewBox")).map(
-        (element) => ({
-          platform: "makemytrip",
-          image: element.querySelector("img")?.src || null,
-          date:
-            element.querySelector(".appendTop4")?.textContent.trim() || null,
-          name:
-            element.querySelector(".appendTop4")?.textContent.trim() || null,
-          title:
-            element.querySelector(".reviewBoxLeft p")?.textContent.trim() ||
-            null,
-          review: element.querySelector(".font14")?.textContent.trim() || null,
-          rating:
-            element.querySelector(".reviewListingItemRating")?.textContent ||
-            null,
-        })
-      );
-    });
-
-    function transformReviews(reviews) {
+             const reviews = await page.evaluate(() => {
+               return Array.from(document.querySelectorAll('.userRvs__item ')).map(element => ({
+                 platform:"makemytrip",
+                 image: element.querySelector('img')?.src || null,
+                 date: element.querySelector('.userRvs__rvdtl span:nth-child(5)')?.textContent.trim() || null,
+                 name: element.querySelector('span[class="userRvs__rvdtlPoints titText"]')?.textContent.trim() || null,
+                 title: element.querySelector('.userRvs__itemHdr p')?.textContent.trim() || null,
+                 review: element.querySelector('.userRvs__item p:nth-child(3)')?.textContent.trim() || null,
+                 rating: element.querySelector('.userRvs__rtng')?.textContent || null,
+               }));
+             });
+     console.log(reviews)
+ 
+     function transformReviews(reviews) {
       return reviews.map((review) => {
+        // Extract date and format it as "Tue Feb 27 2024"
         const dateMatch = review.date.match(/(\w+\s\d{1,2},\s\d{4})/);
         const dateFormatted = dateMatch
           ? new Date(dateMatch[0]).toDateString()
           : null;
-
-        const nameMatch = review.name.match(/by\s(.+?)\s\./);
-        const name = nameMatch ? nameMatch[1].trim() : null;
-
-        const rating = parseFloat(review.rating.trim());
-
+    
+        // Extract name after 'by' and before '.'
+      //   const nameMatch = review.name.match(/by\s(.+?)\s\./);
+      //   const name = nameMatch ? nameMatch[1].trim() : null;
+    
+        // Parse rating, round it, and ensure it's out of 5
+        const rating = Math.round((parseFloat(review.rating.trim()) / 5) * 5);
+    
+        // Extract platform, image, title, and review
+        const { platform = 'makemytrip', image = review.image, title, review: reviewText } = review;
+    
         return {
-          ...review,
+          platform,
+          image,
           date: dateFormatted,
-          name: name,
+          name: review.name,
+          title: title.trim(),
+          review: reviewText.trim(),
           rating: rating,
         };
       });
     }
-
-    const filteredReview = transformReviews(reviews);
-    return filteredReview;
-  } catch (error) {
+ 
+     const filteredReview = transformReviews(reviews);
+     console.log(filteredReview)
+     return filteredReview;
+   } catch (error) {
     console.error("Error fetching MakeMyTrip reviews:", error);
     return [];
   } finally {
