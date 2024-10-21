@@ -20,7 +20,6 @@ const Nav = () => {
       setCompanyModal(true); 
     return
     }
-    setCompanyModal(false); 
     setCompanyName(user.companyname);
   }, []);
 
