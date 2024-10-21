@@ -46,6 +46,8 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         },
         body: JSON.stringify({ companyName, userdata }),
       });
+
+      isOpen = false
       
       let userDatas = response.data.user
       console.log('userdatasssssssssssssssssssss', userDatas)

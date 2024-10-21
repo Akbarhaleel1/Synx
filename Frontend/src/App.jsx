@@ -67,7 +67,6 @@ const App = () => {
           <Route path="/AiFeature" element={<BeautifulAIFeaturePageWithLock/>} />
         </Routes>
       </Router>
-
     </main>
   );
 };
