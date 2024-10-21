@@ -5,14 +5,35 @@ import bellIcon from "../assets/images/bellIcon.png";
 import axios from 'axios'
 import useAuth from './customHooks/useAuth';
 import {useNavigate} from 'react-router-dom'
+import CompanyNameModal from "./components/CompanyNameModal";
 const Reviews = () => {
   const [isToggled, setToggled] = useState(false);
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); 
   const [selectedFilter, setSelectedFilter] = useState("Types");
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [companyName, setCompanyName] = useState('');
+  const [companyModal, setCompanyModal] = useState(false);
+
+
   const navigate = useNavigate()
   useAuth();
+
+
+  
+  useEffect(() => {
+    const getUser = localStorage.getItem('user');
+    const user = JSON.parse(getUser);
+    console.log('user is', user);
+    let cName = user.companyname
+    if(!cName || cName.trim() === ""){
+      setCompanyModal(true); 
+    return
+    }
+    setCompanyName(user.companyname);
+  }, []);
 
   
   const handleClick = (index) => {
@@ -22,6 +43,10 @@ const Reviews = () => {
   const handleToggle = () => {
     setToggled(!isToggled);
   };
+
+  const handleCloseModal = ()=>{
+    console.log('handleCloseModal')
+  }
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -196,6 +221,7 @@ const Reviews = () => {
     </div>
   )}
 </div>
+      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
 
       </div>
     </section>

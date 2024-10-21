@@ -11,17 +11,17 @@ const Nav = () => {
   const [companyModal, setCompanyModal] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const getUser = localStorage.getItem('user');
-    const user = JSON.parse(getUser);
-    console.log('user is', user);
-    let cName = user.companyname
-    if(!cName || cName.trim() === ""){
-      setCompanyModal(true); 
-    return
-    }
-    setCompanyName(user.companyname);
-  }, []);
+  // useEffect(() => {
+  //   const getUser = localStorage.getItem('user');
+  //   const user = JSON.parse(getUser);
+  //   console.log('user is', user);
+  //   let cName = user.companyname
+  //   if(!cName || cName.trim() === ""){
+  //     setCompanyModal(true); 
+  //   return
+  //   }
+  //   setCompanyName(user.companyname);
+  // }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -47,9 +47,9 @@ const Nav = () => {
     navigate('/login');
   };
 
-  const handleCloseModal = ()=>{
-    console.log('handleCloseModal')
-  }
+  // const handleCloseModal = ()=>{
+  //   console.log('handleCloseModal')
+  // }
 
   const NavItem = ({ item }) => (
     <div
@@ -140,7 +140,7 @@ const Nav = () => {
           </nav>
         )}
       </div>
-      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
+      {/* <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} /> */}
 
     </header>
   );
