@@ -222,7 +222,7 @@ const Reviews = () => {
     </div>
   )}
 </div>
-      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
+      {/* <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} /> */}
 
       </div>
     </section>
