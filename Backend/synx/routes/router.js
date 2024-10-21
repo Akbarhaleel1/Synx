@@ -63,8 +63,6 @@ Route.get(
   }
 );
 
-
-
 Route.post("/generateqr", authMiddleware,checkSubscription, getReview.generateqr);
 // verify payment
 
