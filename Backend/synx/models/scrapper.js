@@ -9,7 +9,7 @@ const scrapperSchema = new mongoose.Schema({
     },
     platform: {
       type: String,
-      enum: ["airbnb","tripadvisor","makemytrip","gobigo", "trustpilot", "booking.com", "agoda","google"],
+      enum: ["airbnb","tripadvisor","makeMyTrip","gobigo", "trustpilot", "booking.com", "agoda","google"],
       required: true,
     },
     link: {
