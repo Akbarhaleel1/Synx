@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios'
 
 const CloseIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -40,16 +41,16 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         userdata = JSON.parse(getUser)
       }
       isOpen = false
-      const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ companyName, userdata }),
-      });
-
+      // const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-Type': 'application/json',
+      //   },
+      //   body: JSON.stringify({ companyName, userdata }),
+      // });
+      const response = await axios.post('https://synxbackend.synxautomate.com/companyName',{ companyName, userdata })
      
-      
+      console.log('responseissssssssssssssss',response)
       let userDatas = response.data.user
       console.log('userdatasssssssssssssssssssss', userDatas)
       localStorage.setItem('user',userDatas)
