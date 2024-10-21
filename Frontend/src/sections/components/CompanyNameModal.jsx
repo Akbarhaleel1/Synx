@@ -56,6 +56,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       }
 
       console.log('Company name submitted successfully');
+      onClose()
       setCompanyName('');
       setErrorMessage('');
       onSubmit(companyName);
