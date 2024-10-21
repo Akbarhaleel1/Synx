@@ -879,7 +879,8 @@ const makemytrip = async (url) => {
 try {
      await page.setViewport({ width: 1080, height: 1024 });
    //   await page.goto(url, { waitUntil: 'networkidle2' });
-   await page.goto(url, { waitUntil: 'networkidle2' });
+   // await page.goto(url, { waitUntil: 'networkidle2' });
+  await gotoWithRetry(page, url);
      await page.waitForSelector(".userRvs__item", { timeout: 30000 });
 
              const reviews = await page.evaluate(() => {
