@@ -857,7 +857,24 @@ const makemytrip = async (url) => {
     headless: chromium.headless,
     ignoreHTTPSErrors: true,
   });
-   const page = await browser.newPage();
+  
+  const page = await browser.newPage();
+
+  // Retry logic for the page.goto call
+  const gotoWithRetry = async (page, url, retries = 3) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        await page.goto(url, { waitUntil: 'networkidle2' });
+        return; // Exit the loop if successful
+      } catch (err) {
+        console.log(`Failed to navigate, attempt ${i + 1} of ${retries}`);
+        if (i === retries - 1) {
+          // If all attempts fail, throw the error to be handled outside
+          throw new Error(`Failed to load the page after ${retries} attempts: ${err}`);
+        }
+      }
+    }
+  };
 
 try {
      await page.setViewport({ width: 1080, height: 1024 });
