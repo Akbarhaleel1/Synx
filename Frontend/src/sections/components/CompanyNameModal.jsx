@@ -39,6 +39,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       if(getUser){
         userdata = JSON.parse(getUser)
       }
+      isOpen = false
       const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
         method: 'POST',
         headers: {
@@ -47,7 +48,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         body: JSON.stringify({ companyName, userdata }),
       });
 
-      isOpen = false
+     
       
       let userDatas = response.data.user
       console.log('userdatasssssssssssssssssssss', userDatas)
