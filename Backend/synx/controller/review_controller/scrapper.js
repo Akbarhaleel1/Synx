@@ -133,7 +133,7 @@ const integrate = async (req, res) => {
                 case 'tripadvisor':
                     reviews = await review.tripadvisor(pageLink);
                     break;
-                case 'makeMyTrip':
+                case 'makemytrip':
                     reviews = await review.makemytrip(pageLink);
                     break;
                 case 'goibibo':
@@ -349,7 +349,7 @@ const automate = async () => {
         case "tripadvisor":
           reviews = await review.tripadvisor(scrapper.link);
           break;
-        case "makeMyTrip":
+        case "makemytrip":
           reviews = await review.makemytrip(scrapper.link);
           break;
         case "goibibo":
