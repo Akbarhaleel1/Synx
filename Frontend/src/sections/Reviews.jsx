@@ -32,6 +32,7 @@ const Reviews = () => {
       setCompanyModal(true); 
     return
     }
+    setCompanyModal(false); 
     setCompanyName(user.companyname);
   }, []);
 

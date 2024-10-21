@@ -47,7 +47,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         body: JSON.stringify({ companyName, userdata }),
       });
       
-      let userDatas = response.data.user
+      let userDatas = response.data
       console.log('userdatasssssssssssssssssssss', userDatas)
       localStorage.setItem('user',userDatas)
 
