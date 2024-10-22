@@ -13,8 +13,6 @@ const useAuth = () => {
     console.log('Token:', decodeURIComponent(tokens));
     console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
-
-
     useEffect(() => {
         const manageTokens = async () => {
             let accessToken = JSON.parse(localStorage.getItem('token'));
@@ -27,7 +25,8 @@ const useAuth = () => {
                  userDatas = JSON.parse(userData);
                  const getUserData = JSON.stringify(userDatas);
                  console.log('Stored User Data:', getUserData);
-                 localStorage.setItem('user', userDatas);     
+                 localStorage.setItem('getUserData', getUserData);     
+                 localStorage.setItem('userData', userData);     
                  localStorage.setItem('token', tokens);     
             }
 
