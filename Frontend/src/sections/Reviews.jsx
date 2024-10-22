@@ -59,10 +59,10 @@ const Reviews = () => {
       console.log('the review useeffect is woking')
        let cName = user.companyname
        console.log('the company name is', cName)
-        if(!cName || cName.trim() === ""){
-           setCompanyModal(true); 
-           return
-        }
+        // if(!cName || cName.trim() === ""){
+        //    setCompanyModal(true); 
+        //    return
+        // }
       
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
@@ -228,7 +228,7 @@ const Reviews = () => {
     </div>
   )}
 </div>
-      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
+      {/* <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} /> */}
 
       </div>
     </section>

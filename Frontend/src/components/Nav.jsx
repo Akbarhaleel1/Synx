@@ -47,9 +47,9 @@ const Nav = () => {
     navigate('/login');
   };
 
-  // const handleCloseModal = ()=>{
-  //   console.log('handleCloseModal')
-  // }
+  const handleCloseModal = ()=>{
+    console.log('handleCloseModal')
+  }
 
   const NavItem = ({ item }) => (
     <div
