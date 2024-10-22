@@ -13,7 +13,7 @@ const useAuth = () => {
     console.log('Token:', decodeURIComponent(tokens));
     console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
-    
+
 
     useEffect(() => {
         const manageTokens = async () => {
@@ -27,7 +27,7 @@ const useAuth = () => {
                  userDatas = JSON.parse(userData);
                  const getUserData = JSON.stringify(userDatas);
                  console.log('Stored User Data:', getUserData);
-                 localStorage.setItem('user', getUserData);     
+                 localStorage.setItem('user', userDatas);     
                  localStorage.setItem('token', tokens);     
             }
 
