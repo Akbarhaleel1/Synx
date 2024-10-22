@@ -151,7 +151,7 @@ const Reviews = () => {
             rel="noopener noreferrer"
             className="inline-block bg-black text-white text-sm font-semibold py-2 px-4 rounded-full transition duration-300 hover:bg-gray-800"
           >
-            View And Replay on Google Maps
+            View And Reply on Google Maps
           </a>
         ) : (
           <a

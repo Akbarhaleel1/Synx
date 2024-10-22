@@ -88,6 +88,7 @@ const LinkPageModal = ({ isOpen, onClose, platform }) => {
               <li className="mb-2">
   <a 
     href="https://developers.google.com/maps/documentation/places/web-service/place-id" 
+    target="_blank"
     className="inline-block bg-blue-600 text-white rounded-lg px-4 py-2 transition duration-300 ease-in-out hover:bg-blue-500 hover:shadow-lg"
   >
     Google Place ID Tool
