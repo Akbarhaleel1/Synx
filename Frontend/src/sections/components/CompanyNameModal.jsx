@@ -40,6 +40,8 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       let userdata
       // if(getUser){
         userdata = JSON.parse(getUser)
+        userdata.companyName = companyName;
+        localStorage.setItem('user', JSON.stringify(userdata));
       // }
       console.log('userdata',userdata)
       console.log('1')
