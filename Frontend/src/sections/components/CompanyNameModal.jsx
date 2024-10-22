@@ -35,6 +35,8 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
 
     try {
       const getUser = localStorage.getItem('user');
+      console.log('user is', getUser)
+      
       let userdata
       if(getUser){
         userdata = JSON.parse(getUser)
