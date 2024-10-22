@@ -33,7 +33,7 @@ const Reviews = () => {
   };
 
 
-    // useEffect(() => {
+  //   useEffect(() => {
   //   const getUser = localStorage.getItem('user');
   //   const user = JSON.parse(getUser);
   //   console.log('user is', user);
@@ -56,12 +56,12 @@ const Reviews = () => {
       //   Authorization: `Bearer ${token}`,
       // }});
       console.log('the review useeffect is woking')
-      //  let cName = user.companyname
-      //  console.log('the company name is', cName)
-      //   if(!cName || cName.trim() === ""){
-      //      setCompanyModal(true); 
-      //      return
-      //   }
+       let cName = user.companyname
+       console.log('the company name is', cName)
+        if(!cName || cName.trim() === ""){
+           setCompanyModal(true); 
+           return
+        }
       
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
