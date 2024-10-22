@@ -123,10 +123,14 @@ const SynXPlusReviewRequest = () => {
     for (const input of contacts) {
       console.log('input', input)
       if (!input.name || !input.number) {
+        console.log('the input name is the problem')
+        console.log('input', input.name)
+        console.log('inputnumber', input.number)
         setIsErrorModalOpen(true);
         return;
       }
     }
+    console.log('23')
     setBalence(balence-inputs.length)
 
     console.log('companyName', companyName)
