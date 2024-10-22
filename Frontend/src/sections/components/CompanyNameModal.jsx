@@ -54,7 +54,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       if (!response.ok) {
         throw new Error('Failed to submit company name');
       }
-
+      onClose()
       console.log('Company name submitted successfully');
       setCompanyName('');
       setErrorMessage('');
