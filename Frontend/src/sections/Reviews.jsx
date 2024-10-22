@@ -17,6 +17,12 @@ const Reviews = () => {
   const navigate = useNavigate()
   useAuth();
 
+
+    const handleCloseModal = ()=>{
+    console.log('handleCloseModal')
+    setCompanyModal(false); 
+  }
+
   
   const handleClick = (index) => {
     setRating(index + 1);
