@@ -123,23 +123,21 @@ const SynXPlusReviewRequest = () => {
     for (const input of contacts) {
       console.log('input', input)
       if (!input.name || !input.number) {
-        console.log('the input name is the problem')
-        console.log('input', input.name)
-        console.log('inputnumber', input.number)
         setIsErrorModalOpen(true);
         return;
       }
     }
-    console.log('23')
+    console.log('1')
     setBalence(balence-inputs.length)
-
+    console.log('2')
     console.log('companyName', companyName)
     console.log('messageTemplate', messageTemplate)
+    console.log('3')
     if (!companyName || !messageTemplate) {
       setIsErrorModalOpen(true);
       return
     }
-
+    console.log('4')
     const endpoint = localStorage.getItem('endpoint')
     console.log('enpiontssssssssssssss', endpoint)
     if (!endpoint) {
@@ -147,7 +145,7 @@ const SynXPlusReviewRequest = () => {
       setShowWarning(true);
       return
     }
-
+    console.log('5')
     // Send the data to the backend
     const response = await axios.post('https://synxbackend.synxautomate.com/sendWhatsapp', { user: user, contacts }, {
       headers: {
