@@ -54,6 +54,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         body: JSON.stringify({ companyName, userdata }),
       });
       console.log('2')
+      window.location.reload()
 
       // let userDatas = response.data
       // console.log('userdatasssssssssssssssssssss', userDatas)
