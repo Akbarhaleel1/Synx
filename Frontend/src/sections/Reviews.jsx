@@ -67,7 +67,7 @@ const Reviews = () => {
         console.log('user is ', user)
         console.log('token is is ', token)
       
-      const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
+      const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user:getUser },{headers: {
         Authorization: `Bearer ${token}`,
       }});
 
