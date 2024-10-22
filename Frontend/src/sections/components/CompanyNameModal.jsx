@@ -53,7 +53,7 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       });
       console.log('2')
 
-      let userDatas = response.data.user
+      let userDatas = response.data
       console.log('userdatasssssssssssssssssssss', userDatas)
       localStorage.setItem('user',userDatas)
       console.log('3')
