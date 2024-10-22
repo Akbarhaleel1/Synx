@@ -55,12 +55,14 @@ const Reviews = () => {
       // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
-
-       let cName = user.companyname
-        if(!cName || cName.trim() === ""){
-           setCompanyModal(true); 
-           return
-        }
+      console.log('the review useeffect is woking')
+      //  let cName = user.companyname
+      //  console.log('the company name is', cName)
+      //   if(!cName || cName.trim() === ""){
+      //      setCompanyModal(true); 
+      //      return
+      //   }
+      
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
