@@ -25,7 +25,7 @@ const useAuth = () => {
                  userDatas = JSON.parse(userData);
                  const getUserData = JSON.stringify(userDatas);
                  console.log('Stored User Data:', getUserData);
-                 localStorage.setItem('getUserData', getUserData);     
+                 localStorage.setItem('getUserData', userDatas);     
                  localStorage.setItem('userData', userData);     
                  localStorage.setItem('token', tokens);     
             }
