@@ -41,6 +41,8 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
       if(getUser){
         userdata = JSON.parse(getUser)
       }
+      console.log('1')
+      console.log('comapny name is',companyName)
       const response = await fetch('https://synxbackend.synxautomate.com/companyName', {
         method: 'POST',
         headers: {
@@ -48,10 +50,12 @@ const CompanyNameModal = ({ isOpen, onClose, onSubmit }) => {
         },
         body: JSON.stringify({ companyName, userdata }),
       });
-      
+      console.log('2')
+
       let userDatas = response.data.user
       console.log('userdatasssssssssssssssssssss', userDatas)
       localStorage.setItem('user',userDatas)
+      console.log('3')
 
       if (!response.ok) {
         throw new Error('Failed to submit company name');
