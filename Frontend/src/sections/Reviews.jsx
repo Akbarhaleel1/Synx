@@ -49,12 +49,13 @@ const Reviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
 
-      const user = localStorage.getItem("user");
+      const getUser = localStorage.getItem("user");
       const getToken = localStorage.getItem('token');
       const token = JSON.parse(getToken)
       // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
+      const user = JSON.parse(getUser)
       console.log('the review useeffect is woking')
        let cName = user.companyname
        console.log('the company name is', cName)

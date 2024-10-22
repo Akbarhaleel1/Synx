@@ -13,6 +13,8 @@ const useAuth = () => {
     console.log('Token:', decodeURIComponent(tokens));
     console.log('Refresh Token:', decodeURIComponent(refreshToken));
 
+    
+
     useEffect(() => {
         const manageTokens = async () => {
             let accessToken = JSON.parse(localStorage.getItem('token'));
