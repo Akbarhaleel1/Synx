@@ -63,6 +63,9 @@ const Reviews = () => {
         //    setCompanyModal(true); 
         //    return
         // }
+
+        console.log('user is ', user)
+        console.log('token is is ', token)
       
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
