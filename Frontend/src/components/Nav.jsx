@@ -50,6 +50,7 @@ const Nav = () => {
 
   const handleCloseModal = ()=>{
     console.log('handleCloseModal')
+    setCompanyModal(false)
   }
 
   const NavItem = ({ item }) => (
