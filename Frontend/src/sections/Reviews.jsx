@@ -12,29 +12,10 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
   const [searchQuery, setSearchQuery] = useState(""); 
   const [selectedFilter, setSelectedFilter] = useState("Types");
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [companyName, setCompanyName] = useState('');
   const [companyModal, setCompanyModal] = useState(false);
-
-
   const navigate = useNavigate()
   useAuth();
-
-
-  
-  useEffect(() => {
-    const getUser = localStorage.getItem('user');
-    const user = JSON.parse(getUser);
-    console.log('user is', user);
-    let cName = user.companyname
-    if(!cName || cName.trim() === ""){
-      setCompanyModal(true); 
-    return
-    }
-  
-    setCompanyName(user.companyname);
-  }, []);
 
   
   const handleClick = (index) => {
@@ -45,9 +26,19 @@ const Reviews = () => {
     setToggled(!isToggled);
   };
 
-  const handleCloseModal = ()=>{
-    console.log('handleCloseModal')
-  }
+
+    // useEffect(() => {
+  //   const getUser = localStorage.getItem('user');
+  //   const user = JSON.parse(getUser);
+  //   console.log('user is', user);
+  //   let cName = user.companyname
+  //   if(!cName || cName.trim() === ""){
+  //     setCompanyModal(true); 
+  //   return
+  //   }
+  //   setCompanyName(user.companyname);
+  // }, []);
+
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -58,6 +49,12 @@ const Reviews = () => {
       // const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
       //   Authorization: `Bearer ${token}`,
       // }});
+
+       let cName = user.companyname
+        if(!cName || cName.trim() === ""){
+           setCompanyModal(true); 
+           return
+        }
       const result = await axios.post("https://synxbackend.synxautomate.com/reviews", { user },{headers: {
         Authorization: `Bearer ${token}`,
       }});
@@ -222,7 +219,7 @@ const Reviews = () => {
     </div>
   )}
 </div>
-      {/* <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} /> */}
+      <CompanyNameModal isOpen={companyModal} onClose={handleCloseModal} />
 
       </div>
     </section>
