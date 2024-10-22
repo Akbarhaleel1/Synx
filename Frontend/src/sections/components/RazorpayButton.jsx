@@ -10,15 +10,15 @@ const RazorpayButton = ({ titleId, onSuccess, className, children }) => {
   switch(titleId){
     case 'DIAMOND':
       console.log('Selected Plan: DIAMOND');
-      planId = 'plan_P8CrVYx0VBbRFh'
+      planId = 'plan_PBoqGcGh3Rqz6e'
       break;
     case 'GOLD':
-      console.log('slectSILVER');
-       planId = 'plan_P89dmItbQLG6dU'
+      console.log('select Gold');
+       planId = 'plan_PBopNczJdgZt4U'
       break;
     case 'SILVER':
       console.log('SILVER');
-      planId = 'plan_P8EkuGxrrobxIN'
+      planId = 'plan_PBooKNmKof0CAn'
       break      
   }
 
