@@ -119,8 +119,9 @@ const SynXPlusReviewRequest = () => {
     let user = localStorage.getItem('user')
     const getToken = localStorage.getItem('token');
     const token = JSON.parse(getToken)
-
+    let inputs=[]
     for (const input of contacts) {
+      inputs.push(input)
       console.log('input', input)
       if (!input.name || !input.number) {
         setIsErrorModalOpen(true);
@@ -128,7 +129,7 @@ const SynXPlusReviewRequest = () => {
       }
     }
     console.log('1')
-    // setBalence(balence-inputs.length)
+    setBalence(balence-inputs.length)
     console.log('2')
     console.log('companyName', companyName)
     console.log('messageTemplate', messageTemplate)
