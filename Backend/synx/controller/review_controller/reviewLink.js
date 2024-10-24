@@ -18,7 +18,7 @@ const createOrUpdateReviewLink = async (req, res) => {
       
       const reviewLinkData = {
         user: user._id,
-        link: `https://synx-review.synxautomate.com/HotelReview?endpoint=${data.endpoint}`,
+        link: `https://synx-review.synxautomate.com/feedback?${data.endpoint}`,
         endpoint: data.endpoint,
         title: data.linkTitle,
         starFilter: filterpage,

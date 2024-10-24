@@ -21,7 +21,7 @@ const HospitalityReview = () => {
       const getQueryParams = () => {
         const params = new URLSearchParams(location.search);
         return {
-          endpoint: params.get('endpoint'),
+          endpoint: params.get('l'),
           qrPoint: params.get('qr')
         };
       };
