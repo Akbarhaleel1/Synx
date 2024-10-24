@@ -91,7 +91,7 @@ const EditReviews = () => {
   //   navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}$tab=text`);
   // };
   const handleVisitLink = () => {
-    window.open(`https://synx-review.synxautomate.com/feedback?endpoint=${encodeURIComponent(endpoint)}&tab=text}`, '_blank');
+    window.open(`https://synx-review.synxautomate.com/feedback?end=${encodeURIComponent(endpoint)}&tab=text}`, '_blank');
     // navigate(`/HotelReview?endpoint=${encodeURIComponent(endpoint)}&tab=text`);
   };
 
