@@ -55,7 +55,7 @@ const App = () => {
           <Route path="/forgorPassword" element={<ForgotPasswordPage />} />
           <Route path="/OTPVerificationPage" element={<OTPVerificationPage />} />
           <Route path="/QrCode" element={<QrCode />} />
-          <Route path="/Reviews" element={<HotelReview />} />
+          <Route path="/feedback" element={<HotelReview />} />
           <Route path="/userReview" element={<NegativeReview />} />
           <Route path="/negetiveReview" element={<NegativeReviewsDisplay />} />
           <Route path="/PricingTable" element={<PricingTable/>} />
