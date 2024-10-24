@@ -19,7 +19,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const allowedOrigins = [process.env.DOMAIN,'https://synx-review.synxautomate.com'];
+const allowedOrigins = [process.env.DOMAIN,'https://review.synxautomate.com'];
 
 console.log(allowedOrigins)
 
